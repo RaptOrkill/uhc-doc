@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr" class="">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ValkyrieUHC — UHC à rôles évolutifs</title>
+<meta name="description" content="Serveur Minecraft UHC à rôles évolutifs. Trois modes : Pokémon, Valkyrie et Naruto. Une page par rôle et par mode." />
+
+<script>(function(){const t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{serif:['Fraunces','Georgia','serif'],sans:['Inter','system-ui','sans-serif']}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --bg:#faf9f6;--surface:#ffffff;--surface-2:#f3f1ec;--text:#1b1b18;--muted:#6a685f;--faint:#9a978c;
+    --border:#e7e3da;--accent:#0a8f5f;--accent-soft:#eaf5ef;--pk:#0a8f5f;--vk:#b06a12;--nr:#c2491f;
+  }
+  html.dark{
+    --bg:#0c0c0e;--surface:#141417;--surface-2:#1b1b1f;--text:#ececef;--muted:#a0a09a;--faint:#6e6e74;
+    --border:#26262b;--accent:#34d399;--accent-soft:#11241d;--pk:#34d399;--vk:#f0a93a;--nr:#f2703c;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+  ::selection{background:color-mix(in srgb,var(--accent) 30%,transparent)}
+  .font-serif{font-family:'Fraunces',Georgia,serif}
+  .surface{background:var(--surface)}.surface-2{background:var(--surface-2)}
+  .muted{color:var(--muted)}.faint{color:var(--faint)}.accent{color:var(--accent)}
+  .bd{border-color:var(--border)}.bd-t{border-top:1px solid var(--border)}.bd-b{border-bottom:1px solid var(--border)}
+  .ring-soft{box-shadow:0 1px 2px rgba(0,0,0,.04)}html.dark .ring-soft{box-shadow:0 1px 0 rgba(255,255,255,.03)}
+  .card{background:var(--surface);border:1px solid var(--border);transition:border-color .2s,transform .2s}
+  .card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));transform:translateY(-2px)}
+  .btn{transition:background .18s,color .18s,border-color .18s,transform .12s}.btn:active{transform:translateY(1px)}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .navlink{color:var(--muted);transition:color .18s}.navlink:hover{color:var(--text)}.navlink.active{color:var(--text)}
+  .navlink.active::after{content:'';display:block;height:2px;border-radius:2px;background:var(--accent);margin-top:5px}
+  .pilltab{border:1px solid var(--border);color:var(--muted);background:var(--surface)}
+  .pilltab[aria-selected="true"]{color:var(--text);border-color:color-mix(in srgb,var(--accent) 50%,var(--border));background:var(--accent-soft)}
+  .hairline{background:linear-gradient(90deg,transparent,var(--border),transparent)}
+  details>summary{list-style:none;cursor:pointer}details>summary::-webkit-details-marker{display:none}
+  details[open] .chev{transform:rotate(180deg)}.chev{transition:transform .25s}
+  .dot{width:7px;height:7px;border-radius:9999px;display:inline-block}
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-50 bd-b" style="background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px)">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#/" class="flex items-center gap-2.5 shrink-0">
+      <span class="w-8 h-8 rounded-lg grid place-items-center font-serif text-white text-base" style="background:var(--accent)">V</span>
+      <span class="font-semibold tracking-tight">Valkyrie<span class="muted">UHC</span></span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
+      <a href="#/modes"        class="navlink" data-spy="modes">Modes</a>
+      <a href="#/mode/pokemon"  class="navlink" data-spy="pokemon">Pokémon</a>
+      <a href="#/mode/valkyrie" class="navlink" data-spy="valkyrie">Valkyrie</a>
+      <a href="#/mode/naruto"   class="navlink" data-spy="naruto">Naruto</a>
+      <a href="#/arena"         class="navlink" data-spy="arena">Arène</a>
+      <a href="#/wiki"          class="navlink" data-spy="wiki">Wiki</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="https://discord.gg/sgRJ5MsgwR" target="_blank" rel="noopener" class="btn hidden sm:flex items-center gap-2 px-3 h-9 rounded-lg text-sm font-medium border bd surface muted hover:text-[var(--text)]" title="Rejoindre le Discord">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19 19 0 0015.6 3l-.2.5a14 14 0 014.2 2.1 13 13 0 00-11.2 0A14 14 0 018.6 3.5L8.4 3a19 19 0 00-4.7 1.4C1.2 8.1.6 11.7.9 15.3A19 19 0 006.7 18l.5-.8a12 12 0 01-1.9-.9l.5-.3a13 13 0 0011.4 0l.5.3a12 12 0 01-1.9.9l.5.8a19 19 0 005.8-2.7c.3-4.3-.6-7.9-2.3-10.9zM9 13.6c-.9 0-1.7-.8-1.7-1.9S8.1 9.8 9 9.8s1.7.9 1.7 1.9-.8 1.9-1.7 1.9zm6 0c-.9 0-1.7-.8-1.7-1.9s.8-1.9 1.7-1.9 1.7.9 1.7 1.9-.8 1.9-1.7 1.9z"/></svg>
+        Discord
+      </a>
+      <button onclick="toggleTheme()" aria-label="Thème" class="btn w-9 h-9 grid place-items-center rounded-lg border bd surface muted hover:text-[var(--text)]">
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4 12H2m20 0h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+      <button onclick="copyIP(this)" class="btn ipbtn flex items-center gap-2 pl-3 pr-3.5 h-9 rounded-lg text-sm font-medium text-white" style="background:var(--accent)">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span class="ip-label">Copier l'IP</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="bd-t mt-10">
+  <div class="max-w-6xl mx-auto px-5 py-10 grid sm:grid-cols-3 gap-6 text-sm muted">
+    <div>
+      <div class="flex items-center gap-2.5"><span class="w-7 h-7 rounded-lg grid place-items-center font-serif text-white text-sm" style="background:var(--accent)">V</span><span class="font-medium text-[var(--text)]">ValkyrieUHC</span></div>
+      <p class="mt-3">Serveur UHC à rôles évolutifs — Java 1.8.x.</p>
+    </div>
+    <div>
+      <div class="font-medium text-[var(--text)] mb-2">Rejoindre</div>
+      <button onclick="copyIP(this)" class="ipbtn accent hover:underline ip-label font-medium block">Play.Valkyrie-UHC.FR</button>
+      <a href="https://discord.gg/sgRJ5MsgwR" target="_blank" rel="noopener" class="hover:underline block mt-1">discord.gg/sgRJ5MsgwR</a>
+    </div>
+    <div>
+      <div class="font-medium text-[var(--text)] mb-2">Modes</div>
+      <a href="#/mode/pokemon" class="hover:underline block">Pokémon UHC</a>
+      <a href="#/mode/valkyrie" class="hover:underline block">Valkyrie Apocalypse</a>
+      <a href="#/mode/naruto" class="hover:underline block">Naruto Shinobi</a>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-5 pb-8 text-xs faint">Projet non affilié à Mojang/Nintendo.</div>
+</footer>
+
+<script>
+/* ───────── CONFIG ───────── */
+const SERVER_IP = "Play.Valkyrie-UHC.FR";
+const DISCORD   = "https://discord.gg/sgRJ5MsgwR";
+const FALLBACK_PLAYERS = 42;
+
+/* ───────── DONNÉES ───────── */
+const MODES = [
+  {id:'pokemon', glyph:'◆', accent:'var(--pk)', name:'Pokémon UHC', tag:'Mode phare',
+   desc:"40 joueurs, rôles secrets qui évoluent (Stade 1 → 3 → Méga). Camps, types et météo tactique.",
+   points:['Rôles évolutifs','Méga-Évolution','Météo & CT','4 camps']},
+  {id:'valkyrie', glyph:'✦', accent:'var(--vk)', name:'Valkyrie Apocalypse', tag:'Mythologie',
+   desc:"Dieux, héros et légendes s'affrontent. Artefacts rares, scénarios chaotiques et pouvoirs divins.",
+   points:['Dieux & héros','Artefacts','Scénarios','Cibles']},
+  {id:'naruto', glyph:'❖', accent:'var(--nr)', name:'Naruto Shinobi', tag:'Chakra',
+   desc:"Maîtrise ton chakra, deviens Jinchûriki, rejoins l'Akatsuki ou défends le Village.",
+   points:['Chakra & natures','Bijûs 1→9','Dôjutsu','Clans']},
+];
+const MODE_INTRO = {
+  pokemon:"Reçois un rôle secret de Pokémon, Dresseur ou Légendaire — et fais-le évoluer en pleine partie. Camps, types, météo et Méga-Évolutions composent le PvP le plus stratégique du serveur.",
+  valkyrie:"Dieux, héros et légendes s'affrontent dans un UHC chaotique. Artefacts rares, scénarios imprévisibles et pouvoirs divins : seul le panthéon le plus fort survivra.",
+  naruto:"Choisis ta nature de chakra, incarne un ninja légendaire ou un Jinchûriki, et fais pencher la guerre. Sharingan, Rasengan, Bijûs et Hokage t'attendent.",
+};
+const POKE_CAMPS = {conseil:{name:"Conseil des Maîtres",note:"Camp Safe — le Village"},rocket:{name:"Team Rocket",note:"Les antagonistes"},galaxie:{name:"Team Galaxie",note:"Faction cosmique"},legend:{name:"Légendaires",note:"Solitaires"}};
+const POKE_ROLES = [
+  /* ── CONSEIL DES MAÎTRES (Safe) ── */
+  {camp:"conseil",n:"Sacha",t:"Le Dresseur (Leader)",ev:"Dresseur · Normal",hp:"12 ♥",passif:"L'Aura du Champion : Force I (+20 % dégâts) aux alliés du Village à moins de 15 blocs. À sa mort, tout le Village subit Faiblesse I 3 min (le Deuil).",d:"Le chef du Conseil. Il capture Pikachu dans sa Pokéball pour le mettre en sécurité, le ressort au bon moment et frappe en duo synchronisé.",pw:["Pokéball — capture/libère Pikachu (il devient spectateur lié, gelé et invisible)","Casquette — Tonnerre synchro (uniquement si Pikachu est dans la ball) : 3♥ + Lenteur III","Sac de Sacha (1×/20 min) — 2 Hyper Potions + 1 Super Bonbon","Pop Surprise — ressort Pikachu « Je te choisis ! » (Vitesse III + Force I 5s)"],lien:"Duo avec Pikachu : pseudos connus dès le départ, chat privé permanent, Vengeance si l'un meurt.",fb:"Faible seul, cible n°1 ; son Tonnerre dépend de Pikachu."},
+  {camp:"conseil",n:"Pichu · Pikachu · Raichu",t:"Le Détective",ev:"Électrik",hp:"8 → 10 → 12 ♥",passif:"Statik : Vitesse croissante (I → III) ; ses coups ralentissent et, au Stade 3, ont 20 % de casser le sprint adverse.",d:"Le traqueur du Village : un radar qui s'affine à chaque stade et des décharges qui montent jusqu'au vrai éclair.",pw:["Radar Électrique — direction (Pichu) → faction (Pikachu) → distance exacte (Raichu)","Pichu : Petite Décharge (0,5♥ + micro-freeze)","Pikachu : Cage-Éclair (1♥ + EMPRISONNÉ 2s)","Raichu : Tonnerre (2,5♥ + brûlure + paralysie)"],combo:"Méga-Raichu (2 min) : Vitesse IV + Force I + Coup de Jus Global (frappe la cible ET ses alliés à 5 blocs).",lien:"Duo Sacha : évolution ×2 près de lui ; 10 min de lien → Raichu Spécial. ⚠ Corruptible par Giovanni (brise le duo).",fb:"Fragile, dépendant de Sacha, proie de la quête Rocket."},
+  {camp:"conseil",n:"Salamèche · Reptincel · Dracaufeu",t:"Lignée Dracaufeu",ev:"Feu / Vol",hp:"8 → 10 → 12 ♥",passif:"Immunité au Feu & à la Lave. Fire Aspect : coups enflammés dès Reptincel. Double-saut au Stade 3.",d:"Lignée offensive : ses attaques de feu montent en puissance, il dash pour briser l'armure puis prend les airs.",pw:["Boule de Feu (Stade 1) — projectile : 1♥ + enflamme la cible (portée 8 blocs)","Lance-Flammes (Stade 2) — cône de feu : 2♥ + enflamme (10 blocs)","Fournaise (Stade 3) — traînée de feu au sol : 3♥ + enflamme + anti-soin 5s","Griffe / Assaut — Stade 1 : coup brise-armure ; Stade 2+ : dash sur la cible (15→25 blocs) + Cécité au Stade 3","Double-saut & vol (Stade 3) — double-appui sur ESPACE pour t'envoler"],combo:"Méga-Dracaufeu — choix X (Force + coups Brûlure II) ou Y (aura de Faiblesse), avec vol et ailes de feu.",fb:"−10 % sous la pluie ; inefficace contre les ignifugés."},
+  {camp:"conseil",n:"Carapuce · Carabaffe · Tortank",t:"La Forteresse Aquatique",ev:"Eau",hp:"8 → 10 → 12 ♥",passif:"Pur tank : AUCUNE vitesse. Depth Strider (eau), Résistance I dès Carabaffe, pas de noyade en Tortank.",d:"La muraille du Village : jets d'eau croissants, dash tourbillon et une Méga dévastatrice en zone.",pw:["Pistolet à O (Stade 1) — jet d'eau de 6 blocs : 1♥ + recul de 3 blocs au premier touché","Bulle d'O (Stade 2) — 3 vagues successives : 0,5♥ chacune + Lenteur cumulable (jusqu'à III si les 3 touchent)","Hydrocanon (Stade 3) — gros torrent de 15 blocs : 3♥ + knockback massif (sprint cassé s'il percute un mur)","Triple Hydrocanon (Méga) — 3 jets en cône : 4♥ + dissipe la Vitesse et la Force des ennemis","Repli (Stade 1) — Résistance II pendant 3s, mais tu es immobile","Abri (Stade 2) — bouclier d'eau 4s : 100 % immunisé aux flèches et aux perles de l'Ender","Tour Rapide (Stade 3) — dash tourbillon sur la cible : 2♥ bruts + onde qui repousse ses alliés à 4 blocs","Blindage Giga (Méga) — Tour Rapide à 3♥ + Résistance II 6s après le dash","Astuce : si une attaque ne touche personne, son cooldown retombe à 5s seulement"],combo:"Méga-Tortank : Geyser géant (projette les ennemis en l'air) + Colosse Neigeux (gèle le sol des attaquants).",fb:"Lent (aucune vitesse) ; dépend du placement."},
+  {camp:"conseil",n:"Bulbizarre · Herbizarre · Florizarre",t:"Le Maître des Toxines",ev:"Plante / Poison",hp:"8 → 10 → 12 ♥",passif:"Immunité au Wither, Poison plafonné au niveau I. Florizarre : Régén I + riposte épineuse (15 % → Lenteur).",d:"Le maître des toxines : poudres handicapantes, vol de vie et immobilisation de zone.",pw:["Poudre Dodo (Stade 1) — projectile : Lenteur III 3s au premier touché","Poudre Toxik (Stade 2) — projectile : Poison I 6s","Tempête de Poudre (Stade 3) — zone 5 blocs : Poison I + Lenteur II 5s","Poudre Sombre (Méga) — zone 8 blocs : Poison II + Cécité 4s","Fouet Lianes (Stade 1) — 1♥ brut sur une cible à 6 blocs","Racines Enveloppantes (Stade 2) — dash 15 blocs : 1,5♥ + Lenteur IV 2s","Vampigraine (Stade 3) — dash 25 blocs : 2♥ + tu voles 1,5♥","Racine Ultime (Méga) — dash 3♥ : immobilise la cible 3s et toute la zone (5 blocs) 2s"],combo:"Méga-Florizarre : Isograisse (−50 % feu) + Explosion de Spores (Poison II, 8 blocs).",fb:"−15 % au feu ; pas de Résistance."},
+  {camp:"conseil",n:"Arcko · Massko · Jungko",t:"Lignée Jungko",ev:"Plante",hp:"8 → 10 → 12 ♥",passif:"Vitesse I dès Massko. Vol de vie sur ses attaques. Double-saut au Stade 3.",d:"L'assassin végétal : il draine la vie, frappe dans le dos et disparaît.",pw:["Vol-Vie (Stade 1) — graine-projectile : 1♥ + tu récupères 1♥","Giga-Sangsue (Stade 2) — zone : draine la vie des ennemis autour de toi","Tempête Verte (Stade 3) — tornade + onde de choc : dégâts de zone + drain","Lame de Feuillage — Stade 1 : coup tranchant ; Stade 2+ : dash dans le dos (15→25 blocs) + Cécité, et Poison au Stade 3","Double-saut (Stade 3) — double-appui sur ESPACE"],combo:"Méga-Jungko : Force I + Invisibilité 8 s.",fb:"Fragile ; sensible au feu et au sable."},
+  {camp:"conseil",n:"Chenipan · Chrysacier · Papilusion",t:"La Lignée Botanique",ev:"Insecte / Plante",hp:"7 → 10 → 11 ♥",passif:"Papilusion : immunité aux dégâts de chute. Les graines posées éclosent en Fleurs.",d:"Le piégeur botanique : il prépare le terrain avec des graines invisibles qui, devenu Papilusion, deviennent des Fleurs de combat.",pw:["Plantation de Graine (Chenipan) — pose une graine invisible (max 3) qui éclora en Fleur une fois Papilusion","Sécrétion Collante (Chenipan) — jet de sève : Lenteur II 3s","Enracinement (Chrysacier) — immobile 4s : Résistance III ; un ennemi marchant sur une de tes graines subit Lenteur III","Fleur Feu (Papilusion) — cercle de feu : brûle les ennemis, +0,5♥ de feu à tes coups dans la zone","Fleur Eau (Papilusion) — Régén pour les alliés, soins ennemis réduits","Fleur Paralysie (Papilusion) — coupe le sprint des ennemis (Lenteur)","Bourrasque de Pollen (Papilusion) — KB vertical ; traverse une Fleur → projette son effet sur 15 blocs","/poke jump — Jump Boost IV illimité (Papilusion)"],combo:"Bourrasque de Pollen traversant une Fleur → projette son effet en vague sur 15 blocs.",fb:"Fragile avant l'éclosion ; dépend du placement des graines."},
+  {camp:"conseil",n:"Ptiravi · Leveinard · Leuphorie",t:"Le Soigneur",ev:"Normal",hp:"8 → 10 → 12 ♥",passif:"Faiblesse I permanente (soigneur, pas un combattant). Leuphorie : Régénération I.",d:"Le support du Village : il maintient son équipe en vie au prix de sa propre puissance offensive.",pw:["Œuf Chance — pose une zone de soin pour les alliés","Don de Vie — sacrifie 2♥ pour en rendre 3 à 5 à un allié visé"],fb:"Faiblesse I permanente ; cible prioritaire à protéger."},
+  {camp:"conseil",n:"Morphéo",t:"Le Caméléon du Serveur",ev:"Normal",hp:"12 ♥",passif:"S'adapte à la météo en cours (bonus permanents). Invisibilité totale, armure comprise, la nuit en s'accroupissant.",d:"Le caméléon : sa puissance change avec le climat, et il peut imposer les malus de la météo à ses ennemis.",pw:["Bonus selon la météo (Vitesse + immunité feu, Régén, Force, Résistance…)","Interrupteur de zone — inflige les malus météo aux ennemis (8 blocs)","Ball'Météo — projectile à effet variable selon le climat"],fb:"Affaibli en plein jour clair ; dépend de la météo."},
+  {camp:"conseil",n:"Goinfrex · Ronflex",t:"Le Glouton",ev:"Normal",hp:"12 → 14 ♥",passif:"Ronflex : Lenteur I + Résistance I. Gloutonnerie : mange un bloc faible pour un buff (cobble → Résistance, terre → Force).",d:"Le mur vivant du Village : il encaisse, mange des blocs pour se renforcer et devient invulnérable en se reposant.",pw:["Gloutonnerie — mange un bloc faible pour un buff de 1 min","Repos (Ronflex) — 5s immobile → soin total + invulnérabilité"],fb:"Ronflex lent (kitable à l'arc) ; Repos = 5s sans attaquer."},
+  /* ── TEAM ROCKET ── */
+  {camp:"rocket",n:"Giovanni",t:"Le Boss",ev:"Dresseur · Sol",hp:"12 ♥",passif:"Immunisé à la corruption. Chef de la Rocket : régénère 2♥ à chaque kill d'un membre Rocket.",d:"Le cerveau de la Team Rocket : il corrompt les Pokémon du Village pour les retourner contre leur propre camp.",pw:["Corruption (Contrat) — retourne un Pokémon dans le camp Rocket","Séisme","Réseau d'espionnage Rocket"],lien:"Dirige toute la Team Rocket ; sa corruption peut briser le duo Sacha/Pikachu.",fb:"S'effondre s'il est éliminé tôt."},
+  {camp:"rocket",n:"Jessie",t:"Le Duo de Choc",ev:"Dresseur · Poison",hp:"10 ♥ + Vitesse I",passif:"Lien Rocket : Résistance I tant qu'elle est à moins de 20 blocs de James. Si James meurt → Force I mais Faiblesse I en mêlée 5 min.",d:"Le cerveau colérique du duo. Elle empoisonne à distance et partage un coffre de gang en temps réel avec James.",pw:["Arbok, Crochet Venin — 2♥ + Poison II (12 blocs, CD 1 min)","Télécommande Montgolfière — coffre de gang partagé avec James"],lien:"Duo avec James (Résistance partagée). Quête commune : tuer Pikachu → +2♥ permanents pour TOUTE la Rocket + Force I 10 min.",fb:"Fragile loin de James ; binôme lisible ; sans Type (pas de météo)."},
+  {camp:"rocket",n:"James",t:"Le Duo de Choc",ev:"Dresseur · Poison",hp:"10 ♥ + Vitesse I",passif:"Lien Rocket : Résistance I à moins de 20 blocs de Jessie. Si Jessie meurt → Force I mais Faiblesse I en mêlée 5 min.",d:"Le sensible imprévisible du duo. Il aveugle les ennemis dans un nuage et peut se sacrifier pour Jessie.",pw:["Smogogo, Purée de Pois — nuage Cécité + Lenteur II (le duo est immunisé, CD 1m15)","La Rose de James (1×/partie) — sacrifie 3♥ max pour les donner à Jessie (elle → 13♥, lui → 7♥)","Coffre de gang partagé avec Jessie"],lien:"Duo avec Jessie. Quête commune : tuer Pikachu → bonus pour toute la Rocket.",fb:"7♥ après la Rose = cible facile ; dépendant de Jessie."},
+  {camp:"rocket",n:"Qulbutoké",t:"Le Bouclier Sacré",ev:"Psy",hp:"12 ♥ + Lenteur I",passif:"Immunité au recul. Riposte : 30 % de renvoyer 50 % des dégâts subis en dégâts bruts.",d:"Le garde du corps de Jessie & James : il encaisse, riposte et lie un ennemi à son propre destin.",pw:["Culbu-Pop — TP au milieu de Jessie & James (CD 2 min)","Prélèvement Destin — 8s : 100 % des dégâts que tu subis sont infligés à la cible liée (CD 3 min)"],lien:"Garde du Corps : Résistance I à Jessie & James (<15 blocs). À sa mort, le Duo gagne +4 absorption + Force I 45s.",fb:"Très lent, dégâts directs nuls, inutile loin du duo, riposte aléatoire."},
+  {camp:"rocket",n:"Métamorph",t:"L'ADN Instable",ev:"Normal",hp:"10 ♥ (puis copie sa cible)",passif:"Aucun bonus en forme neutre (fragile). Reste au chat Rocket même transformé.",d:"L'infiltré ultime : il file une cible puis devient sa copie parfaite — skin, pseudo, cœurs et pouvoirs.",pw:["Traqueur ADN — file une cible 5 min cumulées (<20 blocs)","Transformation — copie permanente (skin, pseudo, pouvoirs, stats, cœurs max)","Démorphose possible (redevient neutre)"],fb:"Fragile en neutre ; filature longue et risquée ; copier révèle qui il imite."},
+  {camp:"rocket",n:"Miaouss · Persian",t:"La Fortune",ev:"Normal",hp:"12 ♥",passif:"Jackpot : chance par coup de gagner une pépite d'or (+1 garantie par minerai or/diamant miné). Chute amortie.",d:"L'arnaqueur Rocket : il amasse de l'or pour acheter au Marché Noir et frappe en combo.",pw:["Pièce d'Or — Marché Noir + suivi d'évolution (à 64 pépites → Persian)","Combo-Griffes — 6s : +1 dégât brut/coup + Jackpot boosté (CD 2 min)","Persian : Technicien (+dégâts épée selon l'or porté) + Tranche (Wither sur les coups)"],fb:"Faible en début de partie ; perd ses pépites à la mort."},
+  {camp:"rocket",n:"Absol",t:"Le Présage du Chaos",ev:"Ténèbres",hp:"12 ♥",passif:"Prédiction : alerte (pour lui seul) si un ennemi armé est à moins de 25 blocs. Opportuniste : Force I à chaque mort sur la carte.",d:"Le détecteur de la Rocket : il anticipe les menaces, maudit ses cibles et profite du chaos.",pw:["Regard Noir — maudit une cible : Lenteur + +15 % dégâts Rocket + révélée (10s)","Coupe Psycho — lame 15 blocs : 3♥ + purge les buffs positifs"],lien:"Type Ténèbres : +15 % la nuit, −10 % le jour.",fb:"Info en solo (vocal utile), affaibli de jour, fragile."},
+  {camp:"rocket",n:"Malosse · Démolosse",t:"Le Chasseur",ev:"Feu",hp:"10 → 12 ♥",passif:"Immunité Feu/Lave. Flair : un ennemi frappé sous 6♥ devient une Proie qu'il traque plus vite (Vitesse I).",d:"Le limier de la Rocket : il marque une proie, la brûle et la pourchasse sans répit.",pw:["Crocs Feu — marque une cible (brûle 6s, coords affichées ; anti-soin en Démolosse)","Tricherie — vole le buff de Force (+2♥) ou inflige Cécité","Démolosse : Flammes Noires (coups enflammés 3s) + 2♥ max"],fb:"10♥ en début ; dépend de proies basses ; −10 % sous la pluie."},
+  /* ── TEAM GALAXIE (cosmique) ── */
+  {camp:"galaxie",n:"Hélio",t:"Le Maître Cosmique (Boss)",ev:"Cosmique",hp:"12 ♥",passif:"Boss Galaxie : Résistance I + Vision Nocturne. Ralliement 1×/partie (débloqué dès 50 min).",d:"Le chef de la Team Galaxie : il manipule la gravité et le vide pour dominer l'espace de combat.",pw:["Distorsion — aspire tous les ennemis (10 blocs) vers lui","Trou Noir — vide cosmique qui aspire et ronge (Wither + Cécité)","Dôme de Gravité — vraie coupole de verre Ø24 (30s) : Jump Boost à tous, Force à lui","Ralliement Galactique — TP toute la Galaxie sur lui (30s d'avertissement)"],combo:"Trou Noir pour grouper → Dôme pour enfermer l'ennemi dans une arène.",lien:"Toute la Galaxie connaît son chef et ses alliés dès le départ.",fb:"La Galaxie joue seule contre tous les camps."},
+  {camp:"galaxie",n:"Mars",t:"Commandante de l'Assaut",ev:"Cosmique",hp:"12 ♥",passif:"Rage de la Survivante : gagne de la Force quand elle a plus d'ennemis que d'alliés autour.",d:"La duelliste de la Galaxie, d'autant plus dangereuse qu'elle est en infériorité numérique.",pw:["Comète — dash-météore : dégâts de zone + knockback à l'impact","Frappe Orbitale — marque une cible → frappe du ciel 3s après (esquivable)"],fb:"La Frappe Orbitale est télégraphiée."},
+  {camp:"galaxie",n:"Jupiter",t:"Commandante du Contrôle",ev:"Cosmique",hp:"11 ♥",passif:"Ancrage : knockback subi réduit de 50 %.",d:"La maîtresse du terrain : elle gère le nombre adverse par le contrôle gravitationnel.",pw:["Champ Gravitationnel — cloue les ennemis au sol (Lenteur IV + saut bloqué, 8 blocs)","Inversion — projette violemment une cible en l'air"],fb:"Peu de dégâts bruts."},
+  {camp:"galaxie",n:"Saturne",t:"Le Scientifique",ev:"Cosmique",hp:"12 ♥",passif:"Aura de Soin : régénère en continu les alliés Galaxie proches.",d:"Le soutien de la Galaxie : il maintient l'escouade en vie et déploie un drone de tir.",pw:["Bouclier Plasma — Résistance II à lui + alliés proches","Drone Galactique — tourelle qui tire sur l'ennemi le plus proche (10s)"],fb:"Le drone est fragile et temporaire."},
+  {camp:"galaxie",n:"Commando Galaxie",t:"Sbire Cosmique",ev:"Cosmique",hp:"9 ♥",passif:"Soldat mobile de la Galaxie, taillé pour la traque et le harcèlement.",d:"Le fantassin de la Team Galaxie : il protège Hélio et harcèle l'adversaire.",pw:["Gravité Réduite — bond cosmique (grand saut propulsé)"],fb:"Statistiques modestes."},
+  /* ── LÉGENDAIRES (solo) ── */
+  {camp:"legend",n:"Hoopa",t:"Le Voleur Dimensionnel",ev:"Spectre / Psy",hp:"14 ♥",passif:"Solitaire, immunisé à la corruption. Vitesse I, immunité chute. Aspire le loot de ses victimes dans son Miroir.",d:"Le légendaire voleur : il pille, ouvre des portails dimensionnels et finit par se déchaîner.",pw:["Miroir des Ombres — stocke le loot aspiré (Aspiration / Infiltration)","Anneaux dimensionnels — pose 2 portails (utilisables par tout le monde)","Vol Larcin — vole un item d'une cible (rendu après 5s)","Vase Scellé → Hoopa Déchaîné (forme surpuissante)"],fb:"Seul contre tous les camps."},
+  {camp:"legend",n:"Volcanion",t:"La Fournaise de Vapeur",ev:"Feu / Eau",hp:"12 ♥",passif:"SOLO. Force I + Depth Strider III. Immunité Feu/Lave. Jauge de Pression (charge dans l'eau/lave) ; à 100 % (Surchauffe), ses coups enflamment.",d:"Le légendaire solitaire de la vapeur : il accumule sa pression dans l'eau pour des explosions dévastatrices.",pw:["Jet de Vapeur — dôme de feu explosif ; à 100 % : 4♥ + feu + lui-même +20 % Force 10s","Hydroblast — vraie vague d'eau sur 12 blocs (Cécité + recul)","Anti-Focus — 2 attaquants en moins de 10s → jauge pleine + Résistance I 12s"],fb:"Solo sans soin, dépend de sa jauge et de l'eau, faible au sec."},
+];
+
+const VALK_CAMPS={gods:{name:"Les Dieux",note:"Panthéon grec & nordique"},legends:{name:"Les Légendes",note:"Conquérants & héros de l'Histoire"},arch:{name:"Les Archétypes",note:"Combattants & survivants"},solo:{name:"Les Solitaires",note:"Chacun pour soi"},spec:{name:"Enquêteurs & Spéciaux",note:"Information & rôles à part"}};
+const VALK_ROLES=[
+  /* ── LES DIEUX ── */
+  {camp:"gods",n:"Zeus",t:"Roi de l'Olympe",ev:"Dieu · Foudre",d:"Roi des dieux. Sa voix est le tonnerre, sa colère la foudre — l'Olympe tremble quand il parle, toi aussi."},
+  {camp:"gods",n:"Thor",t:"Le Dieu du Tonnerre",ev:"Dieu · Foudre",d:"Pas de stratégie : Mjölnir brise tout, le tonnerre suit, la victoire aussi."},
+  {camp:"gods",n:"Loki",t:"Le Dieu de la Malice",ev:"Dieu · Illusion",d:"Rien de ce qu'il dit n'est vrai. Sa plus grande arme : tu ne sais jamais qui il est vraiment."},
+  {camp:"gods",n:"Poséidon",t:"Dieu des Mers",ev:"Dieu · Eau",d:"Les mers lui appartiennent. Sur terre dangereux, dans l'eau il est inarrêtable."},
+  {camp:"gods",n:"Hadès",t:"Seigneur des Enfers",ev:"Dieu · Âmes",d:"Maître des âmes. Il ne traque pas ses proies — il les attire. Chaque mort lui appartient."},
+  {camp:"gods",n:"Arès",t:"Dieu de la Guerre",ev:"Dieu · Guerre",d:"La guerre n'est pas son outil, c'est son état naturel. Chaque kill l'enrage davantage."},
+  {camp:"gods",n:"Athéna",t:"Déesse de la Sagesse",ev:"Dieu · Tactique",d:"Elle ne perd jamais un combat qu'elle a planifié — et elle planifie tout."},
+  {camp:"gods",n:"Apollon",t:"Dieu du Soleil",ev:"Dieu · Lumière",d:"De nuit il est mortel ; mais quand le soleil se lève, l'attaquer devient un acte de folie."},
+  {camp:"gods",n:"Artémis",t:"Déesse de la Chasse",ev:"Dieu · Arc",d:"Chasseresse éternelle : ses flèches ne frappent jamais le mauvais endroit. Quand elle te vise, tu es déjà compté."},
+  {camp:"gods",n:"Hermès",t:"Le Messager",ev:"Dieu · Vitesse",d:"Il est arrivé, a frappé, est déjà loin. Si tu l'as vu, c'est qu'il l'a voulu."},
+  {camp:"gods",n:"Héphaistos",t:"Le Forgeron Divin",ev:"Dieu · Forge",d:"Ses forges ont équipé les dieux. Dans ses mains, le métal obéit — et le feu aussi."},
+  {camp:"gods",n:"Chronos",t:"Dieu du Temps",ev:"Dieu · Temps",d:"Il a vu naître l'univers et le verra mourir. Le temps n'est qu'un outil entre ses mains."},
+  {camp:"gods",n:"Azrael",t:"L'Ange de la Mort",ev:"Dieu · Mort",d:"Il ne tue pas par colère : il récolte simplement ce qui lui appartient, depuis toujours."},
+  /* ── LES LÉGENDES ── */
+  {camp:"legends",n:"Alexandre le Grand",t:"Le Conquérant",ev:"Légende",d:"À 20 ans il conquérait la Perse ; à 33 il pleurait de n'avoir plus rien à conquérir."},
+  {camp:"legends",n:"Gengis Khan",t:"Le Khan",ev:"Légende",d:"Le plus grand conquérant de l'Histoire ; ses victoires s'accumulent comme ses territoires."},
+  {camp:"legends",n:"Napoléon Bonaparte",t:"Le Stratège",ev:"Légende",d:"Son génie est dans sa tête : il a déjà tracé dix plans pour te vaincre."},
+  {camp:"legends",n:"Sun Tzu",t:"L'Art de la Guerre",ev:"Légende",d:"Il connaît tes failles avant toi ; la victoire était décidée avant le premier coup."},
+  {camp:"legends",n:"Jeanne d'Arc",t:"La Pucelle",ev:"Légende",d:"On la disait folle — jusqu'à ce qu'elle mène une armée à la victoire."},
+  {camp:"legends",n:"Spartacus",t:"Le Rebelle",ev:"Légende",d:"Gladiateur, esclave, rebelle : il a tenu tête à Rome entière. Ta résistance l'amuse."},
+  {camp:"legends",n:"Cléopâtre",t:"La Reine d'Égypte",ev:"Légende · Poison",d:"Elle a séduit César, Marc Antoine et un empire entier ; toi, elle te tuera au poison."},
+  {camp:"legends",n:"Romulus",t:"Le Fondateur de Rome",ev:"Légende · Meute",d:"Élevé par des loups. Avec son frère Remus, ils forment une meute."},
+  {camp:"legends",n:"Remus",t:"L'Ombre de Romulus",ev:"Légende · Meute",d:"Rapide là où son frère est fort. Quand ils sont ensemble, rien ne les arrête."},
+  {camp:"legends",n:"Le Vengeur",t:"La Colère",ev:"Légende",d:"Il a tout perdu — famille, alliés, camp. La mort lui a tout pris sauf sa colère."},
+  /* ── LES ARCHÉTYPES ── */
+  {camp:"arch",n:"Le Fermier",t:"Le Nourricier",ev:"Archétype · Soutien",d:"On l'a ignoré au début. Puis ses alliés ne mouraient plus : ils guérissaient, ils mangeaient."},
+  {camp:"arch",n:"Le Forgeron",t:"L'Artisan",ev:"Archétype · Craft",d:"Sa forge tourne en plein champ de bataille. Ce qu'il en sort, personne ne peut le briser."},
+  {camp:"arch",n:"L'Archer",t:"Le Tireur d'élite",ev:"Archétype · Arc",d:"Il n'a jamais raté sa cible — parce qu'il ne tire jamais à moins d'être sûr."},
+  {camp:"arch",n:"Le Guérisseur",t:"Le Médecin",ev:"Archétype · Soin",d:"Il se bat pour vaincre. Pour les autres d'abord. Peut-être pour lui, un jour."},
+  {camp:"arch",n:"L'Éclaireur",t:"L'Observateur",ev:"Archétype",d:"Il ne se bat pas : il observe, calcule, disparaît. Quand il revient, c'est pour frapper où ça fait mal."},
+  {camp:"arch",n:"Le Bûcheron",t:"Le Colosse",ev:"Archétype",d:"Chaque arbre abattu l'a rendu plus fort. Il ne s'arrête jamais. Tu es son prochain arbre."},
+  {camp:"arch",n:"Le Chimiste",t:"L'Empoisonneur",ev:"Archétype · Poison",d:"Il a mélangé des poisons pour guérir. Maintenant pour tuer. La différence est dans la dose."},
+  {camp:"arch",n:"Le Trappeur",t:"Le Piégeur",ev:"Archétype",d:"Il n'a jamais eu besoin de courir après ses proies : elles viennent toujours à lui."},
+  {camp:"arch",n:"Le Moine",t:"L'Ascète",ev:"Archétype",d:"Vingt ans de silence et de souffrance maîtrisée. Il ne ressent plus la douleur : il l'utilise."},
+  {camp:"arch",n:"Le Pirate",t:"Le Voleur",ev:"Archétype",d:"Il a volé des flottes entières. Ce que tu possèdes n'est qu'un emprunt — il vient le récupérer."},
+  {camp:"arch",n:"Le Berserker",t:"La Rage",ev:"Archétype",d:"Il saigne, il hurle, il continue. La douleur ne l'arrête pas — elle le libère."},
+  {camp:"arch",n:"Le Fantôme",t:"Le Revenant",ev:"Archétype",d:"Mort il y a trois ans, personne ne lui a dit. Il hante les vivants et disparaît comme il est venu."},
+  {camp:"arch",n:"Le Druide",t:"Le Maître de la Nature",ev:"Archétype",d:"La forêt a grandi autour de lui, les loups l'écoutent. Tu traverses son territoire."},
+  {camp:"arch",n:"Le Sorcier",t:"Le Drain d'Âme",ev:"Archétype",d:"Chaque mort l'alimente, chaque âme drainée allonge la sienne. Il ne combat pas — il consume."},
+  {camp:"arch",n:"Le Chevalier",t:"Le Protecteur",ev:"Archétype · Défense",d:"Son serment a survécu à ses rois et à ses guerres. Il reste, il protège, il ne recule jamais."},
+  {camp:"arch",n:"Le Survivant",t:"L'Increvable",ev:"Archétype",d:"La nature a tout essayé pour le tuer, la guerre aussi. Il s'est simplement adapté, encore et encore."},
+  {camp:"arch",n:"Le Nécromancien",t:"Le Maître des Morts",ev:"Archétype",d:"La mort est son atelier. Ses ennemis tombés deviennent ses soldats. Son armée ne dort jamais."},
+  {camp:"arch",n:"L'Illusionniste",t:"Le Trompeur",ev:"Archétype · Illusion",d:"Tu ne sais pas où il est ni lequel est réel. Et quand tu le découvres, c'est trop tard."},
+  {camp:"arch",n:"Le Mime",t:"Le Copieur",ev:"Archétype",d:"Il n'a aucun pouvoir propre — mais il a les tiens, et il les utilisera mieux que toi."},
+  {camp:"arch",n:"Le Caméléon",t:"L'Imprévisible",ev:"Archétype",d:"Rien de fixe : ce qu'il était hier n'a aucun rapport avec ce qu'il sera demain."},
+  /* ── LES SOLITAIRES ── */
+  {camp:"solo",n:"L'Exilé",t:"Le Banni",ev:"Solitaire",d:"Banni pour un crime qu'il dit ne pas avoir commis. Sa seule loi : survivre le dernier."},
+  {camp:"solo",n:"Le Chasseur",t:"Le Traqueur",ev:"Solitaire",d:"Il a traqué des bêtes toute sa vie. Sa proie a changé de forme ; sa patience, jamais."},
+  {camp:"solo",n:"Le Gladiateur",t:"Le Combattant",ev:"Solitaire",d:"Arraché à son monde pour prouver que seule la force décide. Là où il apparaît, les batailles cessent."},
+  {camp:"solo",n:"Ombra",t:"L'Ombre",ev:"Solitaire",d:"Son nom n'est pas un nom, c'est ce qu'il est : une ombre, dans les espaces que tu ne regardes pas."},
+  /* ── ENQUÊTEURS & SPÉCIAUX ── */
+  {camp:"spec",n:"Le Détective",t:"L'Enquêteur",ev:"Spécial · Info",d:"Il observe : chaque mort parle. Là où les autres voient le chaos, lui voit une piste vers la vérité."},
+  {camp:"spec",n:"L'Oracle",t:"La Voyante",ev:"Spécial · Info",d:"Elle ne combat pas, elle écoute le monde. Ses visions floues changent des parties entières."},
+  {camp:"spec",n:"L'Inquisiteur",t:"Le Traqueur de Dieux",ev:"Spécial",d:"Il ne pose pas de questions, il détecte. Son instinct le guide là où les dieux se cachent."},
+  {camp:"spec",n:"L'Espion",t:"L'Agent Double",ev:"Spécial",d:"Double vie, double visage : il lit les secrets des dieux sans jamais se révéler."},
+  {camp:"spec",n:"L'Ascendant",t:"Le Montant",ev:"Spécial · Évolutif",d:"Il a commencé humble, il grandira. Quand il aura tout appris, il sera au-dessus de vous."},
+  {camp:"spec",n:"Le Traître",t:"L'Infiltré",ev:"Spécial",d:"Il sourit à ses alliés, connaît leurs failles, et les regardera tomber sans broncher."},
+];
+const NARU_CAMPS={
+  shinobi:{name:"Shinobi",note:"Konoha — éliminer tous les ennemis du Village"},
+  akatsuki:{name:"Akatsuki",note:"Capturer les Bijûs et éliminer les Shinobi"},
+  orochimaru:{name:"Orochimaru",note:"Survivre et accomplir les desseins d'Orochimaru"},
+  taka:{name:"Taka",note:"Accomplir la vengeance de Sasuke"},
+  jubi:{name:"Jûbi",note:"Déclencher le Plan Œil de Lune"},
+  zabuza:{name:"Zabuza & Haku",note:"Duo mercenaire : survivre ensemble"},
+  seuls:{name:"Les Seuls",note:"Rôles solitaires aux objectifs propres"},
+};
+const NARU_ROLES=[
+  /* ── SHINOBI (Konoha) ── */
+  {camp:"shinobi",n:"Naruto",t:"L'Hôte de Kurama",ev:"Fûton · Jinchûriki",d:"Le héros de Konoha, jinchûriki du Renard à Neuf Queues : Rasengan et montée en puissance colossale."},
+  {camp:"shinobi",n:"Sakura",t:"L'Élève de Tsunade",ev:"Soin",d:"Ninja médicale à la force surhumaine : soigne ses alliés et frappe fort."},
+  {camp:"shinobi",n:"Sai",t:"Le Dessin Vivant",ev:"Encre",d:"Ancien de la Racine : son ninjutsu d'encre donne vie à ses dessins."},
+  {camp:"shinobi",n:"Minato",t:"L'Éclair Jaune",ev:"Raiton · Hokage",d:"4ᵉ Hokage : téléportation Hiraishin et vitesse fulgurante. Éligible Hokage."},
+  {camp:"shinobi",n:"Kakashi",t:"Le Ninja Copieur",ev:"Raiton · Sharingan",d:"Le ninja copieur au Sharingan : Raikiri et techniques volées. Éligible Hokage."},
+  {camp:"shinobi",n:"Jiraya",t:"L'Ermite Crapaud",ev:"Sannin",d:"L'un des Trois Sannin : Mode Ermite et invocations de crapauds. Éligible Hokage."},
+  {camp:"shinobi",n:"Tsunade",t:"La Princesse des Limaces",ev:"Soin · Hokage",d:"5ᵉ Hokage, médico-nin légendaire : force titanesque et régénération. Éligible Hokage."},
+  {camp:"shinobi",n:"Asuma",t:"Les Lames de Chakra",ev:"Fûton",d:"Maître d'équipe : ses lames imprégnées de chakra de vent tranchent net."},
+  {camp:"shinobi",n:"Gai Maito",t:"Le Fauve de Jade",ev:"Taijutsu",d:"Maître du taijutsu : les Huit Portes décuplent sa puissance. Éligible Hokage."},
+  {camp:"shinobi",n:"Rock Lee",t:"Le Génie du Travail",ev:"Taijutsu",d:"Aucun ninjutsu, que du taijutsu : Portes Célestes, vitesse et combos."},
+  {camp:"shinobi",n:"Tenten",t:"L'Armurière",ev:"Armes",d:"Spécialiste des armes : elle déluge ses cibles de projectiles."},
+  {camp:"shinobi",n:"Neji",t:"Le Prodige Hyûga",ev:"Byakugan",d:"Byakugan et Poing Souple : il bloque le chakra et voit à 360°. Éligible Hokage."},
+  {camp:"shinobi",n:"Hinata",t:"L'Héritière Hyûga",ev:"Byakugan",d:"Byakugan et Poing Souple : frappes de précision sur les points de chakra. Éligible Hokage."},
+  {camp:"shinobi",n:"Kiba",t:"Le Crocs Sauvages",ev:"Clan Inuzuka",d:"Combat en duo avec son chien Akamaru : assauts bestiaux et pistage."},
+  {camp:"shinobi",n:"Shino",t:"Le Maître des Insectes",ev:"Clan Aburame",d:"Ses insectes dévorent le chakra de l'ennemi à distance."},
+  {camp:"shinobi",n:"Ino",t:"La Manipulatrice",ev:"Clan Yamanaka",d:"Transfert d'esprit et réseau mental : elle peut donner les coords des Bijûs."},
+  {camp:"shinobi",n:"Choji",t:"Le Colosse Akimichi",ev:"Clan Akimichi",d:"Techniques d'expansion : il décuple sa taille et sa force."},
+  {camp:"shinobi",n:"Shikamaru",t:"Le Stratège des Ombres",ev:"Clan Nara",d:"Possession des Ombres : il fige ses ennemis. Le cerveau tactique. Éligible Hokage."},
+  {camp:"shinobi",n:"Temari",t:"La Maîtresse du Vent",ev:"Fûton",d:"Son éventail géant déchaîne des bourrasques tranchantes."},
+  {camp:"shinobi",n:"Yondaime Raikage",t:"L'Armure de Foudre",ev:"Raiton",d:"4ᵉ Raikage : vitesse et puissance décuplées par son manteau de foudre."},
+  {camp:"shinobi",n:"Killer Bee",t:"L'Hôte de Gyûki",ev:"Bijû · Kenjutsu",d:"Jinchûriki du Poulpe à 8 queues : kenjutsu à 7 sabres imprévisible et contrôle parfait du chakra."},
+  {camp:"shinobi",n:"Konohamaru",t:"Le Petit-fils du 3ᵉ",ev:"Fûton",d:"Le jeune espoir de Konoha : il maîtrise déjà le Rasengan."},
+  /* ── AKATSUKI ── */
+  {camp:"akatsuki",n:"Nagato",t:"Les Six Chemins de Pain",ev:"Rinnegan",d:"Porteur du Rinnegan : Shinra Tensei (répulsion) et Banshô Ten'in (attraction) gravitationnelles."},
+  {camp:"akatsuki",n:"Konan",t:"L'Ange de Papier",ev:"Papier",d:"Elle se mue en milliers de feuilles de papier : pièges explosifs et nuées."},
+  {camp:"akatsuki",n:"Deidara",t:"L'Artiste Explosif",ev:"Doton · Argile",d:"« L'art est une explosion ! » : argile explosive et bombardements aériens."},
+  {camp:"akatsuki",n:"Sasori",t:"Le Marionnettiste",ev:"Poison",d:"Maître des marionnettes au poison : il frappe sans s'exposer."},
+  {camp:"akatsuki",n:"Kakuzu",t:"Les Cinq Cœurs",ev:"Multi-élément",d:"Il possède plusieurs cœurs (vies) et maîtrise tous les éléments."},
+  {camp:"akatsuki",n:"Hidan",t:"L'Immortel",ev:"Rituel",d:"Quasi immortel : un rituel sanglant lie sa cible à sa propre douleur."},
+  {camp:"akatsuki",n:"Itachi",t:"Le Génie Maudit",ev:"Katon · Sharingan",d:"Mangekyô Sharingan : Amaterasu, Izanami et genjutsu surpuissant."},
+  {camp:"akatsuki",n:"Kisame",t:"Le Monstre des Mers",ev:"Suiton",d:"Samehada vole le chakra ; immenses réserves de PV et d'eau."},
+  {camp:"akatsuki",n:"Zetsu Noir",t:"La Volonté de Madara",ev:"Manipulation",d:"Manipulateur de l'ombre : il tire les ficelles. Ne voit pas l'annonce du Hokage."},
+  {camp:"akatsuki",n:"Zetsu Blanc",t:"L'Infiltré Végétal",ev:"Clones",d:"Clones et infiltration : il copie et espionne. Ne voit pas l'annonce du Hokage."},
+  /* ── OROCHIMARU ── */
+  {camp:"orochimaru",n:"Orochimaru",t:"Le Sannin Serpent",ev:"Poison · Serpents",d:"Quête de l'immortalité : il renaît, invoque des serpents et appose des Sceaux Maudits."},
+  {camp:"orochimaru",n:"Kabuto",t:"Le Médecin Espion",ev:"Soin · Edo Tensei",d:"Bras droit d'Orochimaru : ninjutsu médical et réanimation."},
+  {camp:"orochimaru",n:"Kimimaro",t:"Le Clan des Os",ev:"Kekkei Genkai",d:"Shikotsumyaku : il façonne ses os en armes mortelles."},
+  {camp:"orochimaru",n:"Sakon & Ukon",t:"Les Frères Fusion",ev:"Duo",d:"Deux corps en un : ils fusionnent avec l'ennemi pour le détruire de l'intérieur."},
+  {camp:"orochimaru",n:"Kidomaru",t:"L'Araignée",ev:"Toile",d:"Six bras : il tisse des toiles et tire des flèches de chakra."},
+  {camp:"orochimaru",n:"Tayuya",t:"La Flûtiste",ev:"Genjutsu sonore",d:"Sa flûte commande des golems et plonge l'ennemi dans un genjutsu."},
+  {camp:"orochimaru",n:"Jirobo",t:"Le Colosse",ev:"Doton",d:"Force brute et techniques de terre ; il draine le chakra."},
+  /* ── TAKA ── */
+  {camp:"taka",n:"Sasuke",t:"Le Vengeur",ev:"Raiton · Sharingan",d:"Sharingan et Chidori : il poursuit sa vengeance. Esquive et burst électrique."},
+  {camp:"taka",n:"Suigetsu",t:"L'Homme d'Eau",ev:"Suiton",d:"Corps liquide : il encaisse, se reforme et manie un sabre géant."},
+  {camp:"taka",n:"Karin",t:"La Détectrice",ev:"Détection · Soin",d:"Elle sent le chakra à distance et soigne par sa morsure."},
+  {camp:"taka",n:"Jugo",t:"La Rage Incarnée",ev:"Mutation",d:"Sa rage le transforme : puissance instable et imprévisible."},
+  /* ── JÛBI ── */
+  {camp:"jubi",n:"Madara",t:"Le Spectre Ultime",ev:"Sharingan · Rinnegan",d:"Le plus grand Uchiha ressuscité : il vise le Plan Œil de Lune."},
+  {camp:"jubi",n:"Obito",t:"Le Masqué",ev:"Kamui · Sharingan",d:"Kamui : intangibilité et téléportation ; il possède un traqueur vers les Bijûs."},
+  /* ── ZABUZA & HAKU ── */
+  {camp:"zabuza",n:"Zabuza",t:"Le Démon de la Brume",ev:"Suiton · Kenjutsu",d:"Épéiste de Kiri : brume meurtrière et assassinat. Survivre avec Haku."},
+  {camp:"zabuza",n:"Haku",t:"Les Miroirs de Glace",ev:"Hyôton",d:"Kekkei Genkai de glace : prison de miroirs et frappes fulgurantes. Protège Zabuza."},
+  /* ── LES SEULS ── */
+  {camp:"seuls",n:"Danzo",t:"L'Ombre de Konoha",ev:"Sharingan · Izanagi",d:"Chef de la Racine : multiples Sharingans et Izanagi. S'il tue le Hokage, il le devient."},
+  {camp:"seuls",n:"Gaara",t:"Le Maître du Sable",ev:"Sable · Jinchûriki",d:"Jinchûriki de Shukaku : bouclier de sable automatique et cercueil de sable."},
+  {camp:"seuls",n:"Hanzo",t:"La Salamandre",ev:"Poison",d:"Légendaire chef d'Ame : poison et salamandre venimeuse."},
+];
+const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
+const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
+const MECH={
+  pokemon:[["Rôles évolutifs","Chaque lignée passe du Stade 1 au Stade 3 puis Méga, avec des pouvoirs qui se renforcent."],["Quatre camps","Conseil, Team Rocket, Team Galaxie et Légendaires solo, chacun avec sa condition de victoire."],["CT & AirDrops","Des Capsules Techniques tombent du ciel : compétences puissantes à usage unique."],["Météo tactique","Le climat change et avantage ou punit les types secrets des joueurs."]],
+  valkyrie:[["Pouvoirs divins","Chaque dieu possède un kit signature aux effets spectaculaires."],["Artefacts rares","Des objets uniques apparaissent sur la carte et peuvent renverser une partie."],["Scénarios","Événements aléatoires qui pimentent chaque épisode."],["Cibles secrètes","Élimine ta cible assignée pour des récompenses."]],
+  naruto:[["Système de chakra","Gère ta jauge et ta nature (Katon, Suiton, Raiton, Doton, Fûton…)."],["Bijûs 1 → 9 queues","Deviens Jinchûriki et débloque des formes démoniaques."],["Dôjutsu","Sharingan, Byakugan, Rinnegan : copie, vision et techniques oculaires."],["Clans & Hokage","Rejoins les Shinobi, l'Akatsuki, Taka — ou joue seul."]],
+};
+
+/* ───────── HELPERS ───────── */
+const app = () => document.getElementById('app');
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function roleStages(r){ return r.n.split('·').map(s=>s.trim()); }
+function roleCat(modeId, r){
+  const st = roleStages(r);
+  if(st.length>1) return {label:`Évolutif · ${st.length} stades`, key:'evo'};
+  if(r.camp==='legend') return {label:'Légendaire', key:'mono'};
+  return {label:'Mono-forme', key:'mono'};
+}
+function roleCard(modeId, idx){
+  const r = DATA[modeId].roles[idx], a = ACC[modeId];
+  const st = roleStages(r), evo = st.length>1;
+  const cat = roleCat(modeId, r);
+  const head = evo
+    ? `<div class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 font-medium leading-snug">${st.map((s,i)=>`${i?'<span class="faint text-xs">→</span>':''}<span>${esc(s)}</span>`).join('')}</div>`
+    : `<h4 class="font-medium leading-snug">${esc(r.n)}</h4>`;
+  const meta = modeId==='pokemon' ? `${cat.label}${r.hp?` · ${esc(r.hp)}`:''}` : '';
+  return `<a href="#/role/${modeId}/${idx}" class="card rounded-xl p-5 ring-soft block">
+    <div class="flex items-start justify-between gap-3">
+      ${head}
+      <span class="shrink-0 text-[11px] font-medium px-2 py-0.5 rounded-md muted border bd surface-2">${esc(r.ev)}</span>
+    </div>
+    <p class="text-sm font-medium mt-1" style="color:${a}">${esc(r.t)}</p>
+    ${meta?`<p class="text-[11px] muted mt-1">${meta}</p>`:''}
+    <p class="text-sm muted mt-2.5 leading-relaxed">${esc(r.d)}</p>
+    <span class="mt-3 inline-flex items-center gap-1 text-xs font-medium" style="color:${a}">Fiche complète →</span>
+  </a>`;
+}
+function modeCard(m, big){
+  return `<a href="#/mode/${m.id}" class="card rounded-2xl p-6 ring-soft block group ${big?'':''}">
+    <div class="flex items-center justify-between">
+      <span class="font-serif text-2xl" style="color:${m.accent}">${m.glyph}</span>
+      <span class="text-[11px] font-medium uppercase tracking-wide muted">${m.tag}</span>
+    </div>
+    <h3 class="font-serif text-xl mt-4">${m.name}</h3>
+    <p class="text-sm muted mt-2 leading-relaxed">${m.desc}</p>
+    <ul class="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[13px] muted">
+      ${m.points.map(p=>`<li class="flex items-center gap-2"><span class="dot" style="background:${m.accent}"></span>${p}</li>`).join('')}
+    </ul>
+    <span class="mt-5 inline-flex items-center gap-1 text-sm font-medium" style="color:${m.accent}">Ouvrir le mode <span class="group-hover:translate-x-0.5 transition">→</span></span>
+  </a>`;
+}
+
+/* ───────── VUES ───────── */
+function viewHome(){
+  return `
+  <section class="max-w-6xl mx-auto px-5 pt-20 pb-16 md:pt-28 md:pb-20">
+    <div class="grid md:grid-cols-12 gap-10 items-end">
+      <div class="md:col-span-8 reveal">
+        <div class="flex items-center gap-2 text-xs font-medium muted mb-6"><span class="dot" style="background:var(--accent)"></span> Serveur UHC à rôles évolutifs · Java 1.8.x</div>
+        <h1 class="font-serif font-medium leading-[1.04] text-5xl md:text-[4.2rem] tracking-tight">L'Ultra Hardcore,<br><span class="muted">repensé autour de rôles</span> qui évoluent.</h1>
+        <p class="mt-7 max-w-xl text-lg muted leading-relaxed">Trois univers complets — <span class="text-[var(--text)] font-medium">Pokémon</span>, <span class="text-[var(--text)] font-medium">Valkyrie</span> et <span class="text-[var(--text)] font-medium">Naruto</span>. Une page par mode, une fiche par rôle. Découvre ton rôle secret, fais-le grandir, survis.</p>
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href="#/modes" class="btn px-5 h-11 inline-flex items-center rounded-lg text-sm font-medium text-white" style="background:var(--accent)">Découvrir les modes</a>
+          <a href="${DISCORD}" target="_blank" rel="noopener" class="btn px-5 h-11 inline-flex items-center gap-2 rounded-lg text-sm font-medium border bd surface">Rejoindre le Discord</a>
+        </div>
+      </div>
+      <div class="md:col-span-4 reveal">
+        <div class="card rounded-2xl p-5 ring-soft">
+          <div class="text-xs font-medium muted uppercase tracking-wide">Le serveur</div>
+          <div class="hairline h-px my-4"></div>
+          <div class="flex items-end justify-between"><div><div class="font-serif text-3xl">Java 1.8<span class="faint text-xl">.x</span></div><div class="text-xs muted mt-0.5">version compatible</div></div><div class="text-right"><div class="font-serif text-3xl">3</div><div class="text-xs muted mt-0.5">modes + arène</div></div></div>
+          <div class="hairline h-px my-4"></div>
+          <div class="flex items-center justify-between text-sm"><span class="muted">IP</span><button onclick="copyIP(this)" class="ipbtn font-medium accent hover:underline ip-label">${SERVER_IP}</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="max-w-6xl mx-auto px-5 py-16 bd-t">
+    <h2 class="font-serif text-3xl md:text-4xl tracking-tight reveal">Trois modes, trois univers</h2>
+    <p class="muted mt-2 reveal">Chaque mode a sa page dédiée et la fiche de chacun de ses rôles.</p>
+    <div class="grid md:grid-cols-3 gap-4 mt-9">${MODES.map(m=>`<div class="reveal">${modeCard(m)}</div>`).join('')}</div>
+  </section>`;
+}
+
+function viewModes(){
+  return `<section class="max-w-6xl mx-auto px-5 pt-16 pb-20">
+    <div class="reveal"><span class="text-xs font-medium uppercase tracking-wide muted">Les modes de jeu</span>
+    <h1 class="font-serif text-4xl md:text-5xl tracking-tight mt-2">Choisis ton univers</h1>
+    <p class="muted mt-3 max-w-2xl text-lg">Trois modes complets et indépendants. Clique sur un mode pour sa page dédiée : mécaniques, camps et fiches de rôles.</p></div>
+    <div class="grid md:grid-cols-3 gap-4 mt-10">${MODES.map(m=>`<div class="reveal">${modeCard(m,true)}</div>`).join('')}</div>
+    <a href="#/arena" class="reveal group mt-4 rounded-2xl p-6 border bd surface-2 flex flex-col sm:flex-row items-center justify-between gap-4 hover:border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] transition-colors">
+      <div class="flex items-center gap-4"><span class="font-serif text-3xl" style="color:#c0563b">⚔</span><div><div class="text-[11px] font-medium uppercase tracking-wide muted">Hors partie</div><h3 class="font-serif text-xl">L'Arène d'entraînement</h3><p class="text-sm muted mt-0.5">Teste tous les rôles, peaufine ton kit et duelle sans enjeu.</p></div></div>
+      <span class="text-sm font-medium accent shrink-0 group-hover:underline">Découvrir →</span>
+    </a>
+  </section>`;
+}
+
+function viewMode(id){
+  const m = MODES.find(x=>x.id===id); if(!m) return view404();
+  const {camps}=DATA[id];
+  const tabs = `<button role="tab" aria-selected="true" onclick="setCamp('${id}','all',this)" class="btn pilltab px-3.5 py-1.5 rounded-lg text-sm font-medium">Tous</button>`
+    + Object.entries(camps).map(([k,c])=>`<button role="tab" aria-selected="false" onclick="setCamp('${id}','${k}',this)" class="btn pilltab px-3.5 py-1.5 rounded-lg text-sm font-medium">${c.name}</button>`).join('');
+  const cats = id==='pokemon' ? [["all","Tous"],["evo","Évolutifs"],["mono","Mono-forme / Solo"]]
+    .map((c,i)=>`<button role="tab" aria-selected="${i===0}" onclick="setCat('${id}','${c[0]}',this)" class="btn pilltab px-3 py-1 rounded-lg text-xs font-medium">${c[1]}</button>`).join('') : '';
+  const evo = id==='pokemon' ? pokeEvo() : '';
+  return `<section class="bd-b">
+    <div class="max-w-6xl mx-auto px-5 pt-12 pb-12">
+      <a href="#/modes" class="text-sm muted hover:text-[var(--text)]">← Tous les modes</a>
+      <div class="flex items-center gap-3 mt-5 mb-2 reveal"><span class="font-serif text-2xl" style="color:${m.accent}">${m.glyph}</span><span class="text-xs font-medium uppercase tracking-wide muted">${m.tag}</span></div>
+      <h1 class="reveal font-serif text-4xl md:text-5xl tracking-tight">${m.name}</h1>
+      <p class="reveal muted mt-3 max-w-2xl text-lg leading-relaxed">${MODE_INTRO[id]}</p>
+    </div>
+  </section>
+  <section class="max-w-6xl mx-auto px-5 py-14">
+    <h2 class="reveal font-serif text-2xl mb-5">Mécaniques</h2>
+    <div class="reveal grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      ${MECH[id].map((x,i)=>`<div class="rounded-xl p-5 surface-2 border bd"><div class="font-serif text-lg" style="color:${m.accent}">0${i+1}</div><h4 class="font-medium mt-1.5">${x[0]}</h4><p class="text-sm muted mt-1.5 leading-relaxed">${x[1]}</p></div>`).join('')}
+    </div>
+    ${evo}
+    ${modeDetail(id)}
+    <div class="reveal mt-14">
+      <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
+        <h2 class="font-serif text-2xl">Camps & rôles</h2>
+        <div class="relative">
+          <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 faint pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+          <input id="search-${id}" oninput="renderRoles('${id}')" placeholder="Rechercher un rôle, un pouvoir…" class="pl-9 pr-3 h-10 w-72 max-w-full rounded-lg border bd surface text-sm outline-none focus:border-[color-mix(in_srgb,var(--accent)_55%,var(--border))]" />
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2" id="tabs-${id}">${tabs}</div>
+      ${cats?`<div class="flex flex-wrap items-center gap-2 mt-2"><span class="text-xs muted mr-1">Forme :</span><div class="flex flex-wrap gap-2" id="cat-${id}">${cats}</div></div>`:''}
+      <div id="count-${id}" class="text-xs muted mt-4"></div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-1" id="grid-${id}"></div>
+    </div>
+  </section>`;
+}
+function pokeEvo(){
+  const steps=[["Stade 1","Forme de base. Progression : +1 %/min, +50 % par kill, +25 % par Super Bonbon."],["Stade 2","Plus de passif : kills et bonbons uniquement. Stats et pouvoirs renforcés."],["Stade 3","Forme finale. Une jauge de Méga se remplit sur les kills (lignées concernées)."],["Méga","Transformation ultime temporaire aux effets signatures."]];
+  const w=['Soleil','Pluie','Orage','Sable','Grêle','Nuit'];
+  return `<div class="reveal mt-14"><h2 class="font-serif text-2xl mb-5">Le système d'évolution</h2>
+    <div class="grid md:grid-cols-4 gap-px rounded-xl overflow-hidden border bd surface-2">
+      ${steps.map((s,i)=>`<div class="p-5 surface"><div class="flex items-center gap-2 text-sm"><span class="w-5 h-5 grid place-items-center rounded-full text-[11px] font-semibold text-white" style="background:var(--pk)">${i+1}</span><span class="font-medium">${s[0]}</span></div><p class="text-sm muted mt-2 leading-relaxed">${s[1]}</p></div>`).join('')}
+    </div>
+    <div class="mt-4 flex flex-wrap items-center gap-2"><span class="text-sm muted mr-1">Météo tactique :</span>${w.map(x=>`<span class="text-sm px-2.5 py-1 rounded-md border bd surface-2">${x}</span>`).join('')}</div></div>`;
+}
+
+function dsection(title, accent, inner){
+  return `<div class="reveal mt-14"><h2 class="font-serif text-2xl mb-5">${title}</h2>${inner}</div>`;
+}
+function tiles(items, accent){
+  return `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">${items.map(it=>`<div class="rounded-xl border bd surface p-5"><h4 class="font-medium flex items-center gap-2">${it[2]?`<span class="w-6 h-6 grid place-items-center rounded-md text-[11px] font-semibold text-white shrink-0" style="background:${accent}">${it[2]}</span>`:''}${it[0]}</h4><p class="text-sm muted mt-1.5 leading-relaxed">${it[1]}</p></div>`).join('')}</div>`;
+}
+function winBox(accent, text){
+  return `<div class="reveal mt-10 rounded-2xl p-6 border bd surface-2"><div class="flex items-center gap-2 mb-1"><span class="dot" style="background:${accent}"></span><h3 class="font-medium">Condition de victoire</h3></div><p class="text-sm muted leading-relaxed">${text}</p></div>`;
+}
+function modeDetail(id){
+  const a = ACC[id];
+  if(id==='pokemon'){
+    const weather=[["☀ Grand Soleil","Avantage Feu & Plante ; punit l'Eau. Morphéo : Vitesse II + immunité feu."],["🌧 Pluie","Avantage l'Eau ; affaiblit le Feu. Morphéo : Régénération."],["⚡ Orage","Booste l'Électrik ; Morphéo augmente le knockback de ses coups."],["⏳ Tempête de Sable","Favorise Roche/Sol ; Morphéo gagne Résistance, nausée aux ennemis."],["❄ Grêle","Renforce la Glace ; coups ralentissants, dégâts ennemis réduits."],["🌑 Nuit Profonde","Les Ténèbres dominent ; Morphéo devient invisible, cécité de zone."]];
+    const ct=[["Hyper Soin","Régénération III instantanée."],["Bouclier","Résistance II quelques secondes."],["Turbo","Vitesse III pour s'engager ou fuir."],["Berserk","Force I temporaire."],["Fulguro-Poing","Foudroie une cible en vue."],["Téléport","Bond instantané de quelques blocs."]];
+    return dsection("Types & météo tactique", a, tiles(weather,a))
+      + dsection("Capsules Techniques (AirDrops)", a, tiles(ct,a))
+      + winBox(a, "La dernière faction en vie gagne. Quatre camps : le Conseil des Maîtres, la Team Rocket, la Team Galaxie — et les Légendaires, qui jouent chacun pour soi et doivent éliminer tous les autres.");
+  }
+  if(id==='valkyrie'){
+    const pantheon=[["Les Dieux (13)","Panthéon grec & nordique : Zeus, Poséidon, Hadès, Arès, Athéna, Apollon, Artémis, Hermès, Héphaïstos, Chronos, Azrael, Thor, Loki."],["Les Légendes (10)","Conquérants & héros : Alexandre, Gengis Khan, Napoléon, Sun Tzu, Jeanne d'Arc, Spartacus, Cléopâtre, Romulus & Remus, le Vengeur."],["Les Archétypes (20)","Combattants & survivants : Forgeron, Archer, Guérisseur, Berserker, Druide, Nécromancien, Illusionniste, Mime, Caméléon…"],["Les Solitaires (4)","Chacun pour soi : L'Exilé, le Chasseur, le Gladiateur, Ombra."],["Enquêteurs & Spéciaux (6)","Information & rôles à part : Détective, Oracle, Inquisiteur, Espion, Ascendant, Traître."]];
+    const sys=[["Artefacts rares","Des objets uniques apparaissent sur la carte et peuvent renverser une partie entière."],["Scénarios & événements","Des événements aléatoires modifient les règles en cours de jeu."],["Cibles secrètes","Système d'assassin : élimine ta cible assignée pour des récompenses."]];
+    return dsection("Les factions (53 rôles)", a, tiles(pantheon,a))
+      + dsection("Artefacts, scénarios & cibles", a, tiles(sys,a))
+      + winBox(a, "Le dernier debout l'emporte. Les dieux dominent, mais une légende, un archétype bien joué ou un solitaire patient peut renverser le panthéon.");
+  }
+  if(id==='naruto'){
+    const natures=[["Katon — Feu","2 % d'enflammer en frappant à l'épée."],["Suiton — Eau","Court plus vite dans l'eau (Depth Strider 1)."],["Raiton — Foudre","1 % qu'un éclair tombe sur la cible frappée à l'épée."],["Doton — Terre","Célérité 1 + 5 % de vitesse en plus sous la couche Y 50."],["Fûton — Vent","20 % de dégâts de chute en moins."]];
+    const bijus=[["Shukaku — Ichibi","1 queue · lié à Gaara (Sable).",1],["Matatabi — Nibi","2 · Blaze, 100♥, Force 1 ; enflamme dans 15 blocs.",2],["Isobu — Sanbi","3 · Gardien, 100♥, Résistance 1 ; invoque des gardiens.",3],["Son Gokû — Yonbi","4 · Cube de magma, 100♥, lave au sol.",4],["Kokuô — Gobi","5 · 100♥, Force 2 + Vitesse 2 ; Cécité + Lenteur aux coups.",5],["Saiken — Rokubi","6 · Slime, 100♥ ; régén + explosion aux coups.",6],["Chômei — Nanabi","7 · Ghast, 100♥ ; boule de feu → creeper.",7],["Gyûki — Hachibi","8 · lié à Killer Bee.",8],["Kurama — Kyûbi","9 · lié à Naruto (Renard à 9 queues).",9]];
+    const hok=[["Tirage du Hokage","Un Hokage est tiré au sort et annoncé à tous au moment choisi par l'orga."],["Pouvoirs","+10 % Force & Résistance · /boost (1×) buff un allié · /reveal (1×) révèle 4 pseudos."],["Succession","5 min après sa mort, un nouveau Hokage est choisi — sauf si Danzo l'a tué (il le devient)."]];
+    return dsection("Les 5 natures de chakra", a, tiles(natures,a))
+      + dsection("Les 9 Bijûs (apparaissent à 40–60 min)", a, tiles(bijus,a))
+      + dsection("Le Hokage", a, tiles(hok,a))
+      + winBox(a, "Chaque camp a son objectif : les Shinobi éliminent tous les ennemis de Konoha, l'Akatsuki capture les Bijûs, Taka venge Sasuke, le Jûbi déclenche le Plan Œil de Lune. Le dernier camp à remplir son but l'emporte.");
+  }
+  return '';
+}
+function viewRole(modeId, idx){
+  const m = MODES.find(x=>x.id===modeId); if(!m) return view404();
+  const r = DATA[modeId].roles[idx]; if(!r) return view404();
+  const camp = DATA[modeId].camps[r.camp], a = ACC[modeId];
+  const det = r;
+  const roles = DATA[modeId].roles;
+  const nx = (idx+1)%roles.length, pv = (idx-1+roles.length)%roles.length;
+  let lienTxt = det.lien || '';
+  if(modeId==='pokemon' && r.camp==='rocket' && r.n!=='Giovanni')
+    lienTxt = (lienTxt ? lienTxt+' · ' : '') + 'Membre de la Team Rocket : tu connais <b>Giovanni</b> (le Boss) et son pseudo dès le départ.';
+  const stages = r.n.split('·').map(s=>s.trim());
+  const evolves = stages.length>1;
+  const stageBlock = evolves ? `<div class="reveal mt-10"><h2 class="font-serif text-xl mb-4">Évolutions</h2>
+      <div class="flex items-stretch gap-2 flex-wrap">${stages.map((s,i)=>`<div class="flex items-center gap-2">
+        <div class="rounded-xl border bd surface px-4 py-3"><div class="text-[11px] muted">Stade ${i+1}</div><div class="font-medium">${s}</div></div>
+        ${i<stages.length-1?`<span class="muted">→</span>`:''}</div>`).join('')}</div></div>` : '';
+  return `<section class="max-w-3xl mx-auto px-5 pt-12 pb-20">
+    <a href="#/mode/${modeId}" class="text-sm muted hover:text-[var(--text)]">← ${m.name}</a>
+    <div class="reveal mt-5 flex items-center gap-2 text-sm">
+      <span class="inline-flex items-center gap-1.5"><span class="dot" style="background:${a}"></span><span class="muted">${camp.name}</span></span>
+      <span class="faint">·</span><span class="muted">${r.ev}</span>
+      ${det&&det.hp?`<span class="faint">·</span><span class="muted">${det.hp}</span>`:''}
+    </div>
+    <h1 class="reveal font-serif text-4xl md:text-5xl tracking-tight mt-3">${r.n.replace(/·/g,'<span class="faint">·</span>')}</h1>
+    <p class="reveal text-xl mt-2 font-medium" style="color:${a}">${r.t}</p>
+    <p class="reveal text-lg muted mt-5 leading-relaxed">${r.d}</p>
+    ${det&&det.passif?`<div class="reveal mt-6 rounded-xl border bd surface p-5"><h3 class="text-sm font-semibold mb-1.5">Passif</h3><p class="text-sm muted leading-relaxed">${det.passif}</p></div>`:''}
+    ${stageBlock}
+    ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-4">Pouvoirs & capacités</h2>
+      <div class="rounded-xl border bd overflow-hidden">
+        ${r.pw.map((p,i)=>`<div class="flex items-start gap-3 p-4 ${i?'bd-t':''} surface"><span class="mt-1 w-5 h-5 shrink-0 grid place-items-center rounded-md text-[11px] font-semibold text-white" style="background:${a}">${i+1}</span><p class="text-sm">${p}</p></div>`).join('')}
+      </div>
+    </div>`:''}
+    ${det&&det.combo?`<div class="reveal mt-6 rounded-xl p-5" style="background:var(--accent-soft);border:1px solid color-mix(in srgb,${a} 28%,transparent)"><h3 class="text-sm font-semibold mb-1" style="color:${a}">Combo signature</h3><p class="text-sm leading-relaxed">${det.combo}</p></div>`:''}
+    ${lienTxt?`<div class="reveal mt-6 rounded-xl border bd surface p-5"><h3 class="text-sm font-semibold mb-1.5 flex items-center gap-2"><span class="dot" style="background:${a}"></span>Lien & synergie</h3><p class="text-sm muted leading-relaxed">${lienTxt}</p></div>`:''}
+    ${r.fb?`<div class="reveal mt-6 rounded-xl border bd surface-2 p-5"><h3 class="text-sm font-semibold mb-1">Faiblesse</h3><p class="text-sm muted">${r.fb}</p></div>`:''}
+    <div class="reveal mt-10 flex flex-wrap gap-3">
+      <button onclick="copyIP(this)" class="btn ipbtn px-5 h-11 rounded-lg text-sm font-medium text-white ip-label" style="background:var(--accent)">Copier l'IP & jouer</button>
+      <a href="#/mode/${modeId}" class="btn px-5 h-11 inline-flex items-center rounded-lg text-sm font-medium border bd surface">Tous les rôles</a>
+    </div>
+    <nav class="reveal mt-8 pt-6 bd-t grid grid-cols-2 gap-3">
+      <a href="#/role/${modeId}/${pv}" class="btn card rounded-xl p-4 text-left ring-soft">
+        <div class="text-xs muted mb-0.5">← Rôle précédent</div>
+        <div class="font-medium text-sm truncate">${roles[pv].n}</div>
+      </a>
+      <a href="#/role/${modeId}/${nx}" class="btn card rounded-xl p-4 text-right ring-soft">
+        <div class="text-xs muted mb-0.5">Rôle suivant →</div>
+        <div class="font-medium text-sm truncate">${roles[nx].n}</div>
+      </a>
+    </nav>
+  </section>`;
+}
+
+function viewArena(){
+  const ACC = "#c0563b";
+  const maps = [
+    ["Arène Normale","Le terrain de duel principal. Une plaine de combat ouverte où l'on s'entraîne au corps-à-corps et où l'on teste chaque rôle sans enjeu de partie.","Monde « arena »"],
+    ["Tartare","La carte avancée, reconvertie d'une map 1.21 vers la 1.8. Reliefs et recoins pour travailler les déplacements, les portées de pouvoirs et les combats en terrain accidenté.","Monde « tartare »"],
+    ["Arène Naruto","Une arène thématique aux couleurs du mode Shinobi, idéale pour prendre en main les jutsus et les natures de chakra avant de se lancer en partie.","Map « lobbyspring »"]
+  ];
+  const rules = [
+    ["Armure diamant Protection III","Équipement de base donné à tous, que chaque rôle peut surcharger avec son propre kit."],
+    ["Items indestructibles","Toutes les pièces et armes ont une durabilité infinie — réinitialisée en continu, jamais d'usure."],
+    ["Bac à sable libre","Tu peux poser et casser tes propres blocs pour t'entraîner aux placements et aux pièges."],
+    ["Reset automatique","La carte se régénère intégralement toutes les 30 minutes : tout repart propre."],
+    ["Invulnérabilité au spawn","3 secondes d'immunité à chaque réapparition pour ne pas être focus à l'arrivée."],
+    ["Mort sans conséquence","Tomber au combat te renvoie directement au lobby : aucune élimination définitive."]
+  ];
+  const feats = [
+    ["Teste n'importe quel rôle","Bascule en direct vers le rôle de ton choix, parmi les trois modes, pour découvrir ses pouvoirs sans attendre une partie."],
+    ["Kit personnel","Range ton inventaire comme tu l'aimes puis sauvegarde-le : il te sera redonné automatiquement. Les pouvoirs, artefacts et livre de stats restent dynamiques selon le rôle actuel."],
+    ["Classement des kills","Chaque élimination en arène est comptée et affichée dans un classement pour mesurer ta progression."],
+    ["Stats de combat","Un livre de statistiques détaille tes pourcentages (dégâts, résistances, vitesse…) selon ton rôle et tes effets actifs."],
+    ["Soin instantané sur kill","Éliminer un adversaire te soigne et réinitialise tes seaux — pour enchaîner les duels sans temps mort."],
+    ["Rôle aléatoire & menu","Une boussole ouvre le menu d'arène : changer de map, tirer un rôle au hasard, voir tous les rôles ou activer un pouvoir."]
+  ];
+  const cmds = [
+    ["/arena join","Rejoindre l'arène d'entraînement."],
+    ["/arena role <nom>","Changer de rôle en direct."],
+    ["/arena list","Lister tous les rôles disponibles."],
+    ["/arena kit save","Sauvegarder ton inventaire comme kit personnel."],
+    ["/arena effets","Afficher les pourcentages de stats de ton rôle."],
+    ["/arena kills","Voir ton score de kills."],
+    ["/arena leave","Quitter l'arène et revenir au lobby."]
+  ];
+  return `<section class="bd-b">
+    <div class="max-w-6xl mx-auto px-5 pt-12 pb-12">
+      <a href="#/" class="text-sm muted hover:text-[var(--text)]">← Accueil</a>
+      <div class="flex items-center gap-3 mt-5 mb-2 reveal"><span class="font-serif text-2xl" style="color:${ACC}">⚔</span><span class="text-xs font-medium uppercase tracking-wide muted">Entraînement</span></div>
+      <h1 class="reveal font-serif text-4xl md:text-5xl tracking-tight">L'Arène</h1>
+      <p class="reveal muted mt-3 max-w-2xl text-lg leading-relaxed">Un espace de test permanent, hors partie, pour apprivoiser chaque rôle, peaufiner son kit et s'échauffer en duel. On y entre, on y meurt sans conséquence, on recommence.</p>
+    </div>
+  </section>
+  <section class="max-w-6xl mx-auto px-5 py-14">
+    <h2 class="reveal font-serif text-2xl mb-5">Les cartes</h2>
+    <div class="reveal grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      ${maps.map((x,i)=>`<div class="rounded-xl p-5 surface-2 border bd"><div class="font-serif text-lg" style="color:${ACC}">0${i+1}</div><h4 class="font-medium mt-1.5">${x[0]}</h4><p class="text-sm muted mt-1.5 leading-relaxed">${x[1]}</p><div class="text-[11px] faint mt-3 uppercase tracking-wide">${x[2]}</div></div>`).join('')}
+    </div>
+
+    <h2 class="reveal font-serif text-2xl mt-14 mb-5">Fonctionnalités</h2>
+    <div class="reveal grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      ${feats.map(x=>`<div class="rounded-xl p-5 surface border bd"><h4 class="font-medium">${x[0]}</h4><p class="text-sm muted mt-1.5 leading-relaxed">${x[1]}</p></div>`).join('')}
+    </div>
+
+    <h2 class="reveal font-serif text-2xl mt-14 mb-5">Les règles</h2>
+    <div class="reveal rounded-xl border bd overflow-hidden">
+      ${rules.map((x,i)=>`<div class="flex items-start gap-4 p-4 ${i?'bd-t':''} surface"><span class="font-serif shrink-0" style="color:${ACC}">✦</span><div><div class="font-medium text-sm">${x[0]}</div><p class="text-sm muted mt-0.5 leading-relaxed">${x[1]}</p></div></div>`).join('')}
+    </div>
+
+    <h2 class="reveal font-serif text-2xl mt-14 mb-5">Commandes</h2>
+    <div class="reveal rounded-xl border bd overflow-hidden">
+      ${cmds.map((c,i)=>`<div class="flex items-start gap-4 p-4 ${i?'bd-t':''} surface"><code class="text-sm font-medium accent shrink-0">${c[0]}</code><p class="text-sm muted">${c[1]}</p></div>`).join('')}
+    </div>
+
+    <div class="reveal mt-14 rounded-2xl p-8 border bd surface-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div><h2 class="font-serif text-xl">Échauffe-toi avant la guerre</h2><p class="muted text-sm mt-1">Rejoins le serveur, tape <code class="accent">/arena join</code> et teste tous les rôles.</p></div>
+      <div class="flex gap-3"><button onclick="copyIP(this)" class="btn ipbtn px-5 h-11 rounded-lg text-sm font-medium text-white ip-label" style="background:var(--accent)">Copier l'IP</button>
+      <a href="#/modes" class="btn px-5 h-11 inline-flex items-center rounded-lg text-sm font-medium border bd surface">Voir les modes</a></div>
+    </div>
+  </section>`;
+}
+function viewWiki(){
+  const cmds=[["/poke me","Affiche ta fiche de rôle détaillée et tes pouvoirs."],["/poke jump","(Papilusion) Active ou désactive ton Jump Boost illimité."],["Clic droit","Active la compétence de l'objet tenu."],["Shift + clic","Variantes de certains pouvoirs (portails, capture…)."]];
+  const faq=[["Comment fonctionne l'évolution ?","Au Stade 1 : +1 % par minute, +50 % par kill, +25 % par Super Bonbon. Ensuite, seuls les kills et bonbons comptent. Au Stade 3, une jauge de Méga se remplit sur les kills."],["Qu'est-ce qu'un camp ?","Ton rôle appartient à un camp (Conseil, Team Rocket, Team Galaxie ou Légendaire solo). La dernière faction en vie gagne ; les Légendaires jouent chacun pour soi."],["À quoi sert la météo ?","Le climat change et avantage ou punit les types secrets. Certains rôles, comme Morphéo, en tirent toute leur puissance."],["Comment rejoindre ?","Lance Minecraft Java 1.8.x, ajoute le serveur avec l'IP Play.Valkyrie-UHC.FR et connecte-toi. Le mode actif est choisi par l'équipe."]];
+  return `<section class="max-w-6xl mx-auto px-5 pt-16 pb-20">
+    <h1 class="reveal font-serif text-4xl md:text-5xl tracking-tight">Wiki & documentation</h1>
+    <p class="reveal muted mt-3 text-lg">Commandes, règles et questions fréquentes.</p>
+    <div class="reveal mt-10 grid md:grid-cols-2 gap-10">
+      <div><h2 class="font-serif text-xl mb-4">Commandes</h2><div class="rounded-xl border bd overflow-hidden">
+        ${cmds.map((c,i)=>`<div class="flex items-start gap-4 p-4 ${i?'bd-t':''} surface"><code class="text-sm font-medium accent shrink-0">${c[0]}</code><p class="text-sm muted">${c[1]}</p></div>`).join('')}</div></div>
+      <div><h2 class="font-serif text-xl mb-4">Questions fréquentes</h2><div class="space-y-2">
+        ${faq.map(f=>`<details class="rounded-xl border bd surface overflow-hidden"><summary class="flex items-center justify-between gap-3 px-4 py-3.5 font-medium">${f[0]}<svg class="chev w-4 h-4 faint shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 9l6 6 6-6"/></svg></summary><div class="px-4 pb-4 text-sm muted leading-relaxed">${f[1]}</div></details>`).join('')}</div></div>
+    </div>
+    <div class="reveal mt-12 rounded-2xl p-8 border bd surface-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div><h2 class="font-serif text-xl">Prêt à jouer ?</h2><p class="muted text-sm mt-1">Rejoins le serveur et le Discord de la communauté.</p></div>
+      <div class="flex gap-3"><button onclick="copyIP(this)" class="btn ipbtn px-5 h-11 rounded-lg text-sm font-medium text-white ip-label" style="background:var(--accent)">Copier l'IP</button>
+      <a href="${DISCORD}" target="_blank" rel="noopener" class="btn px-5 h-11 inline-flex items-center rounded-lg text-sm font-medium border bd surface">Discord</a></div>
+    </div>
+  </section>`;
+}
+function view404(){ return `<section class="max-w-3xl mx-auto px-5 py-32 text-center"><h1 class="font-serif text-5xl">404</h1><p class="muted mt-3">Cette page n'existe pas.</p><a href="#/" class="btn mt-6 inline-flex px-5 h-11 items-center rounded-lg text-white text-sm font-medium" style="background:var(--accent)">Retour à l'accueil</a></section>`; }
+
+/* ───────── ROUTEUR ───────── */
+const FILTER = {pokemon:{camp:'all',cat:'all'}, valkyrie:{camp:'all',cat:'all'}, naruto:{camp:'all',cat:'all'}};
+function markActive(containerId, btn){
+  const c=document.getElementById(containerId); if(!c||!btn)return;
+  c.querySelectorAll('[role=tab]').forEach(b=>b.setAttribute('aria-selected','false'));
+  btn.setAttribute('aria-selected','true');
+}
+function setCamp(modeId, key, btn){ FILTER[modeId].camp=key; markActive('tabs-'+modeId, btn); renderRoles(modeId); }
+function setCat(modeId, cat, btn){ FILTER[modeId].cat=cat; markActive('cat-'+modeId, btn); renderRoles(modeId); }
+function renderRoles(modeId){
+  const f = FILTER[modeId] || {camp:'all',cat:'all'};
+  const q = (document.getElementById('search-'+modeId)?.value || '').toLowerCase().trim();
+  let list = DATA[modeId].roles.map((r,i)=>({r,i}));
+  if(f.camp!=='all') list = list.filter(o=>o.r.camp===f.camp);
+  if(modeId==='pokemon' && f.cat!=='all') list = list.filter(o=>roleCat(modeId,o.r).key===f.cat);
+  if(q) list = list.filter(o=>{ const r=o.r; return (r.n+' '+r.t+' '+r.ev+' '+(r.d||'')+' '+(r.pw||[]).join(' ')+' '+(r.passif||'')).toLowerCase().includes(q); });
+  // organise par évolution : les lignées évolutives d'abord (par nb de stades), puis alpha
+  list.sort((x,y)=>{ const sx=roleStages(x.r).length, sy=roleStages(y.r).length; return sy-sx || x.r.n.localeCompare(y.r.n); });
+  const grid = document.getElementById('grid-'+modeId); if(!grid) return;
+  grid.innerHTML = list.map(o=>roleCard(modeId,o.i)).join('') || `<p class="muted col-span-full text-sm py-8 text-center">Aucun rôle ne correspond à ta recherche.</p>`;
+  const c = document.getElementById('count-'+modeId); if(c) c.textContent = list.length + ' rôle' + (list.length>1?'s':'');
+  observe();
+}
+function route(){
+  const h = (location.hash||'#/').replace(/^#/,'');
+  const p = h.split('/').filter(Boolean); // ['mode','pokemon']...
+  let html, navKey='';
+  if(p.length===0){ html=viewHome(); }
+  else if(p[0]==='modes'){ html=viewModes(); navKey='modes'; }
+  else if(p[0]==='mode'&&p[1]){ html=viewMode(p[1]); navKey=p[1]; }
+  else if(p[0]==='role'&&p[1]&&p[2]!=null){ html=viewRole(p[1],parseInt(p[2],10)); navKey=p[1]; }
+  else if(p[0]==='arena'){ html=viewArena(); navKey='arena'; }
+  else if(p[0]==='wiki'){ html=viewWiki(); navKey='wiki'; }
+  else html=view404();
+  app().innerHTML = html;
+  document.querySelectorAll('[data-spy]').forEach(a=>a.classList.toggle('active', a.dataset.spy===navKey));
+  // filtres réinitialisés sur une page de mode
+  if(p[0]==='mode'&&DATA[p[1]]){ FILTER[p[1]]={camp:'all',cat:'all'}; renderRoles(p[1]); }
+  window.scrollTo(0,0);
+  observe();
+}
+window.addEventListener('hashchange', route);
+
+/* ───────── DIVERS ───────── */
+function toggleTheme(){ const d=document.documentElement.classList.toggle('dark'); localStorage.setItem('theme',d?'dark':'light'); }
+function copyIP(btn){ navigator.clipboard.writeText(SERVER_IP).catch(()=>{}); const l=btn.querySelector('.ip-label')||(btn.classList.contains('ip-label')?btn:null); if(!l)return; const o=l.textContent; l.textContent='IP copiée ✓'; setTimeout(()=>l.textContent=o,1500); }
+function observe(){ // révélation fiable au rendu (stagger léger), indépendante du scroll
+  const els=[...document.querySelectorAll('.reveal:not(.in)')];
+  els.forEach((e,i)=>setTimeout(()=>e.classList.add('in'), Math.min(i*45,260)));
+}
+
+let _statusDone=false;
+route(); // rendu initial
+</script>
+</body>
+</html>
