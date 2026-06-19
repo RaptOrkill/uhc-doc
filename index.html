@@ -926,8 +926,12 @@ function modeDetail(id){
   if(id==='pokemon'){
     const weather=[["☀ Grand Soleil","Avantage Feu & Plante ; punit l'Eau. Morphéo : Vitesse II + immunité feu."],["🌧 Pluie","Avantage l'Eau ; affaiblit le Feu. Morphéo : Régénération."],["⚡ Orage","Booste l'Électrik ; Morphéo augmente le knockback de ses coups."],["⏳ Tempête de Sable","Favorise Roche/Sol ; Morphéo gagne Résistance, nausée aux ennemis."],["❄ Grêle","Renforce la Glace ; coups ralentissants, dégâts ennemis réduits."],["🌑 Nuit Profonde","Les Ténèbres dominent ; Morphéo devient invisible, cécité de zone."]];
     const ct=[["Hyper Soin","Régénération III instantanée."],["Bouclier","Résistance II quelques secondes."],["Turbo","Vitesse III pour s'engager ou fuir."],["Berserk","Force I temporaire."],["Fulguro-Poing","Foudroie une cible en vue."],["Téléport","Bond instantané de quelques blocs."]];
+    const objets=[["Restes","Régénération I permanente (tu te soignes lentement)."],["Bandeau Royal","Force I permanente (tes coups frappent plus fort)."],["Veste de Combat","Résistance I permanente (tu encaisses mieux)."],["Vit'Éclair","Vitesse I permanente."],["Charbon Ardent","Tes coups enflamment l'ennemi (3s) + immunité au feu."],["Lunettes Noires","Vision nocturne permanente."],["Bottes Motiques","Immunité aux dégâts de chute + Saut amélioré."]];
     return dsection("Types & météo tactique", a, tiles(weather,a))
       + dsection("Capsules Techniques (AirDrops)", a, tiles(ct,a))
+      + dsection("Objets Pokémon à trouver", a,
+          `<p class="text-sm muted mb-4 leading-relaxed">Toutes les ~8 min, un <b>Objet Rare</b> apparaît en AirDrop à des coordonnées annoncées. Ce sont des objets tenus tirés des jeux Pokémon, qui donnent un <b>bonus passif permanent</b> tant que tu les portes. <b>Règle : 1 seul objet par joueur</b> — impossible d'en ramasser un second sans jeter l'ancien. Premier arrivé, premier servi !</p>`
+          + tiles(objets,a))
       + winBox(a, "La dernière faction en vie gagne. Quatre camps : le Conseil des Maîtres, la Team Rocket, la Team Galaxie — et les Légendaires, qui jouent chacun pour soi et doivent éliminer tous les autres.");
   }
   if(id==='valkyrie'){
