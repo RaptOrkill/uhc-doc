@@ -286,478 +286,427 @@ const NARU_ROLES=[
   {camp:"seuls",n:"Hanzo",t:"La Salamandre",ev:"Poison",d:"Légendaire chef d'Ame : poison et salamandre venimeuse."},
 ];
 const VALK_LORE = {
-"Le Fermier": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Tes récoltes d'or sont doublées : chaque filon rapporte deux fois plus de lingots et de pépites.<br>Tu es le pilier de soutien de l'équipe — ta valeur se mesure en combats gagnés, pas en kills.",
-"obj": "Tu es le coeur de ton equipe. Sans toi, tes allies meurent plus vite et finissent par s'epuiser.<br>Ton role est uniquement de support : tu ne tues pas, tu gardes les autres en vie le plus longtemps possible.<br>Reste colle a tes allies en permanence, active Soin de Groupe des le debut de chaque combat avant que quelqu'un soit trop bas.<br>Utilise Ravitaillement des que la faim descend et distribue tes steaks aux membres de l'equipe qui en ont besoin.<br>Ta force ne se mesure pas en kills mais en combats gagnes grace a toi — un Fermier bien joue change l'issue d'une partie entiere.",
-"pw": [
-"<b>Soin de Groupe</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Soigne instantanément de +1 cœur tous les alliés dans un rayon de 8 blocs.<br><span class=\"muted\">» Active en début de combat, avant que tes alliés soient trop bas.</span>",
-"<b>Ravitaillement</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Restaure ta faim à 20/20 et ajoute 3 steaks dans ton inventaire.<br><span class=\"muted\">» Donne les steaks à tes alliés — ils en ont plus besoin que toi en combat.</span>"
-]
-},
-"Le Forgeron": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Hâte I automatique lorsque ton armure est complète.<br>Tu démarres avec une Pioche Efficacité IV + Fortune II, idéale pour accumuler les ressources rapidement.",
-"obj": "Tu es le specialiste du renforcement defensif et de la logistique en plein terrain.<br>Avant chaque combat, active Armure Renforcee pour donner a toute ton equipe une fenetre de resistance temporaire tres puissante.<br>La Forge Express te permet de crafter des epees, des arcs ou des outils n'importe ou sur la map sans rentrer a la base.<br>Profite de ta pioche Efficacite IV et Fortune II pour accumuler des ressources plus vite que les autres.<br>Tu n'as pas de bonus de combat direct — ton role est de preparer et d'equiper, pas de foncer.",
-"pw": [
-"<b>Armure Renforcée</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde Résistance II et Hâte III pendant 15 secondes — réduit tous les dégâts reçus de 40%.<br><span class=\"muted\">» Active juste avant d'engager — transforme un combat perdu en victoire.</span>",
-"<b>Forge Express</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Ouvre un établi portable instantanément, utilisable n'importe où sur la map.<br><span class=\"muted\">» Crafte des épées, des arcs ou des outils en plein milieu de la partie sans rentrer à la base.</span>"
-]
-},
-"L'Archer": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Tu démarres avec un Arc Puissance III + Flamme I et 32 flèches.<br>Toutes tes flèches enflamment automatiquement les cibles touchées, infligeant des dégâts de feu supplémentaires.",
-"obj": "Tu es le specialiste du combat a longue portee et tu ne dois jamais t'exposer en melee.<br>Ton arc Power III avec Flame I inflige des degats eleves et enflamme automatiquement chaque cible que tu touches.<br>Utilise Tir Perce-Armure contre les cibles bien equipeees : la prochaine fleche fera 50 pourcent de degats supplementaires et mettra le feu 15 secondes.<br>La Volee Infernale lance 5 fleches enflammees simultanement en eventail — parfaite pour couvrir une retraite ou cibler un groupe serre.<br>Reste toujours a plus de 10 blocs de tes ennemis et n'entre en melee qu'en dernier recours car tu n'as aucun bonus defensif.",
-"pw": [
-"<b>Tir Perce-Armure</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Ta prochaine flèche inflige ×1,5 dégâts (+50%) et met la cible en feu pendant 15 secondes.<br><span class=\"muted\">» Tire immédiatement après l'activation — le buff s'applique à la flèche suivante uniquement.</span>",
-"<b>Volée Infernale</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Tire 5 flèches enflammées simultanément en éventail — chacune inflige le double des dégâts normaux.<br><span class=\"muted\">» Idéal contre un groupe serré ou pour couvrir une retraite en créant une zone de feu.</span>"
-]
-},
-"Le Guérisseur": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Régénération I permanente (tu récupères 0,5 cœur toutes les 2,5s).<br>Attention : un Guérisseur mort signifie souvent la défaite collective — protège-toi avant tout.",
-"obj": "Tu es le role le plus precieux en equipe et ta mort signifie souvent la defaite collective.<br>Ta Regeneration I permanente te permet de tenir plus longtemps sans te battre, mais ton vrai pouvoir est dans les soins des allies.<br>Soin Pulse guerit de 5 coeurs totaux sur 10 secondes a tous les allies dans 6 blocs — active-le des les premieres frappes du combat.<br>Resurrection d'Urgence soigne instantanement de 5 coeurs l'allie le plus blesse dans 10 blocs — garde ce cooldown pour les urgences absolues.<br>Reste en retrait, ne t'engage jamais seul, et priorise toujours ta survie car un Guerisseur mort ne soigne plus personne.",
-"pw": [
-"<b>Soin Pulse</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Soigne +1 cœur toutes les 2 secondes pendant 10 secondes à tous les alliés dans un rayon de 6 blocs (total : +5 cœurs).<br><span class=\"muted\">» Active en début de combat et garde tes alliés groupés pour cumuler tous les soins.</span>",
-"<b>Résurrection d'Urgence</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Soigne instantanément de +5 cœurs l'allié le plus blessé dans un rayon de 10 blocs.<br><span class=\"muted\">» Sauvegarde de vie garantie — garde ce cooldown uniquement pour les urgences absolues.</span>"
-]
-},
-"L'Éclaireur": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs) — Vision Nocturne permanente (tu vois dans le noir en permanence).<br>Tu es un outil de reconnaissance et d'information — ne t'engage jamais seul en combat direct.",
-"obj": "Tu es les yeux et les oreilles de ton equipe, avec la Vitesse II la plus rapide parmi les humains.<br>Ta vision nocturne permanente t'avantage enormement la nuit — profites-en pour reconnaitre le terrain que tes ennemis ne voient pas.<br>Le Dash Eclair te propulse instantanement dans la direction visee avec Speed IV pendant 1.5 secondes — utilise-le pour fuir, engager ou franchir des obstacles.<br>Le Radar Thermique revele les PV exacts et la position de tous les ennemis dans 40 blocs — communique ces informations a ton equipe immediatement.<br>Tu n'as aucun bonus offensif ni defensif : ne t'engage jamais seul, ton role est de localiser et d'informer, pas de te battre.",
-"pw": [
-"<b>Dash Éclair</b> <span class=\"faint\">· CD 25s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Propulsion instantanée dans la direction du regard avec Vitesse IV pendant 1,5 seconde.<br><span class=\"muted\">» Utile pour fuir, engager à grande vitesse ou franchir un obstacle en une fraction de seconde.</span>",
-"<b>Radar Thermique</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Révèle le nom, les PV exacts et la position de tous les ennemis dans un rayon de 40 blocs — résultats dans le chat.<br><span class=\"muted\">» Partage avec ton équipe immédiatement — c'est ta contribution décisive au combat.</span>"
-]
-},
-"Le Bûcheron": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs). Tu démarres avec une Hache en fer Efficacité IV.<br>À chaque kill : soin instantané de +2 cœurs, Hâte I et +1 PV maximum (maximum +6 PV sur toute la partie).<br>Si tu meurs : tous tes PV max accumulés sont perdus — évite absolument de mourir en début de partie.",
-"obj": "Tu es un bruiser qui devient exponentiellement plus fort a mesure que la partie avance et que tu accumules les kills.<br>Chaque ennemi que tu elimines te soigne de 2 coeurs, te donne Haste I, et augmente ton maximum de PV de 1 point — jusqu'a 6 points supplementaires au total.<br>Si tu meurs, tous ces bonus de PV max sont perdus, donc evite absolument de mourir surtout en debut de partie.<br>Rage Berserker te donne Force I, Vitesse I et Haste I pendant 8 secondes — active-le au premier coup pour maximiser les degats sur toute la duree du combat.<br>Tremblement de Terre repousse et blesse tous les ennemis dans 5 blocs — parfait pour interrompre un groupe ou creer de la distance quand tu es encercle.",
-"pw": [
-"<b>Rage Berserker</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde Force I, Vitesse I et Hâte I pendant 8 secondes — augmente significativement tes dégâts et ta vitesse d'attaque.<br><span class=\"muted\">» Active au premier coup d'un combat — maximise les dégâts sur toute la durée.</span>",
-"<b>Tremblement de Terre</b> <span class=\"faint\">· CD 45s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Knockback fort et −1 cœur sur tous les ennemis dans un rayon de 5 blocs.<br><span class=\"muted\">» Parfait pour désorganiser un groupe serré ou interrompre un combo adverse.</span>"
-]
-},
-"Le Chimiste": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs) — Immuné au poison, tes propres poisons ne t'affectent jamais.<br>À chaque contact en mêlée, tu appliques passivement Poison I pendant 3 secondes sur l'ennemi touché.",
-"obj": "Tu es un controleur de zone dont toute la puissance repose sur les effets de poison et les debuffs a distance.<br>Ton contact en melee applique passivement Poison I pendant 3 secondes sur le premier coup — reste assez proche pour toucher sans prendre de degats.<br>Le Nuage Toxique cree une zone de Poison II pendant 5 secondes : pose-le entre toi et ton adversaire pour le forcer a contourner ou a prendre des degats.<br>Brulure Acide applique Poison I et Faiblesse I a tous les ennemis dans 6 blocs instantanement — combine-le avec le Nuage pour des dommages sur la duree maximaux.<br>Tu n'as aucune Force ni Resistance : ne te bats jamais en combat frontal direct, fais confiance au temps et aux effets de statut pour faire le travail.",
-"pw": [
-"<b>Nuage Toxique</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Crée un nuage de Poison II dans un rayon de 3 blocs pendant 5 secondes — tout ennemi qui le traverse est immédiatement empoisonné.<br><span class=\"muted\">» Pose entre toi et l'ennemi pour le forcer à contourner ou prendre des dégâts.</span>",
-"<b>Brûlure Acide</b> <span class=\"faint\">· CD 70s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Poison I et Faiblesse I instantanément à tous les ennemis dans un rayon de 6 blocs.<br><span class=\"muted\">» Combine avec le Nuage Toxique pour des dégâts sur la durée absolument maximaux.</span>"
-]
-},
-"Le Trappeur": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Vision nocturne activée automatiquement la nuit.<br>À chaque kill : le cooldown de tes pièges est réduit de 20 secondes — plus tu élimines, plus tu poses vite.",
-"obj": "Tu es un maitre de l'embuscade et de la preparation du terrain avant que le combat commence.<br>Pose tes pieges invisibles sur les routes naturelles de passage : les ennemis qui marchent dessus recoivent Lenteur III et 2 coeurs de degats instantanement.<br>Chaque kill reduit le cooldown de tes pieges de 20 secondes — plus tu kills, plus tu poses de pieges rapidement.<br>Le Lasso immobilise tous les ennemis dans 6 blocs pendant 5 secondes avec Lenteur II — utilise-le quand un groupe essaie de fuir ou pour bloquer une fuite.<br>Ta vision nocturne te donne un avantage de terrain la nuit. Prepare le combat longtemps a l'avance et laisse tes ennemis venir a toi.",
-"pw": [
-"<b>Piège Mortel</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Pose un piège invisible au sol — au déclenchement par un ennemi : Lenteur III et −2 cœurs instantanément.<br><span class=\"muted\">» Invisible jusqu'au déclenchement — pose sur les chemins de passage naturels.</span>",
-"<b>Lasso</b> <span class=\"faint\">· CD 35s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Lenteur II pendant 5 secondes à tous les ennemis dans un rayon de 6 blocs simultanément.<br><span class=\"muted\">» Parfait pour bloquer une fuite ou immobiliser un groupe entier le temps d'une attaque.</span>"
-]
-},
-"Le Moine": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Place-toi systématiquement en première ligne pour absorber les dégâts et protéger tes alliés fragiles.",
-"obj": "Tu es un tank defensif specialise dans le controle de melee et la protection contre les combos adverses.<br>Ta Resistance I permanente reduit tous les degats que tu recois de 20 pourcent — tu encaisses objectivement mieux que la plupart des roles.<br>La Frappe Kiai applique Lenteur IV pendant 2 secondes et repousse l'ennemi — utilise-la pour interrompre un combo adverse au moment le plus critique.<br>Meditation Profonde te donne Regeneration III pendant 3 secondes pour +3 coeurs et une invulnerabilite totale de 1.5 seconde — garde-la pour quand tu es entre 3 et 5 coeurs.<br>Positionne-toi en premiere ligne pour absorber les degats et proteger les roles plus fragiles comme le Guerisseur ou le Fermier.",
-"pw": [
-"<b>Frappe Kiaï</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Lenteur IV pendant 2 secondes et un knockback puissant sur l'ennemi touché.<br><span class=\"muted\">» Interrompt parfaitement les combos adverses — utilise quand tu es débordé ou encerclé.</span>",
-"<b>Méditation Profonde</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Régénération III pendant 3 secondes (soin de +3 cœurs) + invulnérabilité totale pendant 1,5 seconde.<br><span class=\"muted\">» Utilise entre 3 et 5 cœurs — jamais en plein combat actif, l'invulnérabilité ne dure qu'un instant.</span>"
-]
-},
-"Le Pirate": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque contact en mêlée : 15% de chances de désarmer l'adversaire et de lui faire lâcher son arme momentanément.<br>À chaque kill : Vitesse II pendant 5 secondes — utilise-la pour poursuivre ou te désengager.",
-"obj": "Tu es un fighter agressif avec Force I permanente et une mechanique de desarmement passif unique.<br>A chaque contact en melee, tu as 15 pourcent de chances de desarmer ton adversaire et de lui faire tomber son arme temporairement.<br>Chaque kill te donne Speed II pendant 5 secondes — enchaine les kills pour maintenir cette acceleration et pourchasser tes cibles.<br>Abordage te propulse vers l'ennemi le plus proche, inflige 2 coeurs et applique Lenteur I — commence toujours tes combats avec Abordage pour prendre l'initiative.<br>Pillage vole l'item tenu en main de l'ennemi dans 5 blocs pendant 5 secondes — desarme un archer ou un mage au meilleur moment strategique.",
-"pw": [
-"<b>Abordage</b> <span class=\"faint\">· CD 35s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash vers l'ennemi le plus proche, inflige −2 cœurs à l'impact et applique Lenteur I pendant 3 secondes.<br><span class=\"muted\">» Engage toujours avec Abordage — te donne l'initiative et l'avantage de position au combat.</span>",
-"<b>Pillage</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Vole l'item tenu en main par l'ennemi le plus proche dans un rayon de 5 blocs pendant 5 secondes.<br><span class=\"muted\">» Désarme un archer de son arc ou un mage de son bâton au meilleur moment stratégique.</span>"
-]
-},
-"Le Berserker": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Force I + Vitesse I permanents.<br>Rage passive : quand ta santé descend sous 4 cœurs, un léger boost de Force s'active automatiquement.<br>Ne fuis jamais un combat — tu es fait pour attaquer.",
-"obj": "Tu es un DPS qui devient plus dangereux plus tu prends de degats — ne fuis jamais un combat.<br>Tu as Force I et Vitesse I en permanence des le debut de la partie.<br>Quand ta sante descend sous 4 coeurs, un leger boost de Force s'active automatiquement grace a la Rage passive — continue de te battre au lieu de fuir.<br>Cri de Guerre te donne un boost de Force et Vitesse I pendant 6 secondes (CD 150s) — active-le au premier coup d'un combat.<br>Frenesie donne une Resistance legere et un boost de Force pendant 3 secondes — garde ce long cooldown (210s) pour les combats decisifs.",
-"pw": [
-"<b>Cri de Guerre</b> <span class=\"faint\">· CD 150s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde un boost de Force et Vitesse I pendant 6 secondes.<br><span class=\"muted\">» Active au premier coup d'un combat pour maximiser tes dégâts.</span>",
-"<b>Frénésie</b> <span class=\"faint\">· CD 210s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Résistance légère (−20% de dégâts) et un boost de Force pendant 3 secondes.<br><span class=\"muted\">» Réserve pour les combats de fin de partie — le cooldown long (210s) impose la prudence.</span>"
-]
-},
-"Le Fantôme": {
-"hp": "8 ♥",
-"passif": "16 PV (8 cœurs) — hors combat : ton armure se retire automatiquement et tu deviens invisible (vraie invisibilité 1.8).<br>Dès que tu attaques ou reçois un coup, ton armure revient et l'invisibilité s'efface immédiatement.<br>Moins de PV que les autres humains — ta seule protection est de rester invisible.",
-"obj": "Tu es l'assassin le plus furtif des humains grace a ton invisibilite permanente hors combat.<br>Des que tu n'es plus en combat, ton armure se retire automatiquement et tu deviens vraiment invisible — profite de ces moments pour te repositionner et prendre tes ennemis par surprise.<br>Cri de Banshee inflige Lenteur III, Nausee et Faiblesse I a tous les ennemis dans 6 blocs — active-le au milieu d'un groupe pour desorganiser tout le monde.<br>Voile du Neant te rend invisible avec Speed III pendant 5 secondes — utilise-le pour fuir apres un engagement ou pour te repositionner offensivement.<br>Avec seulement 16 PV, tu es fragile : ne reste jamais visible plus de quelques secondes et utilise chaque engagement pour disparaitre immediatement apres.",
-"pw": [
-"<b>Cri de Banshee</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Lenteur III, Nausée et Faiblesse I pendant 4 secondes à tous les ennemis dans un rayon de 6 blocs.<br><span class=\"muted\">» Active au milieu d'un groupe ennemi — désorganise tout le monde et crée une fenêtre d'attaque.</span>",
-"<b>Voile du Néant</b> <span class=\"faint\">· CD 75s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Invisibilité totale (armure retirée) + Vitesse III pendant 5 secondes — repositionnement absolu.<br><span class=\"muted\">» Fuite ou offensive — disparais complètement et repositionne-toi comme bon te semble.</span>"
-]
-},
-"Le Druide": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>En forêt ou en jungle uniquement : Régénération I s'active automatiquement (soin passif continu).<br>À chaque kill : le cooldown de l'Appel de la Meute est réduit de 25 secondes — enchaine les kills pour garder ta meute active.",
-"obj": "Tu es un invocateur dont la force vient de sa capacite a controler le terrain avec des loups combattants.<br>En foret ou en jungle, ta Regeneration I passive s'active automatiquement — choisis ces biomes pour te battre et tu auras un avantage de soin permanent.<br>Appel de la Meute invoque 2 loups avec Force I et Speed II pendant 20 secondes qui attaquent tes ennemis automatiquement — chaque kill reduit ce cooldown de 25 secondes.<br>Metamorphose te transforme en LOUP (visible par tous) pendant 30 secondes avec Force I et Vitesse II — mais elle coute -2 coeurs maximum pendant 5 minutes, donc choisis bien ton moment.<br>Ta Vitesse I permanente te permet de te repositionner facilement entre les combats. Enchaine les kills pour maintenir ta meute active en permanence.",
-"pw": [
-"<b>Appel de la Meute</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Invoque 2 loups de combat (Force I + Vitesse II + Résistance I) pendant 20 secondes — ils attaquent les ennemis automatiquement. (Aucun effet n'est appliqué sur toi — seuls les loups sont buffés.)<br><span class=\"muted\">» Excellent pour fixer une cible pendant que tu la frappes ou pour désengager.</span>",
-"<b>Métamorphose en Loup</b> <span class=\"faint\">· CD 150s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Tu te transformes en loup (visible par tous) pendant 30 secondes : Force I et Vitesse II. ⚠ Coût : tu perds -2 cœurs maximum pendant 5 minutes après la transformation.<br><span class=\"muted\">» Un pic de puissance brutal mais épuisant — choisis bien ton moment.</span>"
-]
-},
-"Le Sorcier": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>À chaque kill : le cooldown de ta Malédiction est réduit de 20 secondes — plus tu élimines, plus tu maléficies souvent.<br>Joue toujours à distance — ton épée est ton dernier recours.",
-"obj": "Tu es un controleur a distance dont toute la strategie repose sur l'affaiblissement progressif de tes ennemis.<br>Commence chaque combat avec Malediction qui applique Faiblesse II, Lenteur II et Wither I a tous les ennemis dans 15 blocs — cela change radicalement l'issue de chaque echange.<br>Chaque kill reduit le cooldown de Malediction de 20 secondes — plus tu kills, plus tu peux enchainer les malefices.<br>Drain de Vie vole 3 coeurs a l'ennemi le plus proche dans 10 blocs et te soigne simultanement du meme montant — utilise-le en plein combat pour retourner la situation.<br>Tu n'as que 18 PV et aucune Force de base : joue a distance, n'engage jamais en melee directe et laisse les effets de statut faire le travail a ta place.",
-"pw": [
-"<b>Malédiction</b> <span class=\"faint\">· CD 65s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Faiblesse II, Lenteur II et Wither I à tous les ennemis dans un rayon de 15 blocs simultanément.<br><span class=\"muted\">» Ouvre TOUS tes combats avec ça — cela change radicalement l'issue de chaque échange.</span>",
-"<b>Drain de Vie</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Vole −3 cœurs à l'ennemi le plus proche dans un rayon de 10 blocs et te soigne de +3 cœurs simultanément.<br><span class=\"muted\">» Utilise en plein combat pour retourner la situation quand tu es à court de PV.</span>"
-]
-},
-"Le Chevalier": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs). Armure Diamant Protection III dès le départ.<br>À chaque kill : soin instantané de +2 cœurs.<br>Sous 3 cœurs : Force II s'active automatiquement — continue de te battre même en mauvaise posture.",
-"obj": "Tu es le tank de premiere ligne de ton equipe avec l'armure et les stats les plus solides parmi les humains.<br>Tu disposes de Force I, Resistance I permanents et d'une armure diamant Protection III des le debut de la partie — engage toujours en tete.<br>Quand ta sante tombe sous 3 coeurs, Force II s'active automatiquement et chaque kill te soigne de 2 coeurs — continue de te battre meme en mauvaise posture.<br>Charge Heroique te propulse vers l'avant avec un knockback fort et Lenteur III sur la cible — ouvre chaque combat avec ca pour prendre l'initiative positionnelle.<br>Banniere de Combat donne Force I et Resistance I a tous tes allies dans 8 blocs pendant 10 secondes — active-la juste avant chaque assaut pour galvaniser toute ton equipe.",
-"pw": [
-"<b>Charge Héroïque</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash vers l'avant avec un knockback fort sur la cible touchée et Lenteur III pendant 3 secondes.<br><span class=\"muted\">» Ouvre chaque combat avec ça — l'avantage positionnel est décisif en mêlée.</span>",
-"<b>Bannière de Combat</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Accorde Force I et Résistance I à tous les alliés dans un rayon de 8 blocs pendant 10 secondes.<br><span class=\"muted\">» Active juste avant un assaut groupé — galvanise toute ton équipe pour le combat décisif.</span>"
-]
-},
-"Le Survivant": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — immunité aux dégâts de chute (sauts illimités sans risque).<br>Sous 6 cœurs : Régénération I s'active automatiquement — ne panique pas quand tu es bas.<br>Ta vraie force : survivant quand tout le monde te croit mort.",
-"obj": "Tu es le role qui ne meurt jamais — toutes tes mecaniques sont concues pour te permettre de te relever de n'importe quelle situation.<br>Vitesse II permanente et immunite aux degats de chute te donnent une mobilite incomparable pour eviter les combats perdus et fuir rapidement.<br>Quand ta sante descend sous 6 coeurs, Regeneration I s'active automatiquement — ne panique pas quand tu es bas, tu vas te regenerer.<br>Second Souffle te soigne instantanement de 6 coeurs mais ne peut s'utiliser que sous 4 coeurs — garde ce CD pour le dernier moment, c'est la carte qui renverse les parties perdues.<br>Instinct de Survie donne Resistance IV pendant 5 secondes ET efface tous tes effets negatifs — la meilleure reponse possible face a un Sorcier, un Chimiste ou un Hades.",
-"pw": [
-"<b>Second Souffle</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Soin instantané de +6 cœurs — Uniquement utilisable sous 4 cœurs (ne fonctionne pas si tu as plus de PV).<br><span class=\"muted\">» La carte qui renverse les parties perdues — garde-la toujours pour le dernier moment.</span>",
-"<b>Instinct de Survie</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Résistance IV pendant 5 secondes + suppression de tous les effets négatifs (Poison, Wither, Lenteur...).<br><span class=\"muted\">» Cleanse complet + bouclier — la réponse parfaite contre le Sorcier, le Chimiste ou Hadès.</span>"
-]
-},
-"Le Nécromancien": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque kill : un zombie servant est invoqué automatiquement (Force I + Vitesse II).<br>Maximum 6 zombies simultanément — gère tes kills pour maintenir une horde constante.",
-"obj": "Tu es un invocateur de horde dont la puissance augmente mecaniquement a chaque kill grace aux zombies servants.<br>Chaque ennemi que tu elimines invoque automatiquement un zombie servant avec Force I et Speed II — tu peux en avoir jusqu'a 6 simultanement.<br>Rituel des Morts invoque 2 zombies supplementaires pendant 60 secondes — utilise-le quand tu as peu de kills pour maintenir une armee constante.<br>Armee des Morts invoque 4 zombies d'un coup — combine avec les kills passifs pour atteindre rapidement la limite de 6 zombies simultanes.<br>Ta Vitesse II permanente te permet de fuir facilement pendant que ta horde continue d'attaquer. Plus la partie avance, plus tu accumules de kills et plus tu deviens dangereux.",
-"pw": [
-"<b>Rituel des Morts</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Invoque 2 zombies servants (Force I + Vitesse II) pendant 60 secondes — s'ajoutent aux zombies déjà présents.<br><span class=\"muted\">» Utilise quand tu as peu de kills — maintient une armée constante même sans éliminations.</span>",
-"<b>Armée des Morts</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Invoque 4 zombies simultanément pendant 60 secondes — maximum 6 avec les kills passifs combinés.<br><span class=\"muted\">» Le pic de puissance de ta horde — combine avec les kills pour atteindre 6 zombies immédiatement.</span>"
-]
-},
-"L'Illusionniste": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>Esquive passive : 20% de chances de schiver chaque coup reçu, avec soin instantané de +1 cœur à chaque esquive.<br>Sous 3 cœurs : un clone zombie leurre apparaît automatiquement pour attirer l'attention des ennemis.",
-"obj": "Tu es un specialist de la tromperie et du repositionnement dont la survie repose sur le mouvement permanent.<br>Tu as 20 pourcent de chances passives d'esquiver chaque coup recu et de regenerer 1 coeur lors de l'esquive — reste toujours en mouvement pour maximiser ces esquives.<br>Mirage echange instantanement ta position avec l'ennemi dans 15 blocs et lui inflige Nausee — utilise-le pour fuir, pour teleporter un ennemi dans le vide, ou pour creer de la distance.<br>Illusion Mortelle invoque un zombie-clone a ton image pendant 3 secondes puis il explose pour 2.5 coeurs et Cecite dans 4 blocs — pendant l'explosion tu es invisible 4 secondes, repositionne-toi.<br>Sous 3 coeurs, un clone zombie decoy apparait automatiquement pour attirer l'attention des ennemis. Tu n'as que 18 PV donc ne prends jamais deux coups consecutifs.",
-"pw": [
-"<b>Mirage</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Échange instantanément ta position avec l'ennemi dans un rayon de 15 blocs et lui inflige Nausée pendant 3 secondes.<br><span class=\"muted\">» Idéal pour fuir, repositionner un ennemi dans le vide ou créer une fenêtre d'attaque.</span>",
-"<b>Illusion Mortelle</b> <span class=\"faint\">· CD 65s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Clone zombie à ton image pendant 3 secondes puis explosion (−2,5 cœurs + Cécité 3s dans un rayon de 4 blocs). Pendant l'explosion : toi tu es invisible pendant 4 secondes — repositionne-toi immédiatement."
-]
-},
-"Le Mime": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>Tu mémorises automatiquement le dernier pouvoir actif utilisé par n'importe quel joueur dans un rayon de 15 blocs.<br>Tu peux imiter tout actif 1 ou actif 2 de n'importe quel rôle — même les pouvoirs de dieux et de légendes.",
-"obj": "Tu es le role le plus imprevisible du jeu car tes pouvoirs changent selon ce que tes ennemis utilisent contre toi.<br>Tu memorises automatiquement le dernier pouvoir actif utilise par n'importe quel joueur dans 15 blocs — tu peux imiter aussi bien un actif 1 qu'un actif 2.<br>Imitation utilise immediatement le pouvoir memorise — attends que ton adversaire declenche son meilleur actif pour le copier et l'utiliser contre lui.<br>Reset Copie efface le pouvoir en memoire pour en copier un nouveau — utilise-le si tu as copie un mauvais actif et que tu veux en recuperer un plus utile.<br>Avec Force I permanente et 18 PV, tu as un potentiel offensif si tu copies les bons pouvoirs. Observe avant d'agir : la patience est ta plus grande force.",
-"pw": [
-"<b>Imitation</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Utilise immédiatement le ernier pouvoir mémorisé sur toi ou sur ta cible — même les pouvoirs de dieux.<br><span class=\"muted\">» Observe et attends que l'ennemi utilise son meilleur actif, puis copie-le contre lui.</span>",
-"<b>Reset Copie</b> <span class=\"faint\">· CD 10s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Efface le pouvoir actuellement mémorisé pour pouvoir en mémoriser un nouveau immédiatement.<br><span class=\"muted\">» Utilise si tu as mémorisé un mauvais actif et que tu veux récupérer quelque chose d'utile.</span>"
-]
-},
-"Le Caméléon": {
-"hp": "9 ♥",
-"passif": "18 PV (9 cœurs) — tes stats dépendent entièrement du rôle emprunté.<br>Toutes les 10 minutes, tes pouvoirs changent automatiquement pour ceux d'un rôle aléatoire parmi les 53 disponibles.<br>Ni toi ni tes ennemis ne savez ce que tu vas obtenir — l'imprévisibilité totale est ton avantage absolu.",
-"obj": "Tu es le role du pur chaos car tes deux actifs changent completement toutes les 10 minutes en empruntant les pouvoirs d'un role aleatoire.<br>Tu peux te retrouver avec les pouvoirs de Zeus, d'Azrael, de Cleo ou de n'importe quel autre role — apprends rapidement ce que tu as et adapte ton style.<br>Revelation Forcee declenche immediatement un changement de role — utilise-la si tes pouvoirs actuels sont inutiles ou si tu veux quelque chose de plus fort.<br>Prophetie te revele quel sera ton prochain role avant le changement et te donne Regen II et Speed II pendant 5 secondes — anticipe ta prochaine identite.<br>Ta force unique est que ni tes ennemis ni toi ne savez ce que tu vas avoir — l'impredictibilite totale est ton avantage absolu.",
-"pw": [
-"<b>Révélation Forcée</b> <span class=\"faint\">· CD 5 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Déclenche immédiatement un changement de rôle aléatoire sans attendre la fin des 10 minutes normales.<br><span class=\"muted\">» Utilise si tes pouvoirs actuels sont inutiles — prends le risque d'avoir quelque chose de plus fort.</span>",
-"<b>Prophétie</b> <span class=\"faint\">· CD 3 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Révèle quel sera ton prochain rôle avant le changement automatique + Régénération II et Vitesse II pendant 5s.<br><span class=\"muted\">» Prépare ta stratégie en avance — anticipe ton prochain identité de rôle.</span>"
-]
-},
 "Zeus": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque frappe en corps-à-corps : 10% de chances d'étourdir l'adversaire avec un éclair visuel.<br>Tu es le roi de la puissance brute — le dieu qui frappe le plus fort de tout le serveur.",
-"obj": "Tu es le dieu de la puissance brute avec la Force la plus elevee du jeu et des eclairs permanents.<br>Chaque frappe en corps-a-corps a 10 pourcent de chances d'etourdir ton adversaire avec un eclair visuel — reste en melee pour maximiser ces procs.<br>Tonnerre Royal lance 6 eclairs reels en cercle dans 5 blocs qui infligent 2 coeurs, mettent le feu et appliquent Lenteur I — devastateur contre les groupes serres.<br>Jugement Divin cible un ennemi dans 25 blocs et apres 1 seconde de delai inflige 5 coeurs directs — utilise-le pour finir les fuyards ou apres Tonnerre Royal.<br>Tu es le roi du corps-a-corps et ne dois jamais jouer a distance. Reste dans la melee, enchaine les frappes et declenche tes pouvoirs sur les groupes.",
+"passif": "Force I + Résistance I. Sceptre de Zeus (Sharp III). Chaque frappe = éclair visuel ; tous les 10 coups = vrai éclair + 1♥ de dégât. Kill = éclair réel. 20 PV (10♥).",
 "pw": [
-"<b>Tonnerre Royal</b> <span class=\"faint\">· CD 70s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Frappe avec 6 éclairs réels en cercle dans un rayon de 5 blocs : chacun inflige −2 cœurs, Feu (5s) et Lenteur I.<br><span class=\"muted\">» Dévaste les groupes serrés — utilise quand plusieurs ennemis sont proches de toi.</span>",
-"<b>Jugement Divin</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Pilier de foudre ciblé sur l'ennemi dans un rayon de 25 blocs après 1 seconde de délai — inflige −5 cœurs de dégâts directs.<br><span class=\"muted\">» Cible de loin ou après un Tonnerre Royal pour achever une cible affaiblie.</span>"
+"<b>Tonnerre Royal</b> — 6 éclairs + 1♥ + Feu + Lenteur I r=5 [CD:70s]",
+"<b>Jugement Divin</b> — éclair réel sur cible r=25 (3♥) après 1s [CD:120s]"
 ]
 },
 "Thor": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque kill : une foudre réelle frappe la victime, infligeant des dégâts de zone aux ennemis proches.<br>Contre-attaque passive : 5% de chances d'invoquer une éclair réel + Lenteur I sur quiconque te frappe.",
-"obj": "Tu es le dieu de la foudre avec un pouvoir unique : chaque ennemi que tu tues declenche une foudre reelle qui blesse les joueurs proches.<br>En plus, chaque fois que tu prends un coup, tu as 5 pourcent de chances d'invoquer un eclair reel et d'infliger Lenteur I a ton attaquant — passif rare mais devastateur.<br>Frappe Tonnerre repousse tous les ennemis dans 6 blocs avec un knockback fort, 1.5 coeurs et de la foudre reelle — parfait pour interrompre un groupe ou creer de la distance.<br>Tempete de Mjolnir invoque 5 eclairs reels aleatoires dans 8 blocs — chaque ennemi touche recoite Lenteur I pendant 3 secondes, creant une zone de chaos total.<br>Joue agressif en permanence et cherche toujours a etre au milieu des ennemis pour maximiser les degats de zone de tes kills.",
+"passif": "Force I + Résistance I. Kill = foudre réelle. Contre-attaque éclair réel 5%. 20 PV (10♥).",
 "pw": [
-"<b>Frappe Tonnerre</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Foudre réelle + −1,5 cœur + knockback fort sur tous les ennemis dans un rayon de 6 blocs.<br><span class=\"muted\">» Excellent pour interrompre un groupe ou repousser plusieurs ennemis en même temps.</span>",
-"<b>Tempête de Mjölnir</b> <span class=\"faint\">· CD 65s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Invoque 5 éclairs réels aléatoires dans un rayon de 8 blocs (1 toutes les 3 ticks) — chaque ennemi touché reçoit Lenteur I pendant 3s.<br><span class=\"muted\">» Zone de chaos total — les ennemis sont ralentis et paniqués pendant plusieurs secondes.</span>"
+"<b>Frappe Tonnerre</b> — foudre + 1.5♥ + knockback fort r=6 [CD:55s]",
+"<b>Tempête de Mjolnir</b> — 5 éclairs réels aléatoires r=8 + Slow I 3s par impact [CD:65s]"
 ]
 },
 "Arès": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque kill : +1 stack de Force temporaire (1 stack max → tu frappes encore plus fort) + Régénération I pendant 5s.<br>Dieu de la guerre : sa puissance augmente avec chaque élimination — joue pour les kills, pas pour la survie.",
-"obj": "Tu es le dieu de la guerre dont la puissance augmente mecaniquement avec chaque kill que tu realises pendant la partie.<br>Tu commences avec Force I, Resistance I et Vitesse I — des stats solides des le debut qui te permettent d'engager n'importe qui avec confiance.<br>Chaque kill ajoute un stack de Force temporaire qui te monte a Force II total avec Regeneration I pendant 5 secondes — enchaine les kills pour maintenir ce niveau.<br>Furie d'Ares ajoute Force I supplementaire et une legere Vitesse pendant 10 secondes — active-la apres avoir deja un stack pour atteindre Force II total.<br>Tu n'as pas d'Actif 2 — toute ta puissance est dans l'accumulation passive et dans Furie. Joue pour les kills, pas pour la survie, et ne fuis jamais un combat.",
+"passif": "Force I base. Kill = +1 stack de Colère (max 1) + Regen I. 20 PV (10♥).",
 "pw": [
-"<b>Furie d'Arès</b> <span class=\"faint\">· CD 110s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Ajoute Force I temporaire supplémentaire pendant 10 secondes — avec 1 stack de kill actif, atteint Force II total.<br><span class=\"muted\">» Active quand tu as déjà effectué un kill pour maximiser l'effet à Force II total.</span>"
+"<b>Furie d'Arès</b> — Force II + Vitesse I 10s [CD:110s]",
+"<b>Cri de Mort</b> — Faiblesse I + Nausée r=7 5s + +2♥ soin [CD:90s]"
 ]
 },
 "Poséidon": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — stats normales hors de l'eau.<br>Dans l'eau : Force bonus, Résistance bonus, Vitesse II et Respiration infinie s'activent automatiquement.<br>Dans l'eau, tu es inarrêtable — attire toujours les combats vers l'eau pour dominer tes adversaires.",
-"obj": "Tu es le dieu de l'eau et ton potentiel en combat depend directement de la proximite de l'eau.<br>Hors de l'eau, tu as des stats normales competitives. Dans l'eau, Force I, Resistance I, Vitesse II et Respiration infinie s'activent automatiquement — tu deviens inarretable.<br>Vague Titanesque envoie une onde explosive avec un knockback fort dans 9 blocs, Cecite 2 secondes et Lenteur II — ouvre tous tes combats de groupe avec ca.<br>Noyade cible un ennemi dans 15 blocs avec Cecite 3s, Lenteur III 5s, Faiblesse 5s et 1.5 coeurs — paralysie complete d'une cible pour la finir facilement.<br>Attire toujours les combats vers l'eau en fuyant dans l'eau si possible. En mer ou en riviere, aucun adversaire ne peut te battre.",
+"passif": "Dans l'eau : Résistance II + Force I + Vitesse II + Respiration III. Depth Strider III. 20 PV (10♥).",
 "pw": [
-"<b>Vague Titanesque</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Onde explosive avec knockback fort dans un rayon de 9 blocs, Cécité (2s) et Lenteur II sur tous les ennemis touchés.<br><span class=\"muted\">» Repousse un groupe entier — ouvre tous tes combats de groupe avec ça.</span>",
-"<b>Noyade</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Cécité (3s), Lenteur III (5s), Faiblesse I (5s) et −1,5 cœur à l'ennemi dans un rayon de 15 blocs.<br><span class=\"muted\">» Paralyse complète d'une cible — idéal pour les duels ou pour finir un ennemi déjà affaibli.</span>"
+"<b>Vague Titanesque</b> — onde + knockback r=9 + Cécité + Lenteur [CD:55s]",
+"<b>Noyade</b> — Cécité + Lenteur III + Faiblesse + 1.5♥ cible r=15 [CD:80s]"
 ]
 },
 "Hadès": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Vision nocturne et immunité feu permanents.<br>Aura Wither I passive dans un rayon de 3 blocs : les ennemis proches reçoivent Wither I toutes les 2 secondes.<br>À chaque kill : soin de +2 cœurs + 1 âme collectée (utilise /me pour voir ton total d'âmes).<br>Dans le Tartare : chaque frappe inflige automatiquement Fire Aspect pendant 4 secondes.<br>Azraël est immunisé — il ne peut pas être envoyé dans les Enfers par ton Portail.",
-"obj": "Tu es le seigneur des Enfers et ton jeu consiste a accumuler des ames via les kills pour alimenter ton Portail du Tartare.<br>Ton Aura Wither I dans 3 blocs blesse continuellement tous les ennemis proches — reste toujours colle a tes adversaires en melee pour maximiser ces degats passifs.<br>Malediction des Enfers inflige Wither II, Faiblesse II et Cecite simultanement a tous les ennemis dans 10 blocs — ouvre chaque combat de groupe avec ca.<br>Portail du Tartare (coute 1 ame) teleporte tous les ennemis dans 10 blocs dans les Enfers pendant 2 minutes : feu une fois toutes les 10 secondes, regen desactivee.<br>Dans le Tartare, chaque frappe inflige Fire Aspect automatiquement et une boussole indique la direction de l'ennemi le plus proche. Azrael est immunise — il ne peut pas etre envoye dans les Enfers.",
+"passif": "Vision nocturne. Immunité feu. Aura Wither I r=3 sur ennemis proches. Kill = +2♥ + 1 âme. Force I + Résistance I (20%). 20 PV (10♥).",
 "pw": [
-"<b>Malédiction des Enfers</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige simultanément à tous les ennemis dans un rayon de 10 blocs : Wither II (5s) + Faiblesse II (5s) + Cécité (3s).<br><span class=\"muted\">» Combine avec ton Aura Wither passif pour des dégâts continus absolument dévastateurs.</span>",
-"<b>Portail du Tartare</b> <span class=\"faint\">· CD 180s — COÛT : 1 âme</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Téléporte tous les ennemis dans un rayon de 10 blocs vers le Tartare pendant 2 minutes. Dans le Tartare : feu une fois toutes les 10s et régénération désactivée. Boussole en barre d'action : direction + distance de l'ennemi le plus proche. Hermès reçoit une invitation cliquable pour te rejoindre (/tartarejoin). Azraël est immunisé et ne peut pas être envoyé dans le Tartare."
+"<b>Malédiction des Enfers</b> — Wither II + Faiblesse II + Cécité r=10 [CD:80s]",
+"<b>Portail du Tartare</b> — TP ennemis r=10 dans l'Enfer 2min — feu toutes les 10s + no regen. Hadès : Fire Aspect + boussole action bar. Hermès invité. (coûte 1 âme) [CD:180s]"
 ]
 },
 "Athéna": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Bouclier tactique passif : se régénère automatiquement toutes les 60 secondes et absorbe un coup fatal (vie supplémentaire invisible).",
-"obj": "Tu es la deesse de la strategie avec l'une des meilleures capacites de buff d'equipe de tout le jeu.<br>Force I, Resistance I et Vitesse I permanents te donnent un profil complet et equilibre qui te permet d'exceller dans n'importe quelle situation.<br>Un bouclier tactique se regenere toutes les 60 secondes et absorbe un coup fatal — tu as donc une vie supplementaire passive que personne ne peut anticiper.<br>Strategie Divine est le meilleur buff d'equipe du jeu : Force I, Vitesse I, Resistance I et Regen I a tous les allies dans 12 blocs pendant 10 secondes.<br>Egide Divine te donne Resistance III et 2 coeurs d'Absorption pendant 5 secondes — completement imprenable pendant cette duree, utilise-la face a un combo potentiellement fatal.",
+"passif": "Bouclier auto sous 1.5♥ (absorbe un coup, CD 60s). Force I + Résistance I. 20 PV.",
 "pw": [
-"<b>Stratégie Divine</b> <span class=\"faint\">· CD 100s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde Force I, Vitesse I, Résistance I et Régénération I à tous les alliés dans un rayon de 12 blocs pendant 10 secondes.<br><span class=\"muted\">» Le buff d'équipe le plus complet du jeu — active juste avant chaque assaut décisif.</span>",
-"<b>Égide Divine</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Résistance III + Absorption (+2 cœurs bonus) pendant 5 secondes — complètement imprenable.<br><span class=\"muted\">» Active face à un combo potentiellement fatal — rien ne peut te tuer pendant ces 5 secondes.</span>"
+"<b>Stratégie Divine</b> — Force I + Vitesse I + Résistance I + Regen I alliés r=12 [CD:100s]",
+"<b>Égide</b> — Résistance III + Absorption 5s [CD:50s]"
 ]
 },
 "Apollon": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Résistance au Feu permanente.<br>De jour uniquement : Résistance bonus et les attaquants reçoivent Feu pendant 4s en te frappant.<br>La nuit, tu es un dieu normal. De jour, attaquer Apollon est dangereux pour l'attaquant.",
-"obj": "Tu es le dieu du soleil dont la puissance varie selon l'heure de la journee dans le monde Minecraft.<br>De jour uniquement, une Resistance I supplementaire s'active qui reduit tes degats recus de 20 pourcent en plus de ta Resistance au Feu permanente.<br>De jour, tous les joueurs qui te frappent au contact prennent Feu pendant 4 secondes — attaquer Apollon de jour est couteux pour l'attaquant.<br>Rayon Solaire inflige Feu 10s, 2 coeurs et Cecite 3s a tous les ennemis en ligne de vue dans 12 blocs — encore plus efficace de jour car tu encaisses moins.<br>Benediction Solaire te soigne de 3 coeurs (ou 6 coeurs de jour) et donne Force I et Vitesse I pendant 5 secondes — garde-la pour les urgences et utilise-la preferentiellement de jour.",
+"passif": "Vitesse I + Résist Feu permanents. De jour : Résist I. Attaquants brûlent de jour. 20 PV.",
 "pw": [
-"<b>Rayon Solaire</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Feu (10s), −2 cœurs et Cécité (3s) à tous les ennemis en ligne de vue dans un rayon de 12 blocs.<br><span class=\"muted\">» Encore plus puissant de jour — éblouit et brûle simultanément toute une ligne d'ennemis.</span>",
-"<b>Bénédiction Solaire</b> <span class=\"faint\">· CD 70s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Soin de +3 cœurs (ou +6 cœurs si utilisé de jour) + Force I et Vitesse I pendant 5 secondes.<br><span class=\"muted\">» Utilise de jour pour le double soin — garde pour les urgences, jamais par précaution.</span>"
+"<b>Rayon Solaire</b> — feu 10s + 2♥ + Cécité ennemis en vue r=12 [CD:50s]",
+"<b>Bénédiction Solaire</b> — soin +3♥ (+6♥ de jour) + Force I + Vitesse I temp [CD:70s]"
 ]
 },
 "Hermès": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>À chaque kill : le cooldown de ta Téléportation est réduit de 10 secondes — enchaîne les kills pour te téléporter quasi en continu.<br>Allié de Hadès : tu reçois une invitation cliquable pour rejoindre le Tartare avec /tartarejoin.",
-"obj": "Tu es le dieu de la vitesse avec Vitesse II permanente, ce qui fait de toi le joueur le plus rapide du serveur.<br>Tu n'as aucune Force ni Resistance de base — tu n'es pas fait pour te battre en frontal mais pour te repositionner, fuir et harceler.<br>Chaque kill reduit le cooldown de ta Teleportation de 10 secondes — enchaine les kills pour te teleporter presque en permanence.<br>Teleportation Eclair te deplace instantanement a une position sure aleatoire dans la bordure — la fuite la plus rapide du jeu.<br>Vol de Mercure est un bond directionnel rapide avec propulsion x3 — son cooldown de 20 secondes en fait un outil quasi-permanent. En tant qu'allie de Hades, tu recois une invitation cliquable pour rejoindre le Tartare avec /tartarejoin.",
+"passif": "Vitesse I permanent. Kill = CD téléport -10s. Coup reçu = Speed légèrement augmentée. 18 PV (9♥).",
 "pw": [
-"<b>Téléportation Éclair</b> <span class=\"faint\">· CD 75s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Déplacement aléatoire instantané à une position sûre à l'intérieur de la frontière — la fuite la plus rapide du jeu.<br><span class=\"muted\">» Chaque kill réduit ce cooldown de 10 secondes — enchaîne les kills pour te téléporter quasi-en permanence.</span>",
-"<b>Vol de Mercure</b> <span class=\"faint\">· CD 20s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Bond directionnel rapide dans la direction visée (propulsion ×3, hauteur +1,5).<br><span class=\"muted\">» Fuite ou engagement en 0,2 seconde — cooldown ultra-court pour une utilisation quasi-permanente.</span>"
+"<b>Téléportation</b> — déplacement aléatoire dans la bordure [CD:60s]",
+"<b>Vol de Mercure</b> — bond directionnel rapide [CD:20s]"
 ]
 },
 "Héphaistos": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — immunité feu totale permanente.<br>La lave, le feu, le Fire Aspect et les explosions enflammées ne te font strictement rien.",
-"obj": "Tu es le dieu du feu et des explosions avec une immunite totale aux flammes et des capacites devastatrices de zone.<br>Force I et Resistance I permanents plus une immunite feu totale te rendent tres solide en combat — la lave, le feu et le Fire Aspect ne te font strictement rien.<br>Tu demarres avec l'Artefact Marteau d'Hephaistos dans ton inventaire — un avantage immediat que peu de roles ont des le debut de la partie.<br>Explosion de Forge cree une explosion de lave sur l'ennemi le plus proche dans 3.5 blocs et le met en feu 5 secondes — tu es immunise a ta propre explosion, utilise-la sans risque.<br>Pluie de Lave cree 5 explosions en etoile autour de toi — zone de destruction massive pour les combats de groupe. Garde ce long cooldown pour quand tu es entoure.",
+"passif": "Immunité feu. Force I + Résistance I. Artefact Marteau de départ. 20 PV (10♥).",
 "pw": [
-"<b>Explosion de Forge</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Explosion de lave sur l'ennemi le plus proche dans un rayon de 3,5 blocs + Feu pendant 5 secondes.<br><span class=\"muted\">» Dégâts massifs en zone — tu es immunisé à ta propre explosion grâce à ton immunité feu.</span>",
-"<b>Pluie de Lave</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Crée 5 explosions de lave en étoile autour de toi (rayon de 2,5 blocs chacune).<br><span class=\"muted\">» Zone de destruction massive — garde pour les combats de groupe serrés, tu es immunisé à ta propre lave.</span>"
+"<b>Explosion de Forge</b> — explosion lave ciblée rayon 3.5 + feu [CD:90s]",
+"<b>Pluie de Lave</b> — 5 explosions en étoile autour de soi [CD:120s]"
 ]
 },
 "Artémis": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Vision nocturne permanente.<br>Tu démarres avec un arc et 32 flèches : chaque flèche que tu tires inflige le double des dégâts normaux.<br>Personne ne peut se cacher dans le noir de toi.",
-"obj": "Tu es la chasseresse divine avec des fleches qui infligent le double des degats normaux — chaque flèche que tu tires fait deux fois plus mal que pour n'importe qui d'autre.<br>Force I, vision nocturne permanente et un arc plus 32 fleches de depart font de toi l'archeresse la plus puissante du jeu des le premier instant.<br>Pluie de Fleches envoie 8 fleches enflammees simultanement vers ta cible dans 25 blocs — zone de degats massive sur un groupe serre.<br>Oeil du Chasseur revele les PV exacts et la distance de tous les ennemis dans 50 blocs et partage cette info avec tes allies — son court cooldown de 35 secondes permet une utilisation tres frequente.<br>Reste toujours a plus de 10 blocs de distance, ne t'engages jamais en melee et utilise l'Oeil regulierement pour garder une vision complete du champ de bataille.",
+"passif": "Dégâts d'arc x2. Force I. Vision nocturne. 20 PV (10♥).",
 "pw": [
-"<b>Pluie de Flèches</b> <span class=\"faint\">· CD 75s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Lance 8 flèches enflammées simultanément vers la cible dans un rayon de 25 blocs — chacune inflige le double des dégâts normaux.<br><span class=\"muted\">» Zone de dégâts massive — parfait sur un groupe serré ou pour couvrir une retraite.</span>",
-"<b>Œil du Chasseur</b> <span class=\"faint\">· CD 35s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Révèle les PV exacts et la distance de tous les ennemis dans un rayon de 50 blocs — résultats dans le chat.<br><span class=\"muted\">» Cooldown court (35s) — utilise très souvent et partage systématiquement avec tes alliés.</span>"
+"<b>Pluie de Flèches</b> — 8 flèches enflammées vers cible r=25 [CD:75s]",
+"<b>Oeil du Chasseur</b> — révèle PV + distance ennemis r=50 [CD:35s]"
 ]
 },
 "Chronos": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs). Tu démarres avec une Épée Diamant Tranchant III.<br>Tous tes cooldowns sont automatiquement réduits de 20% — tu peux utiliser tes pouvoirs bien plus souvent.<br>Toutes les 10 frappes d'épée : Lenteur II pendant 5 secondes sur la cible. Tes PV sont sauvegardés toutes les 15 secondes pour le Rembobinage.",
-"obj": "Tu es le maitre du temps et tu controles le rythme du combat grace a tes ralentissements et a ta capacite unique de revenir en arriere sur tes propres PV.<br>Tous tes cooldowns sont automatiquement reduits de 20 pourcent — tu peux utiliser tes pouvoirs plus souvent que n'importe quel autre dieu.<br>Toutes les 10 frappes d'epee, tu infliges Lenteur II pendant 5 secondes sur ta cible — un ralentissement passif regulier en combat soutenu.<br>Distorsion Temporelle est l'un des meilleurs controles de masse du jeu : Lenteur III et Faiblesse I sur tous les ennemis dans 10 blocs pendant 5 secondes, ils sont quasi-immobiles.<br>Rembobinage restaure tes HP au niveau de la derniere sauvegarde automatique (toutes les 15 secondes) et efface tous tes effets negatifs — active-le AVANT d'etre en danger, pas apres, car la sauvegarde doit etre haute.",
+"passif": "CDs -20%. Tous les 10 coups d'épée : Lenteur II 5s sur la cible. 18 PV (9 ♥).",
 "pw": [
-"<b>Distorsion Temporelle</b> <span class=\"faint\">· CD 45s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Lenteur III et Faiblesse I pendant 5 secondes à tous les ennemis dans un rayon de 10 blocs — quasi-immobilisation totale.<br><span class=\"muted\">» Contrôle de masse absolu — utilise pour créer une fenêtre d'attaque ou fuir en sécurité.</span>",
-"<b>Rembobinage</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Restaure tes PV au niveau de la derniêre sauvegarde (toutes les 15s) + supprime tous les effets négatifs. Si sauvegardé à 18 PV → soin presque complet. » Active AVANT d'être en danger, pas après — la sauvegarde doit être haute."
+"<b>Distorsion Temporelle</b> — Lenteur III + Faiblesse I aux ennemis r=10 (5s) [CD 45s]",
+"<b>Rembobinage</b> — restaure tes HP sauvegardés (0-15s) + retire tous tes effets négatifs [CD 80s]"
 ]
 },
 "Loki": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Après chaque lancer de Perle d'Ender : invisibilité automatique pendant 30 secondes (vraie invisibilité 1.8 sans particules).<br>À chaque kill : +2 Perles d'Ender en bonus — plus tu élimines, plus tu peux te rendre invisible.",
-"obj": "Tu es le dieu de la tromperie dont toute la puissance repose sur l'element de surprise et la desinformation.<br>Apres chaque lancer de Perle d'Ender, tu deviens invisible pendant 30 secondes sans particules — une vraie invisibilite 1.8 que personne ne peut detecter. Tu recois 2 perles supplementaires par kill.<br>Tromperie echange instantanement ta position avec l'ennemi le plus proche, te rend invisible 3 secondes et lui inflige Nausee — desoriente totalement la cible.<br>Metamorphose de Loki te donne l'apparence exacte d'un joueur proche pendant 10 secondes — deguisement parfait qui peut pousser les alliés et ennemis a t'attaquer par erreur.<br>Ne t'engage jamais sans avoir prepare ton attaque. Perle pour l'invis, repositionne-toi, frappe quand personne ne t'attend, perle pour fuir.",
+"hp": "9 ♥",
+"passif": "Invis 30s après perle (sans particules). +2 perles/kill. Force I. 18 PV (9♥).",
 "pw": [
-"<b>Tromperie</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Échange instantanément ta position avec l'ennemi le plus proche, te rend invisible pendant 3 secondes et lui inflige Nausée.<br><span class=\"muted\">» Désoriente totalement — l'ennemi se retrouve là où tu étais, toi tu disparais dans son dos.</span>",
-"<b>Métamorphose de Loki</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Prend l'apparence visuelle exacte d'un joueur proche pendant 10 secondes — déguisement parfait.<br><span class=\"muted\">» Alliés et ennemis t'attaqueront par erreur — utilise pour semer la confusion totale.</span>"
+"<b>Tromperie</b> — échange position + invisible 3s + Nausée ennemi [CD:50s]",
+"<b>Métamorphose</b> — skin + nom + armure d'un ennemi proche, visible par tous, 10s [CD:90s]"
+]
+},
+"Le Fermier": {
+"hp": "10 ♥",
+"passif": "Houe Efficacité III. Or x2 passif. 20 PV (10♥), sans Force.",
+"pw": [
+"<b>Soin de Groupe</b> — +2♥ aux alliés dans 8 blocs [CD:120s]",
+"<b>Banquet</b> — nourriture max + 3 steaks [CD:120s]"
+]
+},
+"Le Forgeron": {
+"hp": "10 ♥",
+"passif": "Haste I si armure complète. Pioche Efficacité IV + Fortune II. 20 PV.",
+"pw": [
+"<b>Armure Renforcée</b> — Résistance II + Haste III pendant 15s [CD:120s]",
+"<b>Forge Express</b> — ouvre un établi portable [CD:30s]"
+]
+},
+"L'Archer": {
+"hp": "10 ♥",
+"passif": "Arc Power III + Flame I. Toutes les flèches brûlent. 20 PV.",
+"pw": [
+"<b>Tir Perce-Armure</b> — flèche x1.5 dégâts + feu 15s [CD:90s]",
+"<b>Volée</b> — 5 flèches enflammées simultanées [CD:55s]"
+]
+},
+"Le Guérisseur": {
+"hp": "10 ♥",
+"passif": "Régénération I permanente. 20 PV.",
+"pw": [
+"<b>Soin Pulsé</b> — +1♥ toutes les 2s aux alliés r=6 pendant 10s [CD:60s]",
+"<b>Résurrection</b> — +5♥ à l'allié le plus blessé r=10 [CD:90s]"
+]
+},
+"L'Éclaireur": {
+"hp": "9 ♥",
+"passif": "Vision nocturne. Vitesse II permanent. 18 PV.",
+"pw": [
+"<b>Dash</b> — propulsion avant + Vitesse II 1.5s [CD:70s]",
+"<b>Radar</b> — révèle position + PV ennemis r=40 [CD:50s]"
+]
+},
+"Le Bûcheron": {
+"hp": "10 ♥",
+"passif": "Hache Efficacité IV. +1 PV max par kill (max +6). 20 PV (10♥). Pas de Force de base.",
+"pw": [
+"<b>Rage</b> — Force I + Vitesse I + Haste I 8s [CD:100s]",
+"<b>Tremblement</b> — knockback + 1♥ aux ennemis r=5 [CD:45s]"
+]
+},
+"Le Chimiste": {
+"hp": "9 ♥",
+"passif": "Résistance au poison. Premier coup = Poison I sur la cible. 18 PV.",
+"pw": [
+"<b>Nuage Toxique</b> — Poison II + Faiblesse II sur ennemis r=5 6s [CD:120s]",
+"<b>Brûlure Acide</b> — Feu 8s + Poison II + Lenteur I cible r=15 [CD:55s]"
+]
+},
+"Le Trappeur": {
+"hp": "10 ♥",
+"passif": "Vision nocturne. Pièges invisibles jusqu'au déclenchement. 20 PV.",
+"pw": [
+"<b>Piège Zone</b> — pose 3 pièges autour de soi (dégâts + Lenteur) [CD:90s]",
+"<b>Lasso</b> — immobilise l'ennemi le plus proche r=10 5s [CD:35s]"
+]
+},
+"Le Moine": {
+"hp": "10 ♥",
+"passif": "Résistance I permanent. Régénération I dans 5 blocs autour de soi. 20 PV.",
+"pw": [
+"<b>Aura de Paix</b> — Résistance II + Regen I aux alliés r=7 9s [CD:120s]",
+"<b>Frappe Kiai</b> — 2♥ + Nausée + Lenteur II ennemis r=4 [CD:30s]"
+]
+},
+"Le Pirate": {
+"hp": "10 ♥",
+"passif": "Force I permanent. Chance de désarmer au contact. 20 PV.",
+"pw": [
+"<b>Abordage</b> — charge + 2♥ + Lenteur I à l'impact [CD:80s]",
+"<b>Pillage</b> — vole l'item en main de l'ennemi r=5 [CD:60s]"
+]
+},
+"Le Berserker": {
+"hp": "10 ♥",
+"passif": "Force I + Vitesse I permanents. Rage &lt;4♥ = léger boost de Force. 20 PV.",
+"pw": [
+"<b>Cri de Guerre</b> — Force + Vitesse I 6s [CD:150s]",
+"<b>Frénésie</b> — Résistance légère + Force 3s [CD:210s]"
+]
+},
+"Le Fantôme": {
+"hp": "8 ♥",
+"passif": "Hors combat : armure retirée + invisibilité + Vitesse I. En combat : armure remise. 16 PV (8♥).",
+"pw": [
+"<b>Voile Fantôme</b> — invisible 12s + Vitesse II (force, armure retirée) [CD:150s]",
+"<b>Banshee</b> — Cécité + Lenteur II + Nausée ennemis r=8 [CD:65s]"
+]
+},
+"Le Druide": {
+"hp": "10 ♥",
+"passif": "Animaux neutres. Régénération I en forêt/jungle. 20 PV.",
+"pw": [
+"<b>Appel Meute</b> — 2 loups (Force I + Vitesse II + Résistance I) 20s — aucun effet sur toi [CD:150s]",
+"<b>Métamorphose en LOUP 30s</b> — Force I + Vitesse II. Coût : -2♥ max pendant 5min [CD:150s]"
+]
+},
+"Le Sorcier": {
+"hp": "9 ♥",
+"passif": "Wither I au premier coup. Résistance partielle aux effets négatifs. 18 PV.",
+"pw": [
+"<b>Malédiction</b> — Faiblesse II + Lenteur II + Wither I r=15 [CD:120s]",
+"<b>Drain de Vie</b> — vole 3♥ à l'ennemi le plus proche r=10 [CD:50s]"
+]
+},
+"Le Chevalier": {
+"hp": "10 ♥",
+"passif": "Résistance I permanent. Knockback réduit. Armure fer Prot II. 20 PV (10♥).",
+"pw": [
+"<b>Charge</b> — fonce + étourdit ennemis r=2 3s [CD:90s]",
+"<b>Bannière</b> — Force I + Résistance I alliés r=8 10s [CD:80s]"
+]
+},
+"Le Survivant": {
+"hp": "10 ♥",
+"passif": "Immunité chutes. Régénération I sous 6♥. Vitesse II. 20 PV (10♥).",
+"pw": [
+"<b>Second Souffle</b> — PV max + Absorption + Résistance 5s [CD:120s]",
+"<b>Adrénaline</b> — Vitesse II + Saut II + Regen I 8s [CD:45s]"
+]
+},
+"Le Nécromancien": {
+"hp": "9 ♥",
+"passif": "Kill = zombie allié avec équipement du mort (3min). 18 PV.",
+"pw": [
+"<b>Rituels des Morts</b> — 2 serviteurs zombies 60s [CD:60s]",
+"<b>Drain d'Âme</b> — 2♥ volés à la cible r=12 + Régén [CD:40s]"
+]
+},
+"L'Illusionniste": {
+"hp": "9 ♥",
+"passif": "20% de chance d'esquiver un coup (rend 1♥). 18 PV, Speed I.",
+"pw": [
+"<b>Mirage</b> — échange de position avec ennemi r=15 + Nausée [CD:30s]",
+"<b>Illusion Mortelle</b> — clone zombie qui explose 3s après (2.5♥ r=4) [CD:65s]"
+]
+},
+"Le Mime": {
+"hp": "9 ♥",
+"passif": "Copie automatiquement le dernier pouvoir utilisé par un ennemi r=15. 18 PV, Force I.",
+"pw": [
+"<b>Imitation</b> — utilise le pouvoir copié [CD:30s]",
+"<b>Reset Copie</b> — efface le pouvoir mémorisé [CD:10s]"
+]
+},
+"Le Caméléon": {
+"hp": "9 ♥",
+"passif": "Toutes les 10 min : emprunte automatiquement les pouvoirs d'un rôle aléatoire. Timer en actionbar. 18 PV.",
+"pw": [
+"<b>Mimétisme</b> — force un nouveau tirage immédiat [CD:5min]",
+"<b>Boost Emprunté</b> — Régén II + Vitesse II + Force II 5s [CD:3min]"
 ]
 },
 "Jeanne d'Arc": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — immunité feu permanente (lave, feu, Fire Aspect sans effet).<br>Aura de protection : tous les alliés dans un rayon de 5 blocs reçoivent Résistance I temporaire de manière continue.",
-"obj": "Tu es un leader a la fois offensif et defensif avec des stats solides et une immunite complete au feu.<br>Force I, Resistance I, Vitesse I et Immunite au Feu en permanence font de toi l'un des roles les plus polyvalents du jeu.<br>Ton aura passive donne Resistance I temporaire a tous les allies dans 5 blocs — reste groupe avec ton equipe pour distribuer cette protection en continu.<br>Elan Divin te propulse vers l'avant en charge et met le feu dans 3 blocs a l'impact — ouvre chaque combat avec ca pour prendre l'initiative et punir immediatement.<br>Voix des Saints est l'un des meilleurs buffs d'equipe du jeu : +4 coeurs de soin, Force I, Vitesse I, Resistance I et Regen I a tous les allies dans 12 blocs pendant 10 secondes. Garde-le pour les moments decisifs.",
+"passif": "Immunité feu. Aura Résistance I alliés r=5. Contre-attaque feu sous 4♥. 20 PV (10♥).",
 "pw": [
-"<b>Élan Divin</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Charge fulgurante dans la direction visée et met en feu tous les ennemis dans un rayon de 3 blocs à l'impact.<br><span class=\"muted\">» Ouvre chaque combat — punition céleste instantanée et avantage positionnel immédiat.</span>",
-"<b>Voix des Saints</b> <span class=\"faint\">· CD 120s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Soin de +4 cœurs + Force I, Vitesse I, Résistance I et Régénération I à tous les alliés dans un rayon de 12 blocs pendant 10s.<br><span class=\"muted\">» Le buff d'équipe le plus complet du jeu — garde pour les assauts absolument décisifs.</span>"
+"<b>Élan Divin</b> — charge + feu r=3 + éclair [CD:90s]",
+"<b>Voix des Saints</b> — +4♥ + Force + Vitesse + Résistance + Regen alliés r=12 [CD:120s]"
 ]
 },
 "Alexandre le Grand": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque kill : Force temporaire supplémentaire pendant 5 secondes, cumulable si plusieurs kills rapides.<br>Plus tu enchaînes les kills, plus ta Force monte — joue pour les éliminations constamment.",
-"obj": "Tu es le conquerant absolu dont la puissance augmente exponentiellement avec chaque kill realise rapidement.<br>Tu demarres avec Force II, Resistance I et Vitesse I — parmi les meilleures stats de base de tout le jeu.<br>Chaque kill t'ajoute Force II temporaire supplementaire pendant 5 secondes, cumulable si plusieurs kills rapides — enchaine les kills pour une puissance massive.<br>Phalange est le buff d'equipe ultime pre-combat : Force II, Resistance II et Vitesse I a tous les allies dans 10 blocs pendant 10 secondes — active juste avant chaque assaut.<br>Conquete te teleporte sur l'ennemi dans 20 blocs et inflige 4 coeurs plus Lenteur II pendant 3 secondes — aucune fuite possible pour ta cible. Joue pour les kills : ta puissance ne connait pas de plafond.",
+"passif": "Force I base. Kill = +10%/stack Force temp (max 4). 20 PV (10♥).",
 "pw": [
-"<b>Phalange</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde Force II, Résistance II et Vitesse I à tous les alliés dans un rayon de 10 blocs pendant 10 secondes.<br><span class=\"muted\">» Buff d'équipe décisif avant chaque combat — ne l'économise pas pour la fin, utilise-le souvent.</span>",
-"<b>Conquête</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Téléportation sur l'ennemi le plus proche dans un rayon de 20 blocs, inflige −4 cœurs et Lenteur II pendant 3 secondes.<br><span class=\"muted\">» Agression offensive foudroyante — aucune fuite possible pour ta cible.</span>"
+"<b>Phalange</b> — Force I + Résistance I alliés r=10 8s [CD:75s]",
+"<b>Conquête</b> — téléport sur ennemi + 2.5♥ + Lenteur I r=20 [CD:120s]"
 ]
 },
 "Napoléon Bonaparte": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>Tous tes cooldowns sont automatiquement réduits de 15% — fréquence de pouvoirs supérieure à la moyenne.<br>Tu démarres avec 3 TNT dans ton inventaire — utilise-les tôt avant de les perdre.",
-"obj": "Tu es un stratege explosif dont tous les cooldowns sont reduits de 15 pourcent et qui commence la partie avec 3 TNT dans l'inventaire.<br>Force I et Resistance I permanents avec 18 PV — stats solides mais pas exceptionnelles, c'est ta frequence de pouvoirs qui fait ta difference.<br>Manoeuvre Tactique te teleporte dans le dos de l'ennemi dans 20 blocs avec Speed II pendant 3 secondes — son cooldown tres court permet de l'utiliser quasi en permanence.<br>Canon Imperial cree une explosion de rayon 4.5 sur un ennemi dans 20 blocs apres 2 secondes de delai — previens ton equipe des 2 secondes d'attente et retire-toi avant l'explosion.<br>Tu es un stratege, pas un guerrier en frontal. Joue a distance, utilise les explosions et les repositionnements plutot que de t'exposer en melee.",
+"passif": "Force I + Résistance I. CDs -15%. TNT x3 de départ. 18 PV (9♥).",
 "pw": [
-"<b>Manœuvre Tactique</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Téléportation instantanée dans le dos de l'ennemi dans un rayon de 20 blocs + Vitesse II pendant 3 secondes.<br><span class=\"muted\">» Cooldown très court — repositionnement quasi-permanent en combat tout au long de la partie.</span>",
-"<b>Canon Impérial</b> <span class=\"faint\">· CD 100s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Explosion TNT dans un rayon de 4,5 blocs sur un ennemi dans un rayon de 20 blocs après 2 secondes de délai.<br><span class=\"muted\">» Préviens ton équipe des 2s d'attente — retire-toi avant l'explosion pour éviter les dégâts alliés.</span>"
+"<b>Manoeuvre Tactique</b> — téléport dans le dos + Vitesse II [CD:30s]",
+"<b>Canon</b> — explosion rayon 4.5 ciblée après 2s [CD:100s]"
 ]
 },
 "Spartacus": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Rage passive : chaque coup reçu accumule 1 stack de Force temporaire supplémentaire — plus l'ennemi te frappe, plus tu deviens fort.<br>Tu es le contre-attaquant idéal — ne recule jamais, laisse l'ennemi créer sa propre perte.",
-"obj": "Tu es le gladiateur de contre-attaque dont la particularite unique est de devenir plus dangereux a mesure que tu prends des coups.<br>Tu commences avec Force II, Resistance I et Vitesse II — l'un des kits de base les plus puissants du jeu.<br>Chaque coup recu accumule des stacks de Force supplementaire temporaires — plus l'ennemi te frappe, plus tu deviens fort en retour.<br>Gladius fait que ton prochain coup d'epee inflige le double des degats normaux plus Speed II — son cooldown de seulement 20 secondes te permet de l'utiliser tres regulierement.<br>Revolte annule tous tes effets negatifs ET repousse tous les ennemis dans 8 blocs — cleanse plus anti-melee combines. La reponse parfaite contre les controleurs comme le Sorcier ou Hades.",
+"passif": "Force I. Tous les 3 coups reçus : +1 stack Force (max II, 15%). 20 PV (10♥).",
 "pw": [
-"<b>Gladius</b> <span class=\"faint\">· CD 20s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Ton prochain coup d'épée inflige ×2 dégâts normaux, puis te donne Vitesse II pendant 2 secondes après la frappe.<br><span class=\"muted\">» Cooldown très court (20s) — enchaîne régulièrement pendant toute la durée du combat.</span>",
-"<b>Révolte des Gladiateurs</b> <span class=\"faint\">· CD 80s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Supprime tous les effets négatifs en un instant et repousse tous les ennemis dans un rayon de 8 blocs avec knockback.<br><span class=\"muted\">» Cleanse + anti-mêlée combinés — la réponse parfaite contre le Sorcier ou le Chimiste.</span>"
+"<b>Gladius</b> — prochain coup x1.5 dégâts + Vitesse I [CD:25s]",
+"<b>Révolte</b> — annule effets négatifs + repousse ennemis r=8 [CD:80s]"
 ]
 },
 "Cléopâtre": {
 "hp": "8 ♥",
-"passif": "16 PV (8 cœurs) — immunité au poison totale.<br>Contact mêlée passif : Poison I pendant 2 secondes sur l'ennemi touché.<br>Quiconque te frappe reçoit Lenteur I pendant 1 seconde.",
-"obj": "Tu es une empoisonneuse a distance dont toute la puissance repose sur les effets passifs et les debuffs de zone.<br>Vitesse II permanente et immunite poison — personne ne peut te rattraper facilement et les attaques empoisonnees ne t'affectent pas.<br>Chaque fois que tu touches quelqu'un en melee, tu lui appliques Poison I pendant 2 secondes passivement — et quand quelqu'un te frappe, il recoite Lenteur I pendant 1 seconde.<br>Seduction applique Lenteur II et Faiblesse I a tous dans 8 blocs pendant 3 secondes — affaiblit instantanement un groupe entier, parfait pour fuir ou preparer un soin.<br>Venin du Cobra combine Poison I et Wither I sur tous dans 5 blocs — les degats sur la duree combinés avec ton contact passif epuisent les adversaires. Ne te bats jamais en frontal avec tes 16 PV.",
+"passif": "Immunité poison. Contact = Poison I 2s. Charme = Lenteur I 1s sur attaquant. 16 PV (8♥).",
 "pw": [
-"<b>Séduction</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige Lenteur II et Faiblesse I à tous les ennemis dans un rayon de 8 blocs pendant 3 secondes.<br><span class=\"muted\">» Affaiblit instantanément tout un groupe — idéal pour fuir ou créer l'opportunité d'un soin.</span>",
-"<b>Venin du Cobra</b> <span class=\"faint\">· CD 130s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Poison I (4s) et Wither I (3s) à tous les ennemis dans un rayon de 5 blocs simultanément.<br><span class=\"muted\">» Combine avec ton contact passif (Poison I automatique) pour maximiser les dégâts sur la durée.</span>"
+"<b>Séduction</b> — Lenteur II + Faiblesse I cible r=8 3s [CD:90s]",
+"<b>Venin du Cobra</b> — Poison I + Wither I ennemis r=5 [CD:130s]"
 ]
 },
 "Sun Tzu": {
 "hp": "8 ♥",
-"passif": "16 PV (8 cœurs). Tous tes cooldowns sont réduits de 25% (le bonus CD le plus élevé du jeu).<br>Radar permanent en barre d'action : tu vois en continu les noms et positions de tous les ennemis dans un rayon de 10 blocs.",
-"obj": "Tu es le stratege ultime avec un radar permanent et les cooldowns les plus courts de toutes les legendes.<br>Tous tes pouvoirs ont leurs cooldowns reduits de 25 pourcent et tu vois en permanence les ennemis dans 10 blocs grace a ton radar passif en action bar.<br>Art de la Guerre echange ta position avec l'ennemi le plus proche et lui inflige Nausee et Cecite — teleporte un ennemi dans une position dangereuse pour lui.<br>Brume de Guerre inflige Cecite 4s, Lenteur II 5s et Nausee 3s a tous dans 7 blocs — confusion totale qui rend les ennemis incapables de reagir correctement pendant plusieurs secondes.<br>Avec seulement 16 PV, tu n'encaisses pas : tes CDs courts et ton radar te permettent d'agir toujours avant les autres. La victoire est decidee avant le premier coup.",
+"passif": "CDs -25%. Voit les ennemis r=10 en permanence. Vitesse I. 16 PV (8♥).",
 "pw": [
-"<b>Art de la Guerre</b> <span class=\"faint\">· CD 35s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Échange ta position avec l'ennemi le plus proche et lui inflige Nausée (3s) et Cécité (2s).<br><span class=\"muted\">» Repositionne l'ennemi dans une position dangereuse pour lui — stratégie avant tout.</span>",
-"<b>Brume de Guerre</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Cécité (4s), Lenteur II (5s) et Nausée (3s) à tous les ennemis dans un rayon de 7 blocs.<br><span class=\"muted\">» Confusion totale — les ennemis sont incapables de réagir correctement pendant plusieurs secondes.</span>"
+"<b>Art de la Guerre</b> — échange de position avec l'ennemi + Nausée + Cécité [CD:35s]",
+"<b>Brume de Guerre</b> — Cécité + Lenteur II + Nausée ennemis r=7 [CD:55s]"
 ]
 },
 "Le Vengeur": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>À chaque mort d'un allié : +1 stack de Force temporaire (max 1 stack → tu frappes bien plus fort).<br>Plus ton équipe souffre, plus tu deviens inarrêtable — tu es fait pour les retournements de situation.",
-"obj": "Tu es un role a snowball inverse dont la force augmente directement proportionnellement aux morts de tes allies.<br>Tu commences avec Force I et Vitesse I — correct mais pas exceptionnel, c'est ta progression par la mort alliee qui te distingue.<br>Chaque fois qu'un de tes allies meurt, tu gagnes un stack de Force qui te monte a Force II total — plus ton equipe souffre, plus toi tu deviens inarretable.<br>Vengeance active Force II temporaire et Vitesse I — combine avec tes stacks passifs pour des pics de puissance enormes apres plusieurs morts alliees.<br>Execution : si ta cible est sous 5 coeurs, ton prochain coup fait le triple des degats normaux avec un cooldown de seulement 30 secondes — finisseur imparable sur les cibles affaiblies.",
+"passif": "Mort d'allié = +Force temp 1 stack max. Force I base. 18 PV (9♥).",
 "pw": [
-"<b>Vengeance</b> <span class=\"faint\">· CD 75s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Accorde Force II temporaire et Vitesse I (+20%) pendant 5 secondes — encore plus puissant avec des stacks passifs actifs.<br><span class=\"muted\">» Plus ton équipe souffre, plus ce pouvoir est fort — tu es fait pour les retournements.</span>",
-"<b>Exécution</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Si la cible est sous 5 cœurs : ton prochain coup d'épée inflige ×3 dégâts normaux.<br><span class=\"muted\">» Cooldown court (30s) — utilise souvent sur les cibles déjà affaiblies par tes alliés.</span>"
+"<b>Vengeance</b> — Force II + Vitesse I 5s [CD:75s]",
+"<b>Exécution</b> — si cible &lt; 5♥, prochain coup x3 dégâts [CD:30s]"
 ]
 },
 "Romulus": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Barre d'action : direction et distance de Remus affichées en permanence. Remus est alerté quand tu es attaqué.<br>Kill à moins de 15 mètres de Remus : +1 stack Fraternité de Sang (max 3 stacks, bonus de Force croissant).",
-"obj": "Tu es la moitie offensive du duo Romulus-Remus avec une synergie unique quand tu combats a cote de Remus.<br>Force I, Resistance I et Vitesse I permanents — un profil equilibre et solide qui te permet de te battre contre n'importe qui.<br>Quand tu kills a moins de 15 metres de Remus, tu accumules des stacks Fratrie de Sang (max 3) qui augmentent progressivement ta Force — restez groupes.<br>Morsure du Loup te propulse vers l'ennemi et les 2 prochains coups infligent Poison I et Faim — les effets de maladie combinés epuisent ta cible sur la duree.<br>Cri d'Alpha avec Remus proche donne Force II, Speed II et Regen I au duo pendant 10 secondes. L'Ultimate invoque 3 loups de 16 coeurs plus Faiblesse sur tous les ennemis dans 15 blocs.",
+"hp": "1 ♥",
+"passif": "DUO Rémus. Force I + Résist I. Kill &lt;15m duo : +stack Fratrie (max 3, +Force) +1♥ partagé. ActionBar compass.",
 "pw": [
-"<b>Morsure du Loup</b> <span class=\"faint\">· CD 50s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash vers l'ennemi et charge tes 2 prochains coups de Poison I et Faim — les effets de maladie durent sur la durée.<br><span class=\"muted\">» Ouvre chaque combat avec ça — les effets combinés épuisent progressivement ta cible.</span>",
-"<b>Cri d'Alpha</b> <span class=\"faint\">· CD 65s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Si Remus est à moins de 15 mètres : Force II + Vitesse II + Régénération I au duo pendant 10s — sinon Vitesse I seulement. Ultimate (Clic Gauche) : invoque 3 loups (16 PV) pendant 20s + Faiblesse sur tous les ennemis dans un rayon de 15 blocs."
+"<b>Morsure du Loup</b> — dash + 2 prochains coups Poison I + Faim [CD:50s]",
+"<b>Cri d'Alpha</b> — Force II+Speed II+Regen duo si &lt;15m, Speed I seul sinon [CD:90s]"
 ]
 },
 "Remus": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — immunité aux dégâts de chute totale.<br>Barre d'action : direction et distance de Romulus affichées en permanence. Tu reçois une alerte quand il est attaqué.<br>La synergie est active tant que Romulus est à moins de 15 mètres — restez proches pour les pouvoirs renforcés.",
-"obj": "Tu es la moitie mobile et rapide du duo Romulus-Remus specialise dans le controle et les engagements eclair.<br>Vitesse II permanente et immunite aux degats de chute te donnent une mobilite superieure a tous les autres roles — tu peux sauter de partout sans risque.<br>Une boussole en action bar te montre en permanence la direction et la distance de Romulus — et toi tu recois une alerte quand il se fait attaquer.<br>Bond du Loup te projette dans la direction visee et si un ennemi se trouve dans 3 blocs a l'atterrissage, il recoite Lenteur II 3s et 1 coeur — engage ou fuis en une seconde.<br>Hurlement de Meute avec Romulus proche dure 16 secondes au lieu de 8 et ajoute Cecite 2 secondes en bonus. L'Ultimate te rend invisible 5 secondes, te teleporte sur Romulus et booste le duo.",
+"passif": "DUO Romulus. Speed II + Chute nulle permanent. ActionBar : distance + direction vers Romulus.",
 "pw": [
-"<b>Bond du Loup</b> <span class=\"faint\">· CD 35s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash dans la direction du regard — si un ennemi se trouve dans un rayon de 3 blocs à l'atterrissage : Lenteur II (3s) et −1 cœur.<br><span class=\"muted\">» Engage ou fuis en une seconde — cooldown court pour une utilisation très fréquente.</span>",
-"<b>Hurlement de Meute</b> <span class=\"faint\">· CD 65s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Faiblesse I dans un rayon de 12 blocs pendant 8s — si Romulus est à moins de 15m : 16s + Cécité (2s). Ultimate (Clic Gauche) : Invis (5s) + Téléportation sur Romulus + Régén II à Romulus + Vitesse III à Remus."
+"<b>Bond du Loup</b> — dash + si ennemi ≤3m → Slowness II 3s + 1♥ [CD:35s]",
+"<b>Hurlement de Meute</b> — Weakness I r=12 8s (16s+Blindness si Romulus &lt;15m) [CD:65s]"
 ]
 },
 "L'Exilé": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>À chaque kill : téléportation immédiate et invisibilité automatique pendant 4 secondes — repositionne-toi instantanément.<br>Ennemi de tous les camps — aucun allié, aucun ennemi fixe. Tu joues seul contre tous.",
-"obj": "Tu es le solo assassin le plus versatile avec une combinaison unique de teleportation, degats lourds et controle de zone.<br>Force I et Vitesse II permanents plus une invis automatique de 4 secondes apres chaque kill — repositionne-toi immediatement apres chaque elimination.<br>Shadow Strike te teleporte instantanement dans le dos de l'ennemi dans 15 blocs et inflige 3 coeurs plus Wither II 7 secondes — son court cooldown de 28 secondes te permet d'enchainer.<br>Malediction de l'Exile inflige Wither II, Faiblesse II et Lenteur I a tous dans 12 blocs pendant 7 secondes — zone de detresse totale parfaite pour fuir ou nettoyer un groupe.<br>Tu n'as ni allies ni ennemis fixes — engage et degage constamment, jamais dans le meme endroit deux fois. Tu es fait pour les duels eclairs, pas les combats prolonges.",
+"passif": "Force I. Premier coup = Wither I. Kill = invis 3s + Vitesse II. SOLO. 20 PV (10♥).",
 "pw": [
-"<b>Shadow Strike</b> <span class=\"faint\">· CD 28s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Téléportation instantanée dans le dos de l'ennemi dans un rayon de 15 blocs, inflige −3 cœurs et Wither II pendant 7 secondes.<br><span class=\"muted\">» Cooldown court (28s) — enchaîne pour ne jamais laisser de répit à ta cible.</span>",
-"<b>Malédiction de l'Exilé</b> <span class=\"faint\">· CD 55s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Inflige Wither II, Faiblesse II et Lenteur I pendant 7 secondes à tous les ennemis dans un rayon de 12 blocs.<br><span class=\"muted\">» Zone de détresse totale — parfait pour fuir un groupe ou pour nettoyer avant un engagement.</span>"
+"<b>Shadow Strike</b> — téléport dans le dos + 3♥ + Wither II [CD:28s]",
+"<b>Malédiction</b> — Wither II + Faiblesse II + Lenteur I r=12 [CD:55s]"
 ]
 },
 "Le Chasseur": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — Vision nocturne permanente.<br>Radar thermique passif : les noms et positions de tous les joueurs vivants sont visibles en permanence, même à travers les murs.",
-"obj": "Tu es le traqueur ultime qui voit TOUS les joueurs vivants en permanence sur la map, peu importe ou ils se cachent.<br>Ton radar thermique passif affiche en continu les noms et positions de tous les joueurs vivants a travers les blocs et les murs — personne ne peut se cacher de toi.<br>Instinct de Chasseur revele les PV exacts et la position de l'ennemi le plus proche dans 50 blocs avec Speed I 10 secondes — utilise-le juste avant d'engager pour connaitre l'etat exact de ta cible.<br>Piege Mortel pose un piege invisible qui inflige Lenteur III et 2 coeurs au premier ennemi qui marche dessus — combine avec l'Instinct pour controler l'approche et forcer les ennemis vers tes pieges.<br>Tu as Force I et vision nocturne permanente. Combine ton radar avec tes pieges pour creer des couloirs de mort. Aucun ennemi ne peut te surprendre ni te fuir.",
+"passif": "Vision nocturne. Artefact PiegeMortel de départ. SOLO. 20 PV (10♥).",
 "pw": [
-"<b>Instinct de Chasseur</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Révèle le nom, les PV exacts et la position de l'ennemi le plus proche dans un rayon de 50 blocs + Vitesse I pendant 10 secondes.<br><span class=\"muted\">» Utilise juste avant d'engager — tu sais exactement combien de PV il lui reste.</span>",
-"<b>Piège Mortel (Actif)</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Pose un piège invisible au sol — au déclenchement par un ennemi : Lenteur III et −2 cœurs instantanément.<br><span class=\"muted\">» Combine avec l'Instinct de Chasseur pour contrôler la zone et forcer l'approche ennemie.</span>"
+"<b>Piège Mortel</b> — pose 3 pièges invisibles [CD:28s]",
+"<b>Vision Thermique</b> — révèle PV + distance + GLOW ennemis r=40 8s [CD:40s]"
 ]
 },
 "Ombra": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs).<br>Hors combat : ton armure se retire automatiquement et tu deviens invisible (vraie invisibilité 1.8, sans particules).<br>Tu es le rôle le plus furtif du jeu — invisible jusqu'au dernier moment avant d'attaquer.",
-"obj": "Tu es l'assassin le plus furtif de tout le jeu grace a ton invisibilite permanente hors combat et ton clone decoy.<br>Des que tu n'es pas en combat, ton armure se retire automatiquement et tu deviens vraiment invisible — les ennemis ne peuvent literalement pas te voir quand tu n'attaques pas.<br>Clone Ombra invoque un zombie-clone a ton image pendant 15 secondes — les ennemis l'attaquent pendant que tu frappes dans le dos, c'est un decoy parfait.<br>Voile Noir te rend invisible pendant 10 secondes avec Speed II et a la fin te teleporte automatiquement vers la cible la plus proche — disparais et reapparais derriere l'ennemi.<br>Avec 18 PV et Force I, tu es fragile si tu te fais reperer. Ton unique avantage est d'attaquer depuis l'invisibilite — ne reste jamais visible plus de quelques frappes.",
+"passif": "Hors combat : invisible + armure retirée (vraie invis 1.8). Combat : armure remise auto. 18 PV (9♥).",
 "pw": [
-"<b>Clone Ombra</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Invoque un zombie-clone à ton image pendant 15 secondes — les ennemis l'attaquent pendant que tu frappes dans leur dos.<br><span class=\"muted\">» Leurre parfait — active avant d'attaquer pour que les ennemis se concentrent sur le clone.</span>",
-"<b>Voile Noir</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Invisibilité totale pendant 10 secondes + Vitesse II — à la fin, téléportation automatique vers la cible la plus proche.<br><span class=\"muted\">» Disparais, repositionne-toi, réapparais derrière l'ennemi sans qu'il te voie venir.</span>"
+"<b>Clone</b> — zombie leurre avec ton équipement, Speed II + Force I, 20s — n'attaque jamais le porteur [CD:90s]",
+"<b>Voile Noir</b> — invisible 15s + Vitesse II + Saut II [CD:150s]"
 ]
 },
 "Azrael": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs).<br>Aura Wither I passive dans un rayon de 2 blocs : les ennemis proches reçoivent Wither I toutes les 2 secondes.<br>À chaque kill : soin instantané de +1 cœur.<br>Immuné au Tartare de Hadès — il ne peut pas t'envoyer dans les Enfers.",
-"obj": "Tu es l'Ange de la Mort dont toute la puissance repose sur les degats passifs du Wither et la pression psychologique du Death Mark.<br>Ton Aura Wither I dans 2 blocs applique Wither I toutes les 2 secondes aux ennemis proches — reste colle en melee pour maximiser ces degats continus.<br>Chaque kill te soigne instantanement de 1 coeur — engage regulierement et tue pour te maintenir en sante pendant toute la partie.<br>Faux d'Azrael te propulse vers l'ennemi dans 12 blocs pour 2.5 coeurs plus Wither I 3 secondes — son cooldown court de 40 secondes te permet d'enchainer dash plus melee regulierement.<br>Death Mark condamne une cible : si elle est encore vivante 30 secondes apres, elle recoit 5 coeurs de degats instantanes. La pression psychologique que ca cree change completement le comportement de ta cible. Tu es immunise au Tartare de Hades.",
+"passif": "Force I. Aura Wither I r=2. Kill = +1♥. SOLO. 20 PV (10♥).",
 "pw": [
-"<b>Faux d'Azraël</b> <span class=\"faint\">· CD 40s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash vers l'ennemi dans un rayon de 12 blocs, inflige −2,5 cœurs et Wither I pendant 3 secondes.<br><span class=\"muted\">» Cooldown court — enchaîne dash + corps-à-corps pour des dégâts Wither continus.</span>",
-"<b>Death Mark</b> <span class=\"faint\">· CD 110s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Condamne la cible — si elle est encore en vie après 30 secondes : −5 cœurs de dégâts instantanés.<br><span class=\"muted\">» Pression psychologique absolue — la cible doit fuir ou accepter sa mort dans les 30 secondes.</span>"
+"<b>Faux d'Azrael</b> — dash vers ennemi + Wither I + 1.25♥ [CD:40s]",
+"<b>Death Mark</b> — condamne la cible — si vivante dans 30s prend 5♥ [CD:110s]"
 ]
 },
 "Gengis Khan": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — 0 Force de base au départ.<br>À chaque kill : +1 stack de Force (maximum 5 stacks → Force III total — le maximum absolu du jeu).<br>Terreur passive : Faiblesse I sur tous les ennemis dans un rayon de 5 blocs en permanence.",
-"obj": "Tu es le grand conquerant dont la Force augmente progressivement de zero jusqu'a Force III au fur et a mesure que tu accumules des kills.<br>Tu commences avec 0 Force de base mais Vitesse I permanente et un effet passif de Faiblesse I sur tous les ennemis dans 5 blocs autour de toi.<br>Chaque kill ajoute un stack de Force jusqu'a 5 stacks maximum qui equivaut a Force III total — concentre-toi sur les kills des le debut de partie pour monter rapidement.<br>Conquete Mongole te propulse vers l'ennemi dans 15 blocs pour 2 coeurs — son cooldown tres court de 30 secondes te permet d'engager constamment et d'accumuler des kills.<br>Horde Mongole est ton ultimate une fois par episode : Force III, Speed II pour toi et Lenteur II sur tous les ennemis dans 20 blocs pendant 20 secondes. Garde-le pour le combat decisif.",
+"passif": "Conquérant : chaque kill = +1 Conquête (max 5). Chaque Conquête = +4% dégâts + 2% résistance. SOLO. 20 PV.",
 "pw": [
-"<b>Conquête Mongole</b> <span class=\"faint\">· CD 30s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Dash vers l'ennemi dans un rayon de 15 blocs et inflige −2 cœurs à l'impact.<br><span class=\"muted\">» Cooldown très court (30s) — engage en permanence et accumule les kills pour augmenter ta Force.</span>",
-"<b>Horde Mongole [1× par épisode]</b><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Force III + Vitesse II pour toi + Lenteur II sur tous les ennemis dans un rayon de 20 blocs pendant 20 secondes.<br><span class=\"muted\">» Ultimate absolu — garde pour le combat le plus décisif de l'épisode, jamais à gâcher.</span>"
+"<b>Intimidation</b> — Weakness I aux ennemis r=15 pendant 10s [CD:5min]",
+"<b>Empire Mongol</b> — Force+Speed+Slow ennemis r=20 pendant 20s [1x/épisode]"
 ]
 },
 "Le Gladiateur": {
 "hp": "11 ♥",
-"passif": "22 PV (11 cœurs) — le maximum de PV du jeu.<br>Tu démarres avec le Glaive du Champion (Épée Diamant Tranchant IV, retourne automatiquement après 3 secondes).<br>Ta force vient uniquement de ton Glaive et de ta maîtrise du duel — en 1v1, tu es pratiquement inarrêtable.",
-"obj": "Tu es le champion des duels avec 22 PV et un Glaive unique qui impose tes combats a n'importe quel adversaire.<br>Tu n'as pas de Force ni de Resistance de base — toute ta puissance vient de ton Glaive du Champion et de ta capacite a forcer les duels en conditions favorables.<br>Glaive du Champion : Sneak plus Clic Droit lance le Glaive en epee diamant Tranchant IV qui inflige 8 coeurs a l'impact et revient automatiquement apres 3 secondes.<br>Defi Arena force instantanement un duel contre le joueur dans 10 blocs en les teleportant dans l'arene — utilise /defi &lt;joueur&gt; pour defier depuis la distance. Aucun message prealable.<br>Tu as 22 PV soit 11 coeurs — le maximum du jeu. En duel 1v1, tu es pratiquement inarretable. N'engage jamais en groupe car sans resistances tu ne peux pas encaisser plusieurs adversaires.",
+"passif": "SOLO. 22 PV. Pas d'effets permanents. En arene : Speed I + Force I. Victoire = adversaire elimine. Defaite = -1 coeur max permanent.",
 "pw": [
-"<b>Glaive du Champion</b> <span class=\"faint\">· CD 18s</span><br><span class=\"faint\" style=\"font-size:11px\">Sneak + Clic Droit : lance le Glaive vers l'ennemi visé — −8 cœurs à l'impact (Épée Diamant Tranchant IV).</span><br>Le Glaive retourne automatiquement dans ton inventaire après 3 secondes.<br><span class=\"muted\">» Utilise comme ouverture de combat — inflige plus de dégâts que n'importe quelle épée.</span>",
-"<b>Défi Arène</b> <span class=\"faint\">· CD 5 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou /defi &lt;joueur&gt; ou Clic Droit Bâton de Blaze (slot 7)</span><br>Force un duel immédiat contre le joueur dans un rayon de 10 blocs — téléportation instantanée dans l'arène, aucun message préalable.<br><span class=\"muted\">» Utilise quand l'ennemi est isolé — never en plein combat de groupe (tu n'as pas de Résistance).</span>"
+"<b>Glaive du Champion</b> — Sneak + Clic Droit = lancer (8♥ de dégats). Revient apres 3s [CD:18s]",
+"<b>Défi</b> — force un duel immediat vs joueur dans 10 blocs (/defi) [CD:5min]"
 ]
 },
 "Le Traître": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — rien ne te distingue visuellement des autres joueurs.<br>Tu es assigné en secret dans un camp allié au début de la partie — personne ne sait que tu es un traître.<br>Immunité aux attaques de tes anciens alliés pendant 5 secondes après avoir activé ta trahison.",
-"obj": "Tu es infiltre dans le camp allie avec une mission : les trahir au moment le plus strategique possible.<br>Tes stats sont similaires a celles d'un Humain standard — rien ne te distingue exterieurement, tu passes completement inapercu au debut.<br>Personne autour de toi ne sait que tu es un traître — utilise cette confiance pour apprendre les positions, les plans et les faiblesses de ton equipe.<br>Trahison Tactique revele les positions et PV de tous tes anciens allies aux ennemis pendant 15 secondes et te donne 5 secondes d'immunite contre eux.<br>Le moment de la trahison est la decision la plus importante de ta partie. Attends que tes anciens allies soient en combat actif pour que ta revelation ait le maximum d'impact.",
+"passif": "Apparaît comme un dieu. Accès au chat dieu. Gagne avec les HUMAINS. 20 PV.",
 "pw": [
-"<b>Trahison Tactique</b> <span class=\"faint\">· CD 90s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Révèle les positions et les PV de tes anciens alliés aux ennemis pendant 15 secondes + immunité contre eux pendant 5s.<br><span class=\"muted\">» Active quand tes anciens alliés sont en plein combat — ils ne peuvent pas réagir à temps.</span>"
+"<b>Coup de Poignard</b> — 5♥ bonus en frappant par derrière r=4 [CD:90s]",
+"<b>Trahison</b> — démasque un dieu aléatoire en broadcast [CD:120s]"
 ]
 },
 "L'Ascendant": {
-"hp": "10 ♥",
-"passif": "20 PV (10 cœurs) — 0 stats au départ : tout le monde peut te battre en début de partie.<br>Tu accumules des stacks en killant, en survivant et en changeant d'épisode — plus tu joues, plus tu grandis.<br>Plus de stacks = Élan Ascendant plus long et plus puissant.",
-"obj": "Tu es un role evolutif unique qui commence completement sans stats et peut devenir extremement puissant en fin de partie.<br>Tu commences avec 20 PV et 0 Force, 0 Resistance, 0 Speed — tout le monde peut te battre au debut, tu dois donc etre tres prudent en debut de partie.<br>Tu accumules des stacks en jouant activement : les kills, la survie sur la duree et les episodes t'accordent des stacks qui augmentent tes capacites.<br>Elan Ascendant donne une Force et Vitesse temporaires dont la duree depend directement du nombre de stacks accumules — plus tu en as, plus c'est long et fort.<br>Ascension te permet une seule fois dans toute la partie de rejoindre le camp le plus fort avec 1 coeur de soin. C'est irreversible — choisis le moment ou ce changement aura le plus d'impact strategique.",
+"hp": "9 ♥",
+"passif": "Humain qui monte en puissance. À 5 kills : Ascension disponible. 18 PV.",
 "pw": [
-"<b>Élan Ascendant</b> <span class=\"faint\">· CD 60s</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Force et Vitesse temporaires selon les stacks accumulés (plafond Force II). Durée : 60 + (stacks × 10) ticks — plus tu accumules de stacks, plus la durée est longue.<br><span class=\"muted\">» Utilise régulièrement pour maintenir la pression — deviens plus fort à chaque utilisation.</span>",
-"<b>Ascension [1 seule utilisation par partie]</b><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Change d'équipe vers le cam le plus fort + soin de +1 cœur — décision irréversible. Aucune armure ni arme accordée — uniquement le changement de camp et le soin.<br><span class=\"muted\">» Choisis le moment où ce changement a le plus grand impact stratégique possible.</span>"
+"<b>Élan Ascendant</b> — Force I→II selon stacks (max Force II) + Vitesse I [CD:60s]",
+"<b>ASCENSION</b> — à 5 kills, devient un dieu aléatoire [UNIQUE]"
 ]
 },
 "Le Détective": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs). Tu démarres avec une Loupe (Boussole) et une Épée Tranchant I.<br>À chaque mort sur le serveur : 1 chance sur 3 de recevoir automatiquement les coordonnées exactes et le nom du tueur.<br>Ta valeur est entièrement dans les informations que tu récoltes et transmets.",
-"obj": "Tu es un role de pure information qui localise les tueurs et traque les suspects sans aucun avantage de combat.<br>A chaque mort sur le serveur, tu as 1 chance sur 3 de recevoir automatiquement les coordonnees exactes et le nom du tueur — c'est un avantage informationnel enormement precieux.<br>Enquete te revele soit les PV soit le nombre de kills d'un joueur dans ta ligne de mire dans 15 blocs — partage toujours cette information avec ton equipe immediatement.<br>Filature suit un joueur et te revele sa position toutes les 20 secondes pendant 90 secondes — parfait pour surveiller un suspect ou traquer un fuyard.<br>Tu n'as que 18 PV et aucun bonus de combat. Ta valeur est entierement dans les informations que tu recoltes et transmets. Un bon Detective peut changer l'issue d'une partie entiere.",
+"passif": "1 chance / 3 par mort serveur → coords + nom du tueur (automatique)",
 "pw": [
-"<b>Enquête</b> <span class=\"faint\">· CD 4 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Révèle soit les PV exacts soit le nombre de kills (aléatoire) du joueur dans ta ligne de mire (rayon de 15 blocs).<br><span class=\"muted\">» Partage immédiatement l'information avec ton équipe — tu es les yeux du groupe.</span>",
-"<b>Filature</b> <span class=\"faint\">· CD 6 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Révèle la position (X, Y, Z) du joueur ciblé toutes les 20 secondes pendant 90 secondes au total. Annulation automatique à la mort ou à la déconnexion de la cible."
+"<b>Enquête</b> — regarde un joueur r=15 → PV OU kills (aléatoire) [CD:4min]",
+"<b>Filature</b> — position du joueur ciblé toutes 20s pendant 90s [CD:6min]"
 ]
 },
 "L'Oracle": {
 "hp": "9 ♥",
-"passif": "18 PV (9 cœurs). Tu démarres avec un Sceptre (Blaze Rod, slot 8) et une Épée Tranchant I.<br>👁 PV en temps réel : l'action bar affiche en permanence la vie de tous les joueurs vivants.<br>Vert = en forme | Jaune = blessé | Rouge = critique | Rouge foncé = mourant<br>Toutes les 2 minutes, tu reçois une vision avec le nom du joueur + une info :<br>▸ 29% — Kills : «Nom a causé X mort(s)»<br>▸ 28% — PV du plus proche : «Nom vit avec X♥»<br>▸ 28% — Direction : «Nom se déplace vers le NORD»<br>▸ 10% — Effets : effets de potion actifs de Nom<br>▸ 5% — Inventaire : armure et arme de Nom (rare, très puissant)",
-"obj": "Tu es une prophetesse passive dont le regard transperce les masques — tu vois la vie de chaque joueur en temps reel et recois des visions sur leurs secrets.<br>Ton action bar affiche en permanence les PV de tous les joueurs en vie : vert = en bonne sante, jaune = blesse, rouge = critique. Tu ne peux jamais etre surprise par un joueur \"presque mort\".<br>Toutes les 2 minutes, une vision aleatoire te revele le nom d'un joueur et une information : ses PV, sa direction, ses kills, ses effets (10%) ou son inventaire (5%).<br>Ton Sceptre de Blaze en slot 8 est ton outil de Proces Public — pointe-le vers un suspect dans 20 blocs et fais Clic Droit pour lancer l'accusation devant tout le serveur.<br>Pendant 20 secondes, le serveur vote /coupable ou /innocent. Coupable + humain = votants punis. Coupable + non-humain = accuse perd 2 coeurs perma. Un mauvais jugement peut ruiner ton equipe.",
+"passif": "Vision floue automatique toutes les 2min (info vague sans nom)",
 "pw": [
-"<b>Procès Public</b> <span class=\"faint\">· CD 8 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit sur le Sceptre (slot 8) pointé vers un suspect dans un rayon de 20 blocs</span><br>Tout le serveur vote pendant 20 secondes avec /coupable ou /innocent (boutons cliquables dans le chat). Majorité COUPABLE + humain → les votants reçoivent −5 cœurs + Faiblesse pendant 5 minutes. Majorité COUPABLE + autre camp → l'accusé perd −2 cœurs de manière permanente.<br><span class=\"muted\">» Un mauvais jugement peut ruiner ton équipe — sois certain avant d'accuser.</span>"
+"<b>Procès public</b> — vote 20s. Si coupable+humain → votants -5♥+Faiblesse. Si coupable+autre camp → accusé -2♥ perma [CD:8min]"
 ]
 },
 "L'Inquisiteur": {
 "hp": "10 ♥",
-"passif": "20 PV (10 cœurs). Armure Fer Protection I + Hache Pierre Tranchant II + Recul I dès le départ.<br>Sens du Péché : son et particules si un dieu ou un traître se trouve dans un rayon de 6 blocs (alerte 1 fois par joueur toutes les 5s).<br>Tu es le chasseur de dieux — ton instinct te révèle les rôles cachés avant même qu'ils agissent.",
-"obj": "Tu es un chasseur de dieux et de traitres avec un sens passif unique qui detecte les roles caches autour de toi.<br>Ton Sens du Peche emet un son et des particules chaque fois qu'un dieu ou un traitre se trouve dans 6 blocs de toi — alerte maximale une fois toutes les 5 secondes par joueur.<br>Avec Force I, une armure de fer et une hache Tranchant II Recul I, tu es un combattant serieux en plus d'un detecteur.<br>Frappe de l'Inquisiteur inflige 6 coeurs nets a l'ennemi dans 4 blocs — si la cible est un dieu ou un traitre, elle recoit aussi Lenteur III 4 secondes en bonus.<br>Chatiment marque un joueur pendant 3 minutes : son prochain coup recu sera double. Tu es notifie quand ca se declenche. Marque une cible avant de l'envoyer se battre contre un ennemi.",
+"passif": "Sens du péché : son d'alerte quand un dieu/traître est dans r=6",
 "pw": [
-"<b>Frappe de l'Inquisiteur</b> <span class=\"faint\">· CD 3 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Inflige −6 cœurs à l'ennemi dans un rayon de 4 blocs — si la cible est un dieu ou un traître : Lenteur III bonus pendant 4s.<br><span class=\"muted\">» Coup de justice imparable — utilise après avoir détecté une cible avec ton Sens du Péché.</span>",
-"<b>Châtiment</b> <span class=\"faint\">· CD 3 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Marque le joueur en vue ou le plus proche dans un rayon de 8 blocs : son prochain coup reçu dans les 3 minutes sera doublé. Tu es notifié quand ça se déclenche. » Marque avant de l'envoyer au combat contre un ennemi."
+"Frappe 6♥ r=4. Si dieu/traître → Lenteur III 4s en bonus [CD:3min]",
+"<b>Châtiment</b> — prochain coup reçu par la cible x2 (expire 3min) [CD:3min]"
 ]
 },
 "L'Espion": {
 "hp": "8 ♥",
-"passif": "16 PV (8 cœurs). Armure Cuir + Dague Tranchant II + Feu I + 2 Perles d'Ender dès le départ.<br>Lecture de chat secrète : tous les messages commençant par ! envoyés par les dieux apparaissent dans ton chat en temps réel.<br>Tu connais leurs plans, coordonnées et stratégies — une information valant plus que n'importe quel kill.",
-"obj": "Tu es un espion infiltre qui lit le chat prive des dieux en temps reel sans jamais etre detecte.<br>Tous les messages commencant par le symbole ! envoyes par les dieux apparaissent dans ton chat — tu connais leurs plans, leurs coordonnees et leurs strategies.<br>Avec seulement 16 PV, tu es tres fragile — evite tout combat direct et reste cache. Ta valeur est dans l'information, pas dans les degats.<br>Imposteur te donne le pseudo et la couleur de tab d'un joueur aleatoire pendant 20 secondes — infiltre-toi dans le chat des dieux sous une fausse identite.<br>Double Agent prepare un faux message : ton prochain message avec ! sera envoye au chat des dieux sous l'identite d'un dieu aleatoire. Envoie de fausses coordonnees ou de faux plans pour semer la confusion.",
+"passif": "Lit le chat des dieux (messages !) en temps réel sans être détecté",
 "pw": [
-"<b>Imposteur</b> <span class=\"faint\">· CD 6 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 1 ou Clic Droit Étoile Nether (slot 8)</span><br>Prend le pseudo et la couleur de tab d'un joueur aléatoire pendant 20 secondes — déguisement parfait.<br><span class=\"muted\">» Utilise pour envoyer de faux messages dans le chat des dieux sous une identité volée.</span>",
-"<b>Double Agent</b> <span class=\"faint\">· CD 5 minutes</span><br><span class=\"faint\" style=\"font-size:11px\">/pouvoir 2 ou Clic Droit Bâton de Blaze (slot 7)</span><br>Ton prochain message commençant par ! sera envoyé sous l'identité d'un dieu aléatoire (expire en 30 secondes).<br><span class=\"muted\">» Envoie de fausses coordonnées ou de faux plans aux dieux — sème la confusion totale.</span>"
+"<b>Imposteur</b> — prend le pseudo/couleur d'un joueur aléatoire 20s [CD:6min]",
+"<b>Double Agent</b> — prochain message ! envoyé comme un dieu aléatoire [CD:5min]"
 ]
 }
 };
