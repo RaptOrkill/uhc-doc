@@ -42,6 +42,10 @@
   details>summary{list-style:none;cursor:pointer}details>summary::-webkit-details-marker{display:none}
   details[open] .chev{transform:rotate(180deg)}.chev{transition:transform .25s}
   .dot{width:7px;height:7px;border-radius:9999px;display:inline-block}
+  .rolechip{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 8px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+  .line-clamp-3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .campbar{width:6px;border-radius:9999px;align-self:stretch;min-height:38px}
+  .camphead{position:sticky;top:64px;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px)}
 </style>
 </head>
 <body>
@@ -714,7 +718,7 @@ const VALK_LORE = {
 }
 };
 /* Fusionne les données détaillées in-game (objectif, passif, pouvoirs) dans chaque rôle Valkyrie. */
-VALK_ROLES.forEach(r=>{ const L=(typeof VALK_LORE!=='undefined')&&VALK_LORE[r.n]; if(L){ if(L.hp)r.hp=L.hp; if(L.passif)r.passif=L.passif; if(L.obj)r.obj=L.obj; if(L.pw&&L.pw.length)r.pw=L.pw; } });
+VALK_ROLES.forEach(r=>{ const L=(typeof VALK_LORE!=='undefined')&&VALK_LORE[r.n]; if(L){ if(L.hp)r.hp=L.hp; if(L.passif)r.passif=L.passif; if(L.obj)r.obj=L.obj; if(L.pw&&L.pw.length)r.pw=L.pw; if(L.combo)r.combo=L.combo; if(L.lien)r.lien=L.lien; if(L.fb)r.fb=L.fb; } });
 const NARU_LORE = {
 "Naruto":{hp:"12 ♥",passif:"Vitesse I permanente · +2 cœurs (12 ♥) · Jinchûriki de Kurama (Renard à Neuf Queues).",pw:["<b>Kurama</b> — Force I + Vitesse II pendant 5 min.","<b>Rasengan</b> — ta prochaine frappe explose. Délai 5 min.","<b>Senjutsu (Mode Ermite)</b> — Vitesse I + 3 cœurs (5 min). Délai 15 min.","<b>/ns smell &lt;joueur&gt;</b> — flaire la position d'un joueur (1× par Kurama).","<b>/ns paume [joueur]</b> — paume de chakra (soi si vide)."]},
 "Sakura":{hp:"10 ♥",passif:"Force I permanente · élève de Tsunade.",pw:["<b>Shannaro</b> — ton prochain coup inflige ×2 dégâts + expulse la cible. Délai 10 min.","<b>/ns shosen &lt;joueur&gt;</b> — Ninjutsu médical : soigne un allié visé."]},
@@ -768,7 +772,24 @@ const NARU_LORE = {
 "Hanzo":{hp:"10 ♥",passif:"Force I + Résistance I + Vitesse I permanents · immunité au Poison · Depth Strider 3 + Protection 3 sur les bottes.",pw:["<b>Kusarigama</b> — empoisonne par paliers en frappant.","<b>Masuku</b> — Vitesse II + aura de Force. Délai 1 min."]}
 };
 /* Fusionne les pouvoirs/passifs in-game (NarutoRolePowers + applyRolePassives) dans chaque rôle Naruto. */
-NARU_ROLES.forEach(r=>{ const L=(typeof NARU_LORE!=='undefined')&&NARU_LORE[r.n]; if(L){ if(L.hp)r.hp=L.hp; if(L.passif)r.passif=L.passif; if(L.pw&&L.pw.length)r.pw=L.pw; } });
+NARU_ROLES.forEach(r=>{ const L=(typeof NARU_LORE!=='undefined')&&NARU_LORE[r.n]; if(L){ if(L.hp)r.hp=L.hp; if(L.passif)r.passif=L.passif; if(L.pw&&L.pw.length)r.pw=L.pw; if(L.obj)r.obj=L.obj; if(L.combo)r.combo=L.combo; if(L.lien)r.lien=L.lien; if(L.fb)r.fb=L.fb; } });
+/* Illustrations Pokémon : artwork officiel (PokéAPI) selon la forme finale du rôle
+   — ou le Pokémon signature pour les dresseurs. */
+const POKE_DEX = {
+  // lignées (forme finale) + mono-formes
+  "Raichu":26,"Dracaufeu":6,"Tortank":9,"Florizarre":3,"Jungko":254,"Papilusion":12,
+  "Leuphorie":242,"Morphéo":351,"Ronflex":143,"Évoli":133,"Léviator":130,
+  "Qulbutoké":202,"Métamorph":132,"Persian":53,"Absol":359,"Démolosse":229,
+  "Hoopa":720,"Volcanion":721,"Mewtwo":150,
+  // dresseurs → Pokémon signature
+  "Sacha":25,"Giovanni":53,"Jessie":24,"James":110,
+  "Hélio":169,"Mars":432,"Jupiter":435,"Saturne":454,"Commando Galaxie":42
+};
+POKE_ROLES.forEach(r=>{
+  const last = r.n.split('·').map(s=>s.trim()).pop();
+  const id = POKE_DEX[r.n] || POKE_DEX[last];
+  if(id) r.img = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+id+".png";
+});
 const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
 const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
 const MECH={
@@ -782,6 +803,78 @@ const app = () => document.getElementById('app');
 const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
 
 function roleStages(r){ return r.n.split('·').map(s=>s.trim()); }
+/* Éclate un pouvoir en bloc structuré : numéro + nom + effet + badges (recharge/portée). */
+function powerRow(p, a, i){
+  let s = String(p);
+  const badges = [];
+  s = s.replace(/\[CD\s*:\s*([0-9]+)\s*m(?:in)?\]/gi, (_,n)=>{ badges.push('↻ '+n+' min'); return ''; })
+       .replace(/\[CD\s*:\s*([0-9]+)\s*s\]/gi,        (_,n)=>{ badges.push('↻ '+n+' s'); return ''; })
+       .replace(/(^|[\s(])r\s*=\s*([0-9]+)\b/gi,      (_,pre,n)=>{ badges.push('⌖ portée '+n); return pre; })
+       .trim();
+  let name = '', rest = s;
+  let mb = s.match(/^\s*<b>(.*?)<\/b>\s*(?:[—\-:]\s*)?([\s\S]*)$/);
+  if(mb){ name = mb[1].trim(); rest = mb[2].trim(); }
+  else { const md = s.match(/^([^—]{2,42})\s+—\s+([\s\S]+)$/); if(md){ name = md[1].trim(); rest = md[2].trim(); } }
+  const cdStyle  = 'padding:1px 8px;border-radius:999px;font-size:10px;font-weight:600;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);white-space:nowrap';
+  const rgStyle  = 'padding:1px 8px;border-radius:999px;font-size:10px;font-weight:600;background:var(--accent-soft);border:1px solid color-mix(in srgb,'+a+' 28%,transparent);color:'+a+';white-space:nowrap';
+  const badgeHtml = badges.length ? `<div class="flex flex-wrap gap-1.5 mt-2">${badges.map(b=>`<span style="${/↻/.test(b)?cdStyle:rgStyle}">${b}</span>`).join('')}</div>` : '';
+  return `<div class="flex items-start gap-3 p-4 ${i?'bd-t':''} surface">
+    <span class="mt-0.5 w-6 h-6 shrink-0 grid place-items-center rounded-lg text-[11px] font-semibold text-white" style="background:${a}">${i+1}</span>
+    <div class="min-w-0">
+      ${name?`<div class="font-medium text-sm leading-snug">${name}</div>`:''}
+      ${rest?`<p class="text-sm muted leading-relaxed ${name?'mt-0.5':''}">${rest}</p>`:''}
+      ${badgeHtml}
+    </div>
+  </div>`;
+}
+/* Bloc capacité façon « ➲ Nom • méta » + description (style fiche détaillée). */
+function abilityRow(p, a, opts){
+  opts = opts || {};
+  let s = String(p);
+  const badges = [];
+  s = s.replace(/\[CD\s*:\s*([0-9]+)\s*m(?:in)?\]/gi, (_,n)=>{ badges.push('↻ '+n+' min'); return ''; })
+       .replace(/\[CD\s*:\s*([0-9]+)\s*s\]/gi,        (_,n)=>{ badges.push('↻ '+n+' s'); return ''; })
+       .replace(/(^|[\s(])r\s*=\s*([0-9]+)\b/gi,      (_,pre,n)=>{ badges.push('⌖ portée '+n); return pre; })
+       .trim();
+  // commande éventuelle dans le texte (ex : /poke jump) → méta
+  let cmd = '';
+  const mc = s.match(/(\/[a-z]+(?:\s+[a-z0-9]+){0,2})/i);
+  let name = opts.name || '', rest = s;
+  let mb = s.match(/^\s*<b>(.*?)<\/b>\s*(?:[—\-:]\s*)?([\s\S]*)$/);
+  if(mb){ name = mb[1].trim(); rest = mb[2].trim(); }
+  else if(!opts.name){ const md = s.match(/^([^—]{2,46})\s+—\s+([\s\S]+)$/); if(md){ name = md[1].trim(); rest = md[2].trim(); } }
+  const meta = [];
+  badges.forEach(b=>meta.push(`<span style="padding:1px 8px;border-radius:999px;font-size:10px;font-weight:600;${/↻/.test(b)?'background:var(--surface-2);border:1px solid var(--border);color:var(--muted)':'background:var(--accent-soft);border:1px solid color-mix(in srgb,'+a+' 28%,transparent);color:'+a}">${b}</span>`));
+  const metaHtml = meta.length ? meta.map(m=>`<span class="faint">•</span>${m}`).join(' ') : '';
+  return `<div class="py-4 px-5 ${opts.i?'bd-t':''} surface">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-base" style="color:${a}">➲</span>
+      <span class="font-medium">${name||'Capacité'}</span>
+      ${metaHtml?`<span class="inline-flex items-center gap-1.5 ml-1">${metaHtml}</span>`:''}
+    </div>
+    ${rest?`<p class="text-sm muted leading-relaxed mt-2 ml-6">${rest}</p>`:''}
+  </div>`;
+}
+/* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
+function roleImage(r, a, stages){
+  const label = (stages && stages[stages.length-1]) || r.n;
+  const inner = r.img
+    ? `<img src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy" class="block w-full max-w-md mx-auto rounded-2xl border bd ring-soft" />`
+    : `<div class="rounded-2xl border bd surface-2 mx-auto max-w-md py-14 grid place-items-center text-center">
+         <div class="font-serif text-6xl" style="color:${a}">${esc((label[0]||'?'))}</div>
+         <p class="text-xs muted mt-3">Illustration du rôle — à venir</p>
+       </div>`;
+  return `<div class="reveal mt-12"><h2 class="font-serif text-xl mb-4 flex items-center gap-2"><span style="color:${a}">▣</span>Illustration</h2>${inner}</div>`;
+}
+/* Rend la notation interne lisible : [CD:70s]→badge recharge, r=5→badge portée. */
+function prettyPower(s){
+  const cd  = 'margin-left:6px;padding:1px 7px;border-radius:999px;font-size:10px;font-weight:600;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);white-space:nowrap';
+  const rng = 'margin-left:6px;padding:1px 7px;border-radius:999px;font-size:10px;font-weight:600;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);color:var(--accent);white-space:nowrap';
+  return String(s)
+    .replace(/\[CD\s*:\s*([0-9]+)\s*m(?:in)?\]/gi, ' <span style="'+cd+'">↻ $1 min</span>')
+    .replace(/\[CD\s*:\s*([0-9]+)\s*s\]/gi,        ' <span style="'+cd+'">↻ $1 s</span>')
+    .replace(/(^|[\s(])r\s*=\s*([0-9]+)\b/gi,      '$1<span style="'+rng+'">⌖ portée $2</span>');
+}
 function roleCat(modeId, r){
   const st = roleStages(r);
   if(st.length>1) return {label:`Évolutif · ${st.length} stades`, key:'evo'};
@@ -792,18 +885,22 @@ function roleCard(modeId, idx){
   const r = DATA[modeId].roles[idx], a = ACC[modeId];
   const st = roleStages(r), evo = st.length>1;
   const cat = roleCat(modeId, r);
-  const head = evo
-    ? `<div class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 font-medium leading-snug">${st.map((s,i)=>`${i?'<span class="faint text-xs">→</span>':''}<span>${esc(s)}</span>`).join('')}</div>`
-    : `<h4 class="font-medium leading-snug">${esc(r.n)}</h4>`;
-  const meta = modeId==='pokemon' ? `${cat.label}${r.hp?` · ${esc(r.hp)}`:''}` : '';
+  const name = evo
+    ? st.map((s,i)=>`${i?'<span class="faint">→</span> ':''}${esc(s)}`).join(' ')
+    : esc(r.n);
+  const chips = [`<span class="rolechip">${esc(r.ev)}</span>`];
+  if(r.hp) chips.push(`<span class="rolechip">❤ ${esc(r.hp)}</span>`);
+  chips.push(`<span class="rolechip" style="color:${a};border-color:color-mix(in srgb,${a} 30%,var(--border))">${esc(cat.label)}</span>`);
+  const npw = (r.pw||[]).length;
+  if(npw) chips.push(`<span class="rolechip">${npw} pouvoir${npw>1?'s':''}</span>`);
   return `<a href="#/role/${modeId}/${idx}" class="card rounded-xl p-5 ring-soft block">
-    <div class="flex items-start justify-between gap-3">
-      ${head}
-      <span class="shrink-0 text-[11px] font-medium px-2 py-0.5 rounded-md muted border bd surface-2">${esc(r.ev)}</span>
+    <div class="flex items-start justify-between gap-2">
+      <h4 class="font-medium leading-snug pr-1">${name}</h4>
+      <span class="dot mt-1.5 shrink-0" style="background:${a}"></span>
     </div>
     <p class="text-sm font-medium mt-1" style="color:${a}">${esc(r.t)}</p>
-    ${meta?`<p class="text-[11px] muted mt-1">${meta}</p>`:''}
-    <p class="text-sm muted mt-2.5 leading-relaxed">${esc(r.d)}</p>
+    <div class="flex flex-wrap gap-1.5 mt-3">${chips.join('')}</div>
+    <p class="text-sm muted mt-3 leading-relaxed line-clamp-3">${esc(r.d)}</p>
     <span class="mt-3 inline-flex items-center gap-1 text-xs font-medium" style="color:${a}">Fiche complète →</span>
   </a>`;
 }
@@ -981,17 +1078,32 @@ function viewRole(modeId, idx){
     <h1 class="reveal font-serif text-4xl md:text-5xl tracking-tight mt-3">${r.n.replace(/·/g,'<span class="faint">·</span>')}</h1>
     <p class="reveal text-xl mt-2 font-medium" style="color:${a}">${r.t}</p>
     <p class="reveal text-lg muted mt-5 leading-relaxed">${r.d}</p>
-    ${det&&det.obj?`<div class="reveal mt-6 rounded-xl p-5" style="background:var(--accent-soft);border:1px solid color-mix(in srgb,${a} 28%,transparent)"><h3 class="text-sm font-semibold mb-1.5" style="color:${a}">Objectif — comment jouer</h3><p class="text-sm leading-relaxed">${det.obj}</p></div>`:''}
-    ${det&&det.passif?`<div class="reveal mt-6 rounded-xl border bd surface p-5"><h3 class="text-sm font-semibold mb-1.5">Passif</h3><p class="text-sm muted leading-relaxed">${det.passif}</p></div>`:''}
-    ${stageBlock}
-    ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-4">Pouvoirs & capacités</h2>
-      <div class="rounded-xl border bd overflow-hidden">
-        ${r.pw.map((p,i)=>`<div class="flex items-start gap-3 p-4 ${i?'bd-t':''} surface"><span class="mt-1 w-5 h-5 shrink-0 grid place-items-center rounded-md text-[11px] font-semibold text-white" style="background:${a}">${i+1}</span><p class="text-sm">${p}</p></div>`).join('')}
+    <details class="reveal mt-5 rounded-xl border bd surface-2 px-4 py-3 text-sm">
+      <summary class="flex items-center justify-between font-medium muted hover:text-[var(--text)]"><span>Comment lire cette fiche ?</span><span class="chev faint">⌄</span></summary>
+      <div class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 muted leading-relaxed">
+        <div><b class="text-[var(--text)]">♥</b> — points de vie (1 ♥ = 2 PV).</div>
+        <div><b class="text-[var(--text)]" style="white-space:nowrap">↻ X s/min</b> — temps de recharge du pouvoir.</div>
+        <div><b class="text-[var(--text)]" style="white-space:nowrap">⌖ portée X</b> — rayon d'effet, en blocs.</div>
+        <div><b class="text-[var(--text)]">Force / Résistance / Vitesse I–III</b> — niveau du buff (plus haut = plus fort).</div>
+        <div><b class="text-[var(--text)]">Stade 1 → 2 → 3 → Méga</b> — évolutions : plus de stats et de pouvoirs.</div>
+        <div><b class="text-[var(--text)]">Camp</b> — ton équipe ; certains rôles sont solitaires (chacun pour soi).</div>
       </div>
+    </details>
+    ${det&&det.obj?`<div class="reveal mt-6 rounded-xl p-5" style="background:var(--accent-soft);border:1px solid color-mix(in srgb,${a} 28%,transparent)"><h3 class="text-sm font-semibold mb-1.5" style="color:${a}">Objectif — comment jouer</h3><p class="text-sm leading-relaxed">${det.obj}</p></div>`:''}
+    ${det&&det.passif?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">◆</span>Passif</h2>
+      <div class="rounded-xl border bd overflow-hidden">${abilityRow(det.passif, a, {name:'Capacité passive'})}</div></div>`:''}
+    ${stageBlock}
+    ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Activable — pouvoirs</h2>
+      <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''} · clic d'un pouvoir = effet ; ↻ = recharge, ⌖ = portée.</p>
+      <div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>
     </div>`:''}
-    ${det&&det.combo?`<div class="reveal mt-6 rounded-xl p-5" style="background:var(--accent-soft);border:1px solid color-mix(in srgb,${a} 28%,transparent)"><h3 class="text-sm font-semibold mb-1" style="color:${a}">Combo signature</h3><p class="text-sm leading-relaxed">${det.combo}</p></div>`:''}
-    ${lienTxt?`<div class="reveal mt-6 rounded-xl border bd surface p-5"><h3 class="text-sm font-semibold mb-1.5 flex items-center gap-2"><span class="dot" style="background:${a}"></span>Lien & synergie</h3><p class="text-sm muted leading-relaxed">${lienTxt}</p></div>`:''}
-    ${r.fb?`<div class="reveal mt-6 rounded-xl border bd surface-2 p-5"><h3 class="text-sm font-semibold mb-1">Faiblesse</h3><p class="text-sm muted">${r.fb}</p></div>`:''}
+    ${det&&det.combo?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⚡</span>Combo signature</h2>
+      <div class="rounded-xl overflow-hidden" style="border:1px solid color-mix(in srgb,${a} 28%,var(--border))">${abilityRow(det.combo, a, {name:'Combo'})}</div></div>`:''}
+    ${lienTxt?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⮌</span>Lien & synergie</h2>
+      <div class="rounded-xl border bd overflow-hidden">${abilityRow(lienTxt, a, {name:'Synergie'})}</div></div>`:''}
+    ${r.fb?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">▽</span>Faiblesse</h2>
+      <div class="rounded-xl border bd surface-2 p-5"><p class="text-sm muted leading-relaxed">${r.fb}</p></div></div>`:''}
+    ${roleImage(r, a, stages)}
     <div class="reveal mt-10 flex flex-wrap gap-3">
       <button onclick="copyIP(this)" class="btn ipbtn px-5 h-11 rounded-lg text-sm font-medium text-white ip-label" style="background:var(--accent)">Copier l'IP & jouer</button>
       <a href="#/mode/${modeId}" class="btn px-5 h-11 inline-flex items-center rounded-lg text-sm font-medium border bd surface">Tous les rôles</a>
@@ -1114,11 +1226,36 @@ function renderRoles(modeId){
   if(f.camp!=='all') list = list.filter(o=>o.r.camp===f.camp);
   if(modeId==='pokemon' && f.cat!=='all') list = list.filter(o=>roleCat(modeId,o.r).key===f.cat);
   if(q) list = list.filter(o=>{ const r=o.r; return (r.n+' '+r.t+' '+r.ev+' '+(r.d||'')+' '+(r.pw||[]).join(' ')+' '+(r.passif||'')).toLowerCase().includes(q); });
-  // organise par évolution : les lignées évolutives d'abord (par nb de stades), puis alpha
-  list.sort((x,y)=>{ const sx=roleStages(x.r).length, sy=roleStages(y.r).length; return sy-sx || x.r.n.localeCompare(y.r.n); });
-  const grid = document.getElementById('grid-'+modeId); if(!grid) return;
-  grid.innerHTML = list.map(o=>roleCard(modeId,o.i)).join('') || `<p class="muted col-span-full text-sm py-8 text-center">Aucun rôle ne correspond à ta recherche.</p>`;
-  const c = document.getElementById('count-'+modeId); if(c) c.textContent = list.length + ' rôle' + (list.length>1?'s':'');
+  const cont = document.getElementById('grid-'+modeId); if(!cont) return;
+  const a = ACC[modeId];
+  const sortFn = (x,y)=>{ const sx=roleStages(x.r).length, sy=roleStages(y.r).length; return sy-sx || x.r.n.localeCompare(y.r.n); };
+
+  // Vue par DÉFAUT (aucun filtre/recherche) : regroupée par CAMP, en-tête clair par section.
+  const grouped = f.camp==='all' && !q && !(modeId==='pokemon' && f.cat!=='all');
+  if(grouped){
+    cont.className = 'mt-2 space-y-12';
+    let html = '';
+    for(const [ck,c] of Object.entries(DATA[modeId].camps)){
+      const items = list.filter(o=>o.r.camp===ck).sort(sortFn);
+      if(!items.length) continue;
+      html += `<div class="reveal">
+        <div class="camphead flex items-center gap-3 py-3 mb-4 -mx-1 px-1 bd-b">
+          <span class="campbar" style="background:${a}"></span>
+          <div class="min-w-0">
+            <div class="font-serif text-xl leading-tight">${esc(c.name)}</div>
+            <div class="text-xs muted mt-0.5">${c.note?esc(c.note)+' · ':''}${items.length} rôle${items.length>1?'s':''}</div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">${items.map(o=>roleCard(modeId,o.i)).join('')}</div>
+      </div>`;
+    }
+    cont.innerHTML = html;
+  } else {
+    cont.className = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-1';
+    list.sort(sortFn);
+    cont.innerHTML = list.map(o=>roleCard(modeId,o.i)).join('') || `<p class="muted col-span-full text-sm py-8 text-center">Aucun rôle ne correspond à ta recherche.</p>`;
+  }
+  const cnt = document.getElementById('count-'+modeId); if(cnt) cnt.textContent = list.length + ' rôle' + (list.length>1?'s':'');
   observe();
 }
 function route(){
