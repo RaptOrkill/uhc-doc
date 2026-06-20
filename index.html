@@ -882,6 +882,7 @@ function stagePassifs(passif, stages){
       const f=stages[i]; if(!f) continue;
       if(new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(sen)){ res[i].push(sen); done=true; break; }
     }
+    if(!done){ const m=sen.match(/stade\s*([123])/i); if(m && res[+m[1]-1]){ res[+m[1]-1].push(sen); done=true; } }
     if(!done) res.general.push(sen);
   });
   return res;
@@ -895,7 +896,7 @@ function stagedPowers(r, a, stages, idx){
   stages.forEach((form,i)=>{
     const st = i+1;
     const list = st===1 ? g[1].concat(g[0]) : g[st];
-    const passifs = i===0 ? pas.general.concat(pas[0]) : pas[i];
+    const passifs = pas[i]; // uniquement le passif PROPRE à ce stade (le général est affiché à part)
     const hp = hps[i] || '';
     out.push(`<div id="pwstage-${idx}-${st}" style="scroll-margin-top:84px" class="mt-6 first:mt-3 rounded-xl border bd overflow-hidden">
       <div class="flex items-center gap-3 p-4 surface-2 bd-b">
@@ -1146,6 +1147,9 @@ function viewRole(modeId, idx){
     lienTxt = (lienTxt ? lienTxt+' · ' : '') + 'Membre de la Team Rocket : tu connais <b>Giovanni</b> (le Boss) et son pseudo dès le départ.';
   const stages = r.n.split('·').map(s=>s.trim());
   const evolves = stages.length>1;
+  // Passif affiché en haut : pour un rôle évolutif → seulement la part GÉNÉRALE (toutes formes) ;
+  // le reste est réparti par stade plus bas.
+  const basePassif = evolves ? stagePassifs(det.passif, stages).general.join(' ') : (det.passif||'');
   const stageBlock = evolves ? `<div class="reveal mt-10"><h2 class="font-serif text-xl mb-2 flex items-center gap-2"><span style="color:${a}">⇡</span>Évolutions</h2>
       <p class="text-xs muted mb-4 ml-6">Clique sur un stade pour voir ses pouvoirs.</p>
       <div class="flex items-stretch gap-2 flex-wrap">${stages.map((s,i)=>`<div class="flex items-center gap-2">
@@ -1173,8 +1177,8 @@ function viewRole(modeId, idx){
       </div>
     </details>
     ${det&&det.obj?`<div class="reveal mt-6 rounded-xl p-5" style="background:var(--accent-soft);border:1px solid color-mix(in srgb,${a} 28%,transparent)"><h3 class="text-sm font-semibold mb-1.5" style="color:${a}">Objectif — comment jouer</h3><p class="text-sm leading-relaxed">${det.obj}</p></div>`:''}
-    ${det&&det.passif?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">◆</span>Passif</h2>
-      <div class="rounded-xl border bd overflow-hidden">${abilityRow(det.passif, a, {name:'Capacité passive'})}</div></div>`:''}
+    ${basePassif?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">◆</span>${evolves?'Passif de base (toutes formes)':'Passif'}</h2>
+      <div class="rounded-xl border bd overflow-hidden">${abilityRow(basePassif, a, {name: evolves?'Toutes formes':'Capacité passive'})}</div></div>`:''}
     ${stageBlock}
     ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Pouvoirs & capacités</h2>
       <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''}${evolves?' · organisées par stade':''} · ↻ = recharge, ⌖ = portée.</p>
