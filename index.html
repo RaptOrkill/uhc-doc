@@ -789,6 +789,17 @@ POKE_ROLES.forEach(r=>{
   const id = POKE_DEX[r.n] || POKE_DEX[last];
   if(id) r.img = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+id+".png";
 });
+/* Dresseurs → vrais sprites de dresseur (Pokémon Showdown). */
+const POKE_TRAINER = {
+  "Sacha":"ash","Giovanni":"giovanni","Jessie":"teamrocket","James":"teamrocket",
+  "Hélio":"cyrus","Mars":"mars","Jupiter":"jupiter","Saturne":"saturn","Commando Galaxie":"galacticgrunt"
+};
+POKE_ROLES.forEach(r=>{
+  if(r.img) return;
+  const last = r.n.split('·').map(s=>s.trim()).pop();
+  const tid = POKE_TRAINER[r.n] || POKE_TRAINER[last];
+  if(tid){ r.img = "https://play.pokemonshowdown.com/sprites/trainers/"+tid+".png"; r.imgPix = true; }
+});
 const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
 const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
 const MECH={
@@ -866,6 +877,20 @@ function stripStage(p){
                   .replace(/\s*\(\s*M[ée]ga\s*\)\s*/i,' ')
                   .replace(/\s{2,}/g,' ').trim();
 }
+/* Stade d'un pouvoir EN TENANT COMPTE des noms de forme « (Chenipan) », « (Papilusion) »… */
+function powerStageFor(p, stages){
+  const s = String(p);
+  if(/\(\s*M[ée]ga\s*\)/i.test(s) || /\bM[ée]ga[- ]/i.test(s)) return 'mega';
+  const m = s.match(/\(\s*Stade\s*([123])\s*\)/i); if(m) return +m[1];
+  for(let i=0;i<stages.length;i++){ const f=stages[i]; if(f && new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(s)) return i+1; }
+  return 0;
+}
+/* Nettoie aussi les « (NomDeForme) » du texte affiché. */
+function stripStageForms(p, stages){
+  let s = stripStage(p);
+  stages.forEach(f=>{ if(f) s = s.replace(new RegExp('\\s*\\(\\s*'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\)','gi'),' '); });
+  return s.replace(/\s{2,}/g,' ').trim();
+}
 /* PV par stade depuis "8 → 10 → 12 ♥". */
 function splitHp(hp){
   if(!hp) return [];
@@ -890,7 +915,7 @@ function stagePassifs(passif, stages){
 /* Fiche COMPLÈTE par stade : forme + PV + passif du stade + pouvoirs (effets/badges). */
 function stagedPowers(r, a, stages, idx){
   const g = {0:[],1:[],2:[],3:[],mega:[]};
-  (r.pw||[]).forEach(p=>g[powerStage(p)].push(p));
+  (r.pw||[]).forEach(p=>g[powerStageFor(p, stages)].push(p));
   const hps = splitHp(r.hp), pas = stagePassifs(r.passif, stages);
   const out = [];
   stages.forEach((form,i)=>{
@@ -904,7 +929,7 @@ function stagedPowers(r, a, stages, idx){
         <div class="flex-1 min-w-0"><div class="font-medium">${esc(form)}</div><div class="text-[11px] muted">Stade ${st}${hp?' · ❤ '+esc(hp):''}${list.length?' · '+list.length+' pouvoir'+(list.length>1?'s':''):''}</div></div>
       </div>
       ${passifs.length?`<div class="p-4 bd-b surface"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">Passif au stade ${st}</div><p class="text-sm muted leading-relaxed">${passifs.join(' ')}</p></div>`:''}
-      ${list.length?list.map((p,j)=>abilityRow(stripStage(p),a,{i:j})).join(''):`<div class="p-4 text-sm muted">Aucun nouveau pouvoir à ce stade — la forme renforce les stats et les capacités existantes.</div>`}
+      ${list.length?list.map((p,j)=>abilityRow(stripStageForms(p,stages),a,{i:j})).join(''):`<div class="p-4 text-sm muted">Aucun nouveau pouvoir à ce stade — la forme renforce les stats et les capacités existantes.</div>`}
     </div>`);
   });
   if(g.mega.length){
@@ -913,7 +938,7 @@ function stagedPowers(r, a, stages, idx){
         <span class="w-8 h-8 grid place-items-center rounded-full text-sm font-semibold text-white shrink-0" style="background:${a}">M</span>
         <div class="flex-1 min-w-0"><div class="font-medium" style="color:${a}">Méga-Évolution</div><div class="text-[11px] muted">Transformation ultime temporaire · ${g.mega.length} pouvoir${g.mega.length>1?'s':''}</div></div>
       </div>
-      ${g.mega.map((p,j)=>abilityRow(stripStage(p),a,{i:j})).join('')}
+      ${g.mega.map((p,j)=>abilityRow(stripStageForms(p,stages),a,{i:j})).join('')}
     </div>`);
   }
   return out.join('');
@@ -921,8 +946,11 @@ function stagedPowers(r, a, stages, idx){
 /* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
 function roleImage(r, a, stages){
   const label = (stages && stages[stages.length-1]) || r.n;
+  const pix = r.imgPix || /pokemonshowdown/.test(r.img||'');
   const inner = r.img
-    ? `<img src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy" class="block w-full max-w-md mx-auto rounded-2xl border bd ring-soft" />`
+    ? (pix
+        ? `<div class="rounded-2xl border bd surface-2 mx-auto max-w-md py-10 grid place-items-center"><img src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy" style="image-rendering:pixelated;width:200px;height:auto" /></div>`
+        : `<img src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy" class="block w-full max-w-md mx-auto rounded-2xl border bd ring-soft surface-2" />`)
     : `<div class="rounded-2xl border bd surface-2 mx-auto max-w-md py-14 grid place-items-center text-center">
          <div class="font-serif text-6xl" style="color:${a}">${esc((label[0]||'?'))}</div>
          <p class="text-xs muted mt-3">Illustration du rôle — à venir</p>
