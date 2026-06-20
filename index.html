@@ -780,10 +780,9 @@ const POKE_DEX = {
   "Raichu":26,"Dracaufeu":6,"Tortank":9,"Florizarre":3,"Jungko":254,"Papilusion":12,
   "Leuphorie":242,"Morphéo":351,"Ronflex":143,"Évoli":133,"Léviator":130,
   "Qulbutoké":202,"Métamorph":132,"Persian":53,"Absol":359,"Démolosse":229,
-  "Hoopa":720,"Volcanion":721,"Mewtwo":150,
-  // dresseurs → Pokémon signature
-  "Sacha":25,"Giovanni":53,"Jessie":24,"James":110,
-  "Hélio":169,"Mars":432,"Jupiter":435,"Saturne":454,"Commando Galaxie":42
+  "Hoopa":720,"Volcanion":721,"Mewtwo":150
+  // (Dresseurs sans sprite Pokémon : Sacha, Giovanni, Jessie, James, Hélio, Mars,
+  //  Jupiter, Saturne, Commando — illustration dédiée à fournir → placeholder propre.)
 };
 POKE_ROLES.forEach(r=>{
   const last = r.n.split('·').map(s=>s.trim()).pop();
@@ -854,6 +853,38 @@ function abilityRow(p, a, opts){
     </div>
     ${rest?`<p class="text-sm muted leading-relaxed mt-2 ml-6">${rest}</p>`:''}
   </div>`;
+}
+/* À quel stade appartient un pouvoir (d'après "(Stade N)" / "(Méga)" dans le texte). */
+function powerStage(p){
+  const s = String(p);
+  if(/\(\s*M[ée]ga\s*\)/i.test(s) || /\bM[ée]ga[- ]/i.test(s)) return 'mega';
+  const m = s.match(/\(\s*Stade\s*([123])\s*\)/i); if(m) return +m[1];
+  return 0; // général (toutes formes)
+}
+function stripStage(p){
+  return String(p).replace(/\s*\(\s*Stade\s*[123]\s*\)\s*/i,' ')
+                  .replace(/\s*\(\s*M[ée]ga\s*\)\s*/i,' ')
+                  .replace(/\s{2,}/g,' ').trim();
+}
+/* Pouvoirs ORGANISÉS PAR STADE pour un rôle évolutif (sections + cibles cliquables). */
+function stagedPowers(r, a, stages, idx){
+  const g = {0:[],1:[],2:[],3:[],mega:[]};
+  (r.pw||[]).forEach(p=>g[powerStage(p)].push(p));
+  const out = [];
+  [1,2,3,'mega'].forEach(st=>{
+    const list = st===1 ? g[1].concat(g[0]) : g[st];   // pouvoirs « toutes formes » rangés au Stade 1
+    if(!list.length) return;
+    const label = st==='mega' ? 'Méga-Évolution' : ('Stade '+st + (stages[st-1] ? ' — '+esc(stages[st-1]) : ''));
+    out.push(`<div id="pwstage-${idx}-${st}" style="scroll-margin-top:84px" class="mt-6 first:mt-3">
+      <div class="flex items-center gap-2 mb-2.5">
+        <span class="w-7 h-7 grid place-items-center rounded-full text-xs font-semibold text-white" style="background:${a}">${st==='mega'?'M':st}</span>
+        <h3 class="font-medium text-[15px]">${label}</h3>
+        <span class="rolechip">${list.length} pouvoir${list.length>1?'s':''}</span>
+      </div>
+      <div class="rounded-xl border bd overflow-hidden">${list.map((p,i)=>abilityRow(stripStage(p),a,{i})).join('')}</div>
+    </div>`);
+  });
+  return out.join('');
 }
 /* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
 function roleImage(r, a, stages){
@@ -1021,18 +1052,38 @@ function tiles(items, accent){
 function winBox(accent, text){
   return `<div class="reveal mt-10 rounded-2xl p-6 border bd surface-2"><div class="flex items-center gap-2 mb-1"><span class="dot" style="background:${accent}"></span><h3 class="font-medium">Condition de victoire</h3></div><p class="text-sm muted leading-relaxed">${text}</p></div>`;
 }
+/* Liste de sous-entrées ➲ Nom + description (pour les sous-menus de mécaniques). */
+function subList(items, a){
+  return `<div class="rounded-xl border bd overflow-hidden mt-3">${items.map((it,i)=>`<div class="p-4 ${i?'bd-t':''} surface"><div class="font-medium text-sm flex items-center gap-2"><span style="color:${a}">➲</span>${it[0]}</div>${it[1]?`<p class="text-sm muted mt-1 ml-6 leading-relaxed">${it[1]}</p>`:''}</div>`).join('')}</div>`;
+}
+/* Menu de mécaniques : entrées dépliables (glyph, titre, sous-titre, contenu). */
+function menu(items, a){
+  return `<div class="reveal rounded-2xl border bd overflow-hidden">${items.map((it,i)=>`<details class="${i?'bd-t':''}"><summary class="flex items-center gap-3 p-5 cursor-pointer select-none hover:bg-[var(--surface-2)]"><span class="font-serif text-xl shrink-0" style="color:${a}">${it.glyph}</span><div class="flex-1 min-w-0"><div class="font-medium">${it.title}</div><div class="text-xs muted mt-0.5">${it.sub}</div></div><span class="chev faint text-lg">⌄</span></summary><div class="px-5 pb-5 -mt-1">${it.inner}</div></details>`).join('')}</div>`;
+}
 function modeDetail(id){
   const a = ACC[id];
   if(id==='pokemon'){
     const weather=[["☀ Grand Soleil","Avantage Feu & Plante ; punit l'Eau. Morphéo : Vitesse II + immunité feu."],["🌧 Pluie","Avantage l'Eau ; affaiblit le Feu. Morphéo : Régénération."],["⚡ Orage","Booste l'Électrik ; Morphéo augmente le knockback de ses coups."],["⏳ Tempête de Sable","Favorise Roche/Sol ; Morphéo gagne Résistance, nausée aux ennemis."],["❄ Grêle","Renforce la Glace ; coups ralentissants, dégâts ennemis réduits."],["🌑 Nuit Profonde","Les Ténèbres dominent ; Morphéo devient invisible, cécité de zone."]];
     const ct=[["Hyper Soin","Régénération III instantanée."],["Bouclier","Résistance II quelques secondes."],["Turbo","Vitesse III pour s'engager ou fuir."],["Berserk","Force I temporaire."],["Fulguro-Poing","Foudroie une cible en vue."],["Téléport","Bond instantané de quelques blocs."]];
     const objets=[["Restes","Régénération I permanente (tu te soignes lentement)."],["Bandeau Royal","Force I permanente (tes coups frappent plus fort)."],["Veste de Combat","Résistance I permanente (tu encaisses mieux)."],["Vit'Éclair","Vitesse I permanente."],["Charbon Ardent","Tes coups enflamment l'ennemi (3s) + immunité au feu."],["Bottes Motiques","Immunité aux dégâts de chute + Saut amélioré."]];
-    return dsection("Types & météo tactique", a, tiles(weather,a))
-      + dsection("Capsules Techniques (AirDrops)", a, tiles(ct,a))
-      + dsection("Objets Pokémon à trouver", a,
-          `<p class="text-sm muted mb-4 leading-relaxed">À partir d'un moment configurable, les <b>Objets Rares</b> apparaissent un par un, à intervalle régulier. Chaque objet n'apparaît qu'<b>une seule fois</b>, à environ <b>300 blocs du centre (0,0)</b> — et <b>sans coordonnées annoncées</b> : à toi de fouiller pour le trouver. Ce sont des objets tenus tirés des jeux Pokémon, qui donnent un <b>bonus passif permanent</b> tant que tu les portes. <b>Règle : 1 seul objet par joueur</b> — impossible d'en ramasser un second sans jeter l'ancien.</p>`
-          + tiles(objets,a))
-      + winBox(a, "La dernière faction en vie gagne. Quatre camps : le Conseil des Maîtres, la Team Rocket, la Team Galaxie — et les Légendaires, qui jouent chacun pour soi et doivent éliminer tous les autres.");
+    const weatherIntro = `<p class="text-sm muted leading-relaxed">Toutes les <b>15 min</b>, une nouvelle météo s'installe et est annoncée à tous (<b>chat + scoreboard</b>, pas d'affichage à l'écran). Chaque climat <b>avantage certains Types</b> et en <b>punit</b> d'autres ; <b>Morphéo</b> s'y adapte et peut imposer les malus aux ennemis.</p>`;
+    const ctIntro = `<p class="text-sm muted leading-relaxed">Les CT tombent en <b>AirDrop</b> (PokéStop bleu). Chacune est une <b>compétence active à usage unique</b> : clic droit → effet, puis consommée. Elles comptent pour le Vase d'Hoopa.</p>`;
+    const objIntro = `<p class="text-sm muted leading-relaxed">À partir d'un moment configurable, les <b>Objets Rares</b> apparaissent un par un (PokéStop doré), <b>une seule fois chacun</b>, à environ <b>300 blocs du centre</b>, <b>sans coordonnées</b>. Ce sont des objets tenus des jeux Pokémon donnant un <b>bonus passif permanent</b>. <b>1 seul objet par joueur.</b></p>`;
+    const blue = [["Hyper Potion","Régénération III pendant 5 s."],["Capsule Technique (CT)","Une compétence active à usage unique (Soin, Bouclier, Turbo, Berserk, Fulguro-Poing, Téléport)."],["Super Bonbon","Boost d'évolution — ~50 % de chance d'en avoir en bonus."],["Pépites d'or","Quelques pépites (ressource / Marché Noir)."],["Pomme d'or","Parfois, en bonus."]];
+    const pokestopInner = `<p class="text-sm muted leading-relaxed mb-3">Les <b>coffres sont remplacés par des PokéStops</b>. <b>Clic droit</b> dessus → barre de chargement <b>0→100 %</b> (reste à proximité) ; à 100 % le contenu va dans ton <b>inventaire</b> (débord → <b>/full</b>), puis le PokéStop <b>disparaît 5 s après</b>.</p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="rounded-xl border p-4" style="border-color:color-mix(in srgb,#e0a200 50%,var(--border))"><div class="font-medium flex items-center gap-2">🟡 PokéStop DORÉ</div><p class="text-xs muted mt-1">Objets Pokémon (held items) + un Super Bonbon.</p>${subList(objets,a)}</div>
+        <div class="rounded-xl border p-4" style="border-color:color-mix(in srgb,#2f7fe0 50%,var(--border))"><div class="font-medium flex items-center gap-2">🔵 PokéStop BLEU</div><p class="text-xs muted mt-1">Consommables, CT & bonbons.</p>${subList(blue,a)}</div>
+      </div>`;
+    return dsection("Particularités du mode", a,
+      `<p class="text-sm muted mb-5 leading-relaxed">Les mécaniques uniques du Pokémon UHC, en menus dépliables — clique pour ouvrir.</p>`
+      + menu([
+          {glyph:'🌦', title:'Météo tactique', sub:'6 climats — explication du système + chaque météo', inner: weatherIntro + subList(weather,a)},
+          {glyph:'📦', title:'Capsules Techniques (CT)', sub:'6 compétences à usage unique', inner: ctIntro + subList(ct,a)},
+          {glyph:'🅿', title:'PokéStops & AirDrops', sub:'Dorés (objets) · Bleus (CT) — à déchiffrer', inner: pokestopInner},
+          {glyph:'🎁', title:'Objets Pokémon', sub:'Bonus passifs permanents à dénicher', inner: objIntro + subList(objets,a)}
+        ], a))
+      + winBox(a, "La dernière faction en vie gagne. Quatre camps : Conseil des Maîtres, Team Rocket, Team Galaxie — et les Légendaires, chacun pour soi.");
   }
   if(id==='valkyrie'){
     const pantheon=[["Les Dieux (13)","Panthéon grec & nordique : Zeus, Poséidon, Hadès, Arès, Athéna, Apollon, Artémis, Hermès, Héphaïstos, Chronos, Azrael, Thor, Loki."],["Les Légendes (10)","Conquérants & héros : Alexandre, Gengis Khan, Napoléon, Sun Tzu, Jeanne d'Arc, Spartacus, Cléopâtre, Romulus & Remus, le Vengeur."],["Les Archétypes (20)","Combattants & survivants : Forgeron, Archer, Guérisseur, Berserker, Druide, Nécromancien, Illusionniste, Mime, Caméléon…"],["Les Solitaires (4)","Chacun pour soi : L'Exilé, le Chasseur, le Gladiateur, Ombra."],["Enquêteurs & Spéciaux (6)","Information & rôles à part : Détective, Oracle, Inquisiteur, Espion, Ascendant, Traître."]];
@@ -1064,9 +1115,10 @@ function viewRole(modeId, idx){
     lienTxt = (lienTxt ? lienTxt+' · ' : '') + 'Membre de la Team Rocket : tu connais <b>Giovanni</b> (le Boss) et son pseudo dès le départ.';
   const stages = r.n.split('·').map(s=>s.trim());
   const evolves = stages.length>1;
-  const stageBlock = evolves ? `<div class="reveal mt-10"><h2 class="font-serif text-xl mb-4">Évolutions</h2>
+  const stageBlock = evolves ? `<div class="reveal mt-10"><h2 class="font-serif text-xl mb-2 flex items-center gap-2"><span style="color:${a}">⇡</span>Évolutions</h2>
+      <p class="text-xs muted mb-4 ml-6">Clique sur un stade pour voir ses pouvoirs.</p>
       <div class="flex items-stretch gap-2 flex-wrap">${stages.map((s,i)=>`<div class="flex items-center gap-2">
-        <div class="rounded-xl border bd surface px-4 py-3"><div class="text-[11px] muted">Stade ${i+1}</div><div class="font-medium">${s}</div></div>
+        <button onclick="document.getElementById('pwstage-${idx}-${i+1}')?.scrollIntoView({behavior:'smooth',block:'start'})" class="btn text-left rounded-xl border bd surface px-4 py-3 hover:border-[color-mix(in_srgb,${a}_55%,var(--border))]"><div class="text-[11px] muted">Stade ${i+1}</div><div class="font-medium">${esc(s)}</div><div class="text-[10px] mt-0.5" style="color:${a}">voir pouvoirs →</div></button>
         ${i<stages.length-1?`<span class="muted">→</span>`:''}</div>`).join('')}</div></div>` : '';
   return `<section class="max-w-3xl mx-auto px-5 pt-12 pb-20">
     <a href="#/mode/${modeId}" class="text-sm muted hover:text-[var(--text)]">← ${m.name}</a>
@@ -1093,9 +1145,10 @@ function viewRole(modeId, idx){
     ${det&&det.passif?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">◆</span>Passif</h2>
       <div class="rounded-xl border bd overflow-hidden">${abilityRow(det.passif, a, {name:'Capacité passive'})}</div></div>`:''}
     ${stageBlock}
-    ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Activable — pouvoirs</h2>
-      <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''} · clic d'un pouvoir = effet ; ↻ = recharge, ⌖ = portée.</p>
-      <div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>
+    ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Pouvoirs & capacités</h2>
+      <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''}${evolves?' · organisées par stade':''} · ↻ = recharge, ⌖ = portée.</p>
+      ${evolves ? stagedPowers(r, a, stages, idx)
+                : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
     </div>`:''}
     ${det&&det.combo?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⚡</span>Combo signature</h2>
       <div class="rounded-xl overflow-hidden" style="border:1px solid color-mix(in srgb,${a} 28%,var(--border))">${abilityRow(det.combo, a, {name:'Combo'})}</div></div>`:''}
