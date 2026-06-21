@@ -855,6 +855,20 @@ const POKE_STAGE_DESC = {
   ]
 };
 POKE_ROLES.forEach(r=>{ if(POKE_STAGE_DESC[r.n]) r.stageDesc = POKE_STAGE_DESC[r.n]; });
+/* Boutiques / shops spécifiques à certains rôles. */
+const POKE_SHOP = {
+  "Miaouss · Persian":{
+    title:"💰 Marché Noir",
+    open:"Miaouss ouvre sa boutique avec sa <b>Pièce d'Or</b>. Monnaie : <b>pépites d'or</b> — gagnées via le <b>Jackpot</b> (chance sur ses coups) et en minant <b>or/diamant</b> (+1 garantie par minerai). Le craft vanilla lingot→pépites est désactivé.",
+    items:[
+      ["Hyper Potion","Régénération III pendant 5 s.","16 pépites"],
+      ["CT aléatoire","Une Capsule Technique au hasard.","24 pépites"],
+      ["Super Bonbon","+25 % d'évolution (Stade 1 → 2).","32 pépites"],
+      ["Évoluer en Persian","Consomme 64 pépites — Miaouss devient Persian.","64 pépites"]
+    ]
+  }
+};
+POKE_ROLES.forEach(r=>{ if(POKE_SHOP[r.n]) r.shop = POKE_SHOP[r.n]; });
 const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
 const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
 const MECH={
@@ -1309,6 +1323,9 @@ function viewRole(modeId, idx){
         : evolves ? stagedPowers(r, a, stages, idx)
                   : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
     </div>`:''}
+    ${r.shop?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">🛒</span>${r.shop.title}</h2>
+      ${r.shop.open?`<p class="text-sm muted mb-3 leading-relaxed">${r.shop.open}</p>`:''}
+      <div class="rounded-xl border bd overflow-hidden">${r.shop.items.map((it,i)=>`<div class="flex items-center gap-3 p-4 ${i?'bd-t':''} surface"><div class="flex-1 min-w-0"><div class="font-medium text-sm">${esc(it[0])}</div><p class="text-sm muted mt-0.5 leading-relaxed">${esc(it[1])}</p></div><span class="rolechip shrink-0" style="color:${a};border-color:color-mix(in srgb,${a} 35%,var(--border))">${esc(it[2])}</span></div>`).join('')}</div></div>`:''}
     ${det&&det.combo?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⚡</span>Combo signature</h2>
       <div class="rounded-xl overflow-hidden" style="border:1px solid color-mix(in srgb,${a} 28%,var(--border))">${abilityRow(det.combo, a, {name:'Combo'})}</div></div>`:''}
     ${lienTxt?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⮌</span>Lien & synergie</h2>
