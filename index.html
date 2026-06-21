@@ -1000,6 +1000,27 @@ function stagedPowers(r, a, stages, idx){
   }
   return out.join('');
 }
+/* Bloc spécial Évoli : Stade 1 + 3 voies d'évolution AU CHOIX (définitif). */
+function evoliBlock(r, a){
+  const pw = r.pw || [];
+  const base = pw.filter(p=>/Stade\s*1/i.test(p) || /Câlinerie/i.test(p));
+  const defs = [
+    {ico:'💧', name:'Aquali', tag:'Eau · Tank',       col:'#2f7fe0'},
+    {ico:'⚡', name:'Voltali', tag:'Électrik · Burst', col:'#e0b000'},
+    {ico:'🔥', name:'Pyroli',  tag:'Feu · Offensif',   col:'#e0552f'}
+  ];
+  const branches = defs.map(b=>{
+    const p = pw.find(x=> x.indexOf(b.ico)===0 || x.indexOf(b.name)>-1) || '';
+    const desc = p.split('—').slice(1).join('—').trim() || p;
+    return `<div class="rounded-xl border p-4" style="border-color:color-mix(in srgb,${b.col} 45%,var(--border))">
+      <div class="font-medium flex items-center gap-2 flex-wrap">${b.ico} ${b.name}<span class="rolechip">${b.tag}</span></div>
+      <p class="text-sm muted mt-2 leading-relaxed">${esc(desc)}</p>
+    </div>`;
+  }).join('');
+  return `<div class="rounded-xl border bd overflow-hidden">${base.map((p,i)=>abilityRow(stripStage(p),a,{i})).join('')}</div>
+    <div class="rounded-xl border bd surface-2 p-4 mt-4"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">Évolution au choix — définitif</div><p class="text-sm muted leading-relaxed">À l'évolution, une <b>Pierre Évolutive</b> ouvre un menu : tu <b>choisis ta voie</b> parmi trois branches aux styles opposés. Le choix est <b>définitif</b>.</p></div>
+    <div class="grid sm:grid-cols-3 gap-3 mt-3">${branches}</div>`;
+}
 /* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
 function roleImage(r, a, stages){
   const label = (stages && stages[stages.length-1]) || r.n;
@@ -1267,8 +1288,9 @@ function viewRole(modeId, idx){
     ${stageBlock}
     ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Pouvoirs & capacités</h2>
       <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''}${evolves?' · organisées par stade':''} · ↻ = recharge, ⌖ = portée.</p>
-      ${evolves ? stagedPowers(r, a, stages, idx)
-                : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
+      ${r.n==='Évoli' ? evoliBlock(r, a)
+        : evolves ? stagedPowers(r, a, stages, idx)
+                  : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
     </div>`:''}
     ${det&&det.combo?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⚡</span>Combo signature</h2>
       <div class="rounded-xl overflow-hidden" style="border:1px solid color-mix(in srgb,${a} 28%,var(--border))">${abilityRow(det.combo, a, {name:'Combo'})}</div></div>`:''}
