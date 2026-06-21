@@ -869,6 +869,16 @@ const POKE_SHOP = {
   }
 };
 POKE_ROLES.forEach(r=>{ if(POKE_SHOP[r.n]) r.shop = POKE_SHOP[r.n]; });
+/* Recettes / crafts spéciaux. */
+const POKE_CRAFT = {
+  "Hoopa":{
+    title:"Vase Scellé → Hoopa Déchaîné",
+    intro:"Réunis les composants dans ton inventaire, puis utilise le <b>Vase Scellé</b> (clic droit) et confirme. <b>Irréversible</b>. Le Vase refuse de s'ouvrir si tu es <b>en combat depuis moins de 5 s</b>.",
+    ingredients:[["📘 Capsule Technique (CT)","×3"],["🍬 Super Bonbon","×1"],["💀 Tête de joueur","×1"]],
+    result:"Hoopa Déchaîné (permanent) : 18 ♥, Force I, Vitesse II, backstab 15 %, Miroir des Ombres utilisable en combat, et Vol Larcin qui devient Furie Dimensionnelle."
+  }
+};
+POKE_ROLES.forEach(r=>{ if(POKE_CRAFT[r.n]) r.craft = POKE_CRAFT[r.n]; });
 const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
 const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
 const MECH={
@@ -1333,6 +1343,13 @@ function viewRole(modeId, idx){
     ${r.shop?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">🛒</span>${r.shop.title}</h2>
       ${r.shop.open?`<p class="text-sm muted mb-3 leading-relaxed">${r.shop.open}</p>`:''}
       <div class="rounded-xl border bd overflow-hidden">${r.shop.items.map((it,i)=>`<div class="flex items-center gap-3 p-4 ${i?'bd-t':''} surface"><div class="flex-1 min-w-0"><div class="font-medium text-sm">${esc(it[0])}</div><p class="text-sm muted mt-0.5 leading-relaxed">${esc(it[1])}</p></div><span class="rolechip shrink-0" style="color:${a};border-color:color-mix(in srgb,${a} 35%,var(--border))">${esc(it[2])}</span></div>`).join('')}</div></div>`:''}
+    ${r.craft?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">🏺</span>${r.craft.title}</h2>
+      ${r.craft.intro?`<p class="text-sm muted mb-3 leading-relaxed">${r.craft.intro}</p>`:''}
+      <div class="rounded-xl border bd surface-2 p-4">
+        <div class="text-[11px] font-semibold muted uppercase tracking-wide mb-2">Composants</div>
+        <div class="flex flex-wrap gap-2">${r.craft.ingredients.map(it=>`<span class="rolechip">${esc(it[0])} <b style="color:${a}">${esc(it[1])}</b></span>`).join('')}</div>
+        <p class="text-sm mt-3 leading-relaxed"><span class="font-medium" style="color:${a}">Résultat</span> <span class="muted">${esc(r.craft.result)}</span></p>
+      </div></div>`:''}
     ${det&&det.combo?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⚡</span>Combo signature</h2>
       <div class="rounded-xl overflow-hidden" style="border:1px solid color-mix(in srgb,${a} 28%,var(--border))">${abilityRow(det.combo, a, {name:'Combo'})}</div></div>`:''}
     ${lienTxt?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">⮌</span>Lien & synergie</h2>
