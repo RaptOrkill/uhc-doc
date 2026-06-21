@@ -800,6 +800,61 @@ POKE_ROLES.forEach(r=>{
   const tid = POKE_TRAINER[r.n] || POKE_TRAINER[last];
   if(tid){ r.img = "https://play.pokemonshowdown.com/sprites/trainers/"+tid+".png"; r.imgPix = true; }
 });
+/* Descriptions NARRATIVES par stade (un texte par forme). */
+const POKE_STAGE_DESC = {
+  "Pichu · Pikachu · Raichu":[
+    "Frêle et discret, Pichu est d'abord un traqueur : son Radar Électrique indique la direction des ennemis et ses petites décharges grappillent des PV en ralentissant.",
+    "La forme iconique gagne en allonge : le Radar révèle désormais la faction des cibles, et la Cage-Éclair emprisonne brièvement l'adversaire.",
+    "Forme finale offensive : le Radar donne la distance exacte et le Tonnerre foudroie (dégâts + brûlure + paralysie). En Méga-Raichu, il frappe la cible ET ses alliés proches."
+  ],
+  "Salamèche · Reptincel · Dracaufeu":[
+    "Petit dragon de feu : il lance des boules de feu à distance et dispose déjà d'un coup brise-armure pour percer les défenses.",
+    "Ses flammes s'intensifient (Lance-Flammes en cône) et il commence à dasher sur sa cible ; ses coups enflamment (Fire Aspect).",
+    "Forme finale aérienne : Fournaise anti-soin au sol, double-saut et vol. La Méga choisit la voie X (force, brûlure) ou Y (aura de faiblesse)."
+  ],
+  "Carapuce · Carabaffe · Tortank":[
+    "La tortue débute : Pistolet à O à courte portée, et un Repli qui octroie Résistance II au prix de l'immobilité.",
+    "Plus solide (Résistance I permanente) : Bulle d'O cumule la Lenteur, et l'Abri bloque flèches et perles pendant 4 s.",
+    "Muraille finale : Hydrocanon massif, Tour Rapide en tourbillon. La Méga déchaîne un Geyser et gèle le sol des assaillants."
+  ],
+  "Bulbizarre · Herbizarre · Florizarre":[
+    "Le maître des toxines débute en douceur : Poudre Dodo ralentit, Fouet Lianes pique à distance.",
+    "Poudre Toxik empoisonne, et Racines Enveloppantes le propulsent sur la cible en la clouant (Lenteur IV).",
+    "Forme finale de zone : Tempête de Poudre (poison + lenteur), Vampigraine qui vole la vie. La Méga immobilise toute une zone."
+  ],
+  "Arcko · Massko · Jungko":[
+    "Assassin végétal naissant : Vol-Vie le soigne à chaque graine, et sa Lame de Feuillage tranche au corps-à-corps.",
+    "Gagne Vitesse I et un dash dans le dos (Cécité) ; Giga-Sangsue draine la vie des ennemis autour de lui.",
+    "Forme finale furtive : Tempête Verte (zone + drain), double-saut, dash empoisonné. La Méga ajoute Force I + Invisibilité 8 s."
+  ],
+  "Chenipan · Chrysacier · Papilusion":[
+    "Phase de préparation : il pose des graines invisibles (max 3) et englue ses cibles (Lenteur).",
+    "Immobile mais blindé (Résistance III) ; les ennemis qui marchent sur ses graines sont ralentis.",
+    "Le piège éclôt : ses graines deviennent des Fleurs de combat (Feu, Eau, Paralysie) que sa Bourrasque de Pollen projette ; vol illimité."
+  ],
+  "Ptiravi · Leveinard · Leuphorie":[
+    "Support fragile (Faiblesse I permanente) : il pose des zones de soin et sacrifie ses PV pour ses alliés.",
+    "Plus robuste, il prolonge le soutien et protège mieux l'équipe.",
+    "Forme finale (Régénération I) : le pilier du Village, à garder en vie à tout prix."
+  ],
+  "Goinfrex · Ronflex":[
+    "Le glouton mange des blocs faibles pour gagner des buffs temporaires selon ce qu'il avale.",
+    "Mur vivant (Lenteur I + Résistance I) : son Repos l'immobilise 5 s mais le rend invulnérable et le soigne entièrement."
+  ],
+  "Magicarpe · Léviator":[
+    "Quasi inoffensif (Faiblesse II permanente) : son seul atout est de survivre — il évolue en encaissant, pas en tuant.",
+    "Le monstre se réveille : Intimidation de zone, Hydro-Canon dévastateur, Colère (Force III). La Méga-Léviator (Eau/Ténèbres) passe à 12 ♥."
+  ],
+  "Miaouss · Persian":[
+    "L'arnaqueur amasse de l'or (Jackpot) pour acheter au Marché Noir et enchaîne les combos de griffes.",
+    "Technicien : ses dégâts à l'épée montent avec l'or porté, et sa Tranche inflige Wither."
+  ],
+  "Malosse · Démolosse":[
+    "Le limier marque une proie (brûlure, coords) et la traque plus vite ; il vole les buffs de Force.",
+    "Flammes Noires (coups enflammés), anti-soin sur la proie marquée, +2 ♥ : un chasseur implacable."
+  ]
+};
+POKE_ROLES.forEach(r=>{ if(POKE_STAGE_DESC[r.n]) r.stageDesc = POKE_STAGE_DESC[r.n]; });
 const DATA={pokemon:{roles:POKE_ROLES,camps:POKE_CAMPS},valkyrie:{roles:VALK_ROLES,camps:VALK_CAMPS},naruto:{roles:NARU_ROLES,camps:NARU_CAMPS}};
 const ACC={pokemon:'var(--pk)',valkyrie:'var(--vk)',naruto:'var(--nr)'};
 const MECH={
@@ -923,11 +978,13 @@ function stagedPowers(r, a, stages, idx){
     const list = st===1 ? g[1].concat(g[0]) : g[st];
     const passifs = pas[i]; // uniquement le passif PROPRE à ce stade (le général est affiché à part)
     const hp = hps[i] || '';
+    const narr = (r.stageDesc && r.stageDesc[i]) || '';
     out.push(`<div id="pwstage-${idx}-${st}" style="scroll-margin-top:84px" class="mt-6 first:mt-3 rounded-xl border bd overflow-hidden">
       <div class="flex items-center gap-3 p-4 surface-2 bd-b">
         <span class="w-8 h-8 grid place-items-center rounded-full text-sm font-semibold text-white shrink-0" style="background:${a}">${st}</span>
         <div class="flex-1 min-w-0"><div class="font-medium">${esc(form)}</div><div class="text-[11px] muted">Stade ${st}${hp?' · ❤ '+esc(hp):''}${list.length?' · '+list.length+' pouvoir'+(list.length>1?'s':''):''}</div></div>
       </div>
+      ${narr?`<div class="p-4 bd-b surface"><p class="text-sm leading-relaxed">${narr}</p></div>`:''}
       ${passifs.length?`<div class="p-4 bd-b surface"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">Passif au stade ${st}</div><p class="text-sm muted leading-relaxed">${passifs.join(' ')}</p></div>`:''}
       ${list.length?list.map((p,j)=>abilityRow(stripStageForms(p,stages),a,{i:j})).join(''):`<div class="p-4 text-sm muted">Aucun nouveau pouvoir à ce stade — la forme renforce les stats et les capacités existantes.</div>`}
     </div>`);
