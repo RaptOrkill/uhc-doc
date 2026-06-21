@@ -1021,6 +1021,22 @@ function evoliBlock(r, a){
     <div class="rounded-xl border bd surface-2 p-4 mt-4"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">Évolution au choix — définitif</div><p class="text-sm muted leading-relaxed">À l'évolution, une <b>Pierre Évolutive</b> ouvre un menu : tu <b>choisis ta voie</b> parmi trois branches aux styles opposés. Le choix est <b>définitif</b>.</p></div>
     <div class="grid sm:grid-cols-3 gap-3 mt-3">${branches}</div>`;
 }
+/* Bloc spécial Morphéo : 6 formes selon la météo en cours. */
+function morpheoBlock(r, a){
+  const forms = [
+    ["☀","Grand Soleil","Vitesse II + immunité au feu."],
+    ["🌧","Pluie","Régénération continue."],
+    ["⚡","Orage","Knockback de ses coups augmenté."],
+    ["⏳","Tempête de Sable","Résistance ; inflige Nausée aux ennemis."],
+    ["❄","Grêle","Coups ralentissants ; dégâts ennemis réduits."],
+    ["🌑","Nuit Profonde","Invisible (armure comprise) en restant accroupi ; Cécité de zone."]
+  ];
+  const pw = r.pw || [];
+  const actives = pw.filter(p=>!/Bonus selon la météo/i.test(p)); // Interrupteur de zone, Ball'Météo
+  return `<div class="rounded-xl border bd surface-2 p-4"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">6 formes — une par météo</div><p class="text-sm muted leading-relaxed">Morphéo n'a pas de stade : sa <b>forme et ses bonus changent avec la météo en cours</b> (permanents tant que le climat dure). Il peut aussi <b>imposer les malus</b> du climat à ses ennemis.</p></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">${forms.map(f=>`<div class="rounded-xl border bd surface p-4"><div class="font-medium flex items-center gap-2">${f[0]} ${f[1]}</div><p class="text-sm muted mt-1.5 leading-relaxed">${esc(f[2])}</p></div>`).join('')}</div>
+    ${actives.length?`<div class="mt-4"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-2">Capacités actives (toutes formes)</div><div class="rounded-xl border bd overflow-hidden">${actives.map((p,i)=>abilityRow(p,a,{i})).join('')}</div></div>`:''}`;
+}
 /* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
 function roleImage(r, a, stages){
   const label = (stages && stages[stages.length-1]) || r.n;
@@ -1289,6 +1305,7 @@ function viewRole(modeId, idx){
     ${(r.pw&&r.pw.length)?`<div class="reveal mt-10"><h2 class="font-serif text-xl mb-1 flex items-center gap-2"><span style="color:${a}">✦</span>Pouvoirs & capacités</h2>
       <p class="text-xs muted mb-3 ml-6">${r.pw.length} capacité${r.pw.length>1?'s':''}${evolves?' · organisées par stade':''} · ↻ = recharge, ⌖ = portée.</p>
       ${r.n==='Évoli' ? evoliBlock(r, a)
+        : r.n==='Morphéo' ? morpheoBlock(r, a)
         : evolves ? stagedPowers(r, a, stages, idx)
                   : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
     </div>`:''}
