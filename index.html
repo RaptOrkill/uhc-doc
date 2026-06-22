@@ -1071,6 +1071,28 @@ function morpheoBlock(r, a){
         ${abilityRow("Ball'Météo — projectile dont l'effet varie selon le climat en cours.", a, {i:1})}
       </div></div>`;
 }
+/* Bloc spécial Kyurem : 3 formes (normal / Blanc / Noir) + comment les obtenir. */
+function kyuremFormsBlock(a){
+  const forms = [
+    {ico:'❄', name:'Kyurem', tag:'Forme de base · Dragon/Glace', col:'#5fb8e0',
+     how:'Forme de départ dès le début de la partie.',
+     gain:'13 ♥ · Résistance I · +10 % de dégâts contre les Dragons · Pression, Ère Glaciaire, Colère, Laser Glace, Glaciation.'},
+    {ico:'🔥', name:'Kyurem Blanc', tag:'Vérité · Feu', col:'#e8e8e8',
+     how:'Récupère le Pointeau ADN (PokéStop OR) puis ÉLIMINE Reshiram.',
+     gain:'Résistance Feu/Lave permanente + Force I (en plus de toutes ses capacités de base).'},
+    {ico:'⚡', name:'Kyurem Noir', tag:'Idéaux · Électrik', col:'#7a5fd0',
+     how:'Récupère le Pointeau ADN (PokéStop OR) puis ÉLIMINE Zekrom.',
+     gain:'Vitesse II permanente (en plus de toutes ses capacités de base).'}
+  ];
+  return `<div class="reveal mt-10"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">🧬</span>Formes & fusion</h2>
+    <div class="rounded-xl border bd surface-2 p-4 mb-3"><div class="text-[11px] font-semibold muted uppercase tracking-wide mb-1">Comment fusionner</div>
+      <p class="text-sm muted leading-relaxed">Dès le <b>début de partie</b>, Kyurem (lui seul) connaît les <b>pseudos de Reshiram et Zekrom</b>, ainsi que l'<b>heure et le lieu</b> d'apparition du <b>Pointeau ADN</b> (dans un <b>PokéStop OR</b>). Il doit le récupérer, puis <b>éliminer</b> l'un des deux légendaires pour fusionner. La fusion est <b>unique et définitive</b> (non cumulable) : choisir sa proie, c'est choisir sa forme.</p></div>
+    <div class="grid sm:grid-cols-3 gap-3">${forms.map(f=>`<div class="rounded-xl border p-4" style="border-color:color-mix(in srgb,${f.col} 50%,var(--border))">
+      <div class="font-medium flex items-center gap-2 flex-wrap">${f.ico} ${f.name}<span class="rolechip">${f.tag}</span></div>
+      <p class="text-sm mt-2 leading-relaxed"><span class="font-medium" style="color:${a}">Obtention</span> <span class="muted">${esc(f.how)}</span></p>
+      <p class="text-sm mt-1 leading-relaxed"><span class="font-medium" style="color:${a}">Apport</span> <span class="muted">${esc(f.gain)}</span></p>
+    </div>`).join('')}</div></div>`;
+}
 /* Illustration du rôle en fin de fiche (image si fournie, sinon placeholder élégant). */
 function roleImage(r, a, stages){
   const label = (stages && stages[stages.length-1]) || r.n;
@@ -1343,6 +1365,7 @@ function viewRole(modeId, idx){
         : evolves ? stagedPowers(r, a, stages, idx)
                   : `<div class="rounded-xl border bd overflow-hidden">${r.pw.map((p,i)=>abilityRow(p,a,{i})).join('')}</div>`}
     </div>`:''}
+    ${r.n==='Kyurem'?kyuremFormsBlock(a):''}
     ${r.shop?`<div class="reveal mt-8"><h2 class="font-serif text-xl mb-3 flex items-center gap-2"><span style="color:${a}">🛒</span>${r.shop.title}</h2>
       ${r.shop.open?`<p class="text-sm muted mb-3 leading-relaxed">${r.shop.open}</p>`:''}
       <div class="rounded-xl border bd overflow-hidden">${r.shop.items.map((it,i)=>`<div class="flex items-center gap-3 p-4 ${i?'bd-t':''} surface"><div class="flex-1 min-w-0"><div class="font-medium text-sm">${esc(it[0])}</div><p class="text-sm muted mt-0.5 leading-relaxed">${esc(it[1])}</p></div><span class="rolechip shrink-0" style="color:${a};border-color:color-mix(in srgb,${a} 35%,var(--border))">${esc(it[2])}</span></div>`).join('')}</div></div>`:''}
